@@ -12,7 +12,14 @@ import Cocoa
 import CorePlot
 import Foundation
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegate {
+    private var scatterGraph : CPTXYGraph? = nil
+    var contentArray = [plotDataType]()
+    
+    @IBOutlet weak var hostingView: CPTGraphHostingView!
+    
+    typealias plotDataType = [CPTScatterPlotField : Double]
+    private var dataForPlot = [plotDataType]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +34,7 @@ class ViewController: NSViewController {
     }
 
 
-}
+
 
 
 
