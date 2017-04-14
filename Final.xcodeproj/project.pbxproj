@@ -18,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8CC750ED1EA16F190062F09A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8CC750E81EA16F190062F09A /* Swift Plotting Example.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D25249DD1E4B7F2A008DE8D1;
+			remoteInfo = "Swift Plotting Example";
+		};
 		FA201F821EA16A980027AA79 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA201F681EA16A950027AA79 /* Project object */;
@@ -37,6 +44,7 @@
 /* Begin PBXFileReference section */
 		8CC750E31EA16E0A0062F09A /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberExtensions.swift; sourceTree = "<group>"; };
+		8CC750E81EA16F190062F09A /* Swift Plotting Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Swift Plotting Example.xcodeproj"; sourceTree = "<group>"; };
 		FA201F701EA16A950027AA79 /* Final.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Final.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA201F731EA16A960027AA79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA201F751EA16A960027AA79 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8CC750E91EA16F190062F09A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8CC750EE1EA16F190062F09A /* Swift Plotting Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		FA201F671EA16A950027AA79 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +121,7 @@
 				8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */,
 				FA201F771EA16A980027AA79 /* Assets.xcassets */,
 				FA201F791EA16A980027AA79 /* Main.storyboard */,
+				8CC750E81EA16F190062F09A /* Swift Plotting Example.xcodeproj */,
 				FA201F7C1EA16A980027AA79 /* Info.plist */,
 			);
 			path = Final;
@@ -221,6 +238,12 @@
 			mainGroup = FA201F671EA16A950027AA79;
 			productRefGroup = FA201F711EA16A950027AA79 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8CC750E91EA16F190062F09A /* Products */;
+					ProjectRef = 8CC750E81EA16F190062F09A /* Swift Plotting Example.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				FA201F6F1EA16A950027AA79 /* Final */,
@@ -229,6 +252,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8CC750EE1EA16F190062F09A /* Swift Plotting Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Swift Plotting Example.app";
+			remoteRef = 8CC750ED1EA16F190062F09A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FA201F6E1EA16A950027AA79 /* Resources */ = {
