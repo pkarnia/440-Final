@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8CC750E01EA16D200062F09A /* RandomNumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC750DF1EA16D200062F09A /* RandomNumberExtensions.swift */; };
+		8CC750E21EA16D270062F09A /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC750E11EA16D270062F09A /* DrawingView.swift */; };
 		FA201F741EA16A960027AA79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA201F731EA16A960027AA79 /* AppDelegate.swift */; };
 		FA201F761EA16A960027AA79 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA201F751EA16A960027AA79 /* ViewController.swift */; };
 		FA201F781EA16A980027AA79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA201F771EA16A980027AA79 /* Assets.xcassets */; };
@@ -33,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8CC750DF1EA16D200062F09A /* RandomNumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RandomNumberExtensions.swift; path = ../../../Desktop/RandomNumberExtensions.swift; sourceTree = "<group>"; };
+		8CC750E11EA16D270062F09A /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawingView.swift; path = ../../../Desktop/DrawingView.swift; sourceTree = "<group>"; };
 		FA201F701EA16A950027AA79 /* Final.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Final.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA201F731EA16A960027AA79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA201F751EA16A960027AA79 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 			children = (
 				FA201F731EA16A960027AA79 /* AppDelegate.swift */,
 				FA201F751EA16A960027AA79 /* ViewController.swift */,
+				8CC750E11EA16D270062F09A /* DrawingView.swift */,
+				8CC750DF1EA16D200062F09A /* RandomNumberExtensions.swift */,
 				FA201F771EA16A980027AA79 /* Assets.xcassets */,
 				FA201F791EA16A980027AA79 /* Main.storyboard */,
 				FA201F7C1EA16A980027AA79 /* Info.plist */,
@@ -255,8 +261,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CC750E01EA16D200062F09A /* RandomNumberExtensions.swift in Sources */,
 				FA201F761EA16A960027AA79 /* ViewController.swift in Sources */,
 				FA201F741EA16A960027AA79 /* AppDelegate.swift in Sources */,
+				8CC750E21EA16D270062F09A /* DrawingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +504,7 @@
 				FA201F971EA16A990027AA79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FA201F981EA16A990027AA79 /* Build configuration list for PBXNativeTarget "FinalTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +513,7 @@
 				FA201F9A1EA16A990027AA79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FA201F9B1EA16A990027AA79 /* Build configuration list for PBXNativeTarget "FinalUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +522,7 @@
 				FA201F9D1EA16A990027AA79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
