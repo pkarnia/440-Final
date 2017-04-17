@@ -23,7 +23,7 @@ func generate1DEnergy(Spins:[Int8], B:Double, J:Double) -> Double {
     for j in 0...Spins.count-1 {
         sum2 = sum2*Double(Spins[j])
     }
-    sum2 = B*bohrMagneton*sum2/2
+    sum2 = B*bohrmagneton*sum2/2
     
     let Energy:Double = -(sum1+sum2)
     
