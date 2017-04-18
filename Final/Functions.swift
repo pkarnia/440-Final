@@ -21,11 +21,28 @@ func generate1DEnergy(Spins:[Int8], B:Double, J:Double) -> Double {
     sum1 = J*sum1/4 //4 comes from the binary nature of Spins
     
     for j in 0...Spins.count-1 {
-        sum2 = sum2*Double(Spins[j])
+        sum2 = sum2+Double(Spins[j])
     }
     sum2 = B*bohrmagneton*sum2/2
     
     let Energy:Double = -(sum1+sum2)
     
     return Energy
+}
+
+func generate1DNextNearestNeighborEnergy(Spins:[Int8], B:Double, J:Double, J2:Double) -> Double {
+    //J2 is the next nearest neighbors coupling constant, typically around .5J
+    
+    var Energy:Double = generate1DEnergy(Spins:Spins ,B:B ,J:J) //Nearest Neighbor Energy
+    
+    var sum3:Double = Double(Spins[0])*Double(Spins[Spins.count-2]) + Double(Spins[1])*Double(Spins[Spins.count-1]) //Next Nearest Neighbor Boundary Conditions
+
+    for i in 0...Spins.count-3 {//Next Nearest Neighbor Correction 
+        sum3 = sum3 + Double(Spins[i])*Double(Spins[i+2])
+    }
+    
+    Energy = Energy - J2*sum3
+    
+    return Energy
+
 }
