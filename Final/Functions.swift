@@ -46,3 +46,10 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], B:Double, J:Double, J2:Do
     return Energy
 
 }
+
+func SpinFlip1D(Spins:[Int8]) -> [Int8] {
+    var newSpins:[Int8] = Spins
+    let randomNumber: Int = Int.getRandomNumber(lower: 0,upper: Spins.count-1)
+    newSpins[randomNumber] = -Spins[randomNumber]
+    return newSpins
+}
