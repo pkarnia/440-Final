@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8CC750E41EA16E0A0062F09A /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC750E31EA16E0A0062F09A /* DrawingView.swift */; };
+		8C355B431EAAAA5200C0D89D /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C355B421EAAAA5200C0D89D /* DrawingView.swift */; };
 		8CC750E61EA16E140062F09A /* RandomNumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */; };
 		8CDEBFE61EA56D040009269F /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CDEBFD71EA56C2A0009269F /* CorePlot.framework */; };
 		8CDEBFE71EA56D040009269F /* CorePlot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CDEBFD71EA56C2A0009269F /* CorePlot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -115,7 +115,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8CC750E31EA16E0A0062F09A /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
+		8C355B421EAAAA5200C0D89D /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberExtensions.swift; sourceTree = "<group>"; };
 		8CDEBFC61EA56C2A0009269F /* CorePlot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CorePlot.xcodeproj; path = "core-plot-release-2.3/framework/CorePlot.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		8CDEBFEB1EA580740009269F /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
@@ -200,8 +200,8 @@
 				FA201F731EA16A960027AA79 /* AppDelegate.swift */,
 				FA201F751EA16A960027AA79 /* ViewController.swift */,
 				8CDEBFEB1EA580740009269F /* Functions.swift */,
-				8CC750E31EA16E0A0062F09A /* DrawingView.swift */,
 				8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */,
+				8C355B421EAAAA5200C0D89D /* DrawingView.swift */,
 				8CDEBFC61EA56C2A0009269F /* CorePlot.xcodeproj */,
 				FA201F771EA16A980027AA79 /* Assets.xcassets */,
 				FA201F791EA16A980027AA79 /* Main.storyboard */,
@@ -428,9 +428,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CC750E41EA16E0A0062F09A /* DrawingView.swift in Sources */,
 				8CC750E61EA16E140062F09A /* RandomNumberExtensions.swift in Sources */,
 				FA201F761EA16A960027AA79 /* ViewController.swift in Sources */,
+				8C355B431EAAAA5200C0D89D /* DrawingView.swift in Sources */,
 				8CDEBFEC1EA580740009269F /* Functions.swift in Sources */,
 				FA201F741EA16A960027AA79 /* AppDelegate.swift in Sources */,
 			);

@@ -19,6 +19,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     @IBOutlet weak var hostingView: CPTGraphHostingView!
     
     
+    
     @IBOutlet weak var displayView: DrawingView!
     
     
@@ -41,17 +42,41 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 
     @IBAction func generateMetropolis(_ sender: Any) {
+        displayView.display()
         
-        generateMetropolisSystem(numberofSpins:5, maxIterations:100, Dimentions:1, T:10, B:1, J:1, J2: 1, Plot:0)
+        var Derp:[Int8] = generateMetropolisSystem(numberofSpins:100, maxIterations:1000, Dimentions:1, T:1, B:1, J:1, J2: 1, Plot:1)
+        //print(Derp)
         
         
         
+        //for k in 1...10{
+            
+        var j:Int = 1
+        
+        for l in 1...100{
+            displayView.shouldIClear=true
+            displayView.allThePoints.removeAll()
+            displayView.tellGuiToDisplay()
+            
+        j = 1
+        while j<=200{
+            if Int.getRandomNumber(lower:0,upper:10)<3 {
+                displayView.addPoint(xPointa:1, yPointb: Double(j), radiusPointc: 1, colord: "RED")
+            }
+            j = j+20
+        }
+        
+            
+        displayView.shouldIClear=false
+        displayView.shouldIDrawPoints = true
+        displayView.tellGuiToDisplay()
+        
+            }
+     
     }
-
     
 
-
-
+    
 
 func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double, B:Double,J:Double, J2: Double, Plot:Int) -> [Int8] { //This is in the View Controller so that Hosting View can be accessed
         
@@ -71,7 +96,7 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         newEnergy = generate1DEnergy(Spins: newSpins, B: B, J: J)
             
         acceptNewState = metropolisRelativeProbability(oldEnergy:oldEnergy, newEnergy:newEnergy, T:T)
-        print(acceptNewState)
+        //print(acceptNewState)
         if acceptNewState==true{
             oldEnergy=newEnergy
             Spins=newSpins
@@ -79,14 +104,30 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         //print(Spins)
             
         
-           /* if Plot==1{
-                for j in 0...Spins.count-1{
-                    if Spins[j] == 1 {
-                displayView.drawPoint(xPoint:1,yPoint:Double(j),radiusPoint:1)
+            /*if Plot==1{
+                
+                displayView.shouldIClear = true
+                displayView.tellGuiToDisplay()
+                displayView.shouldIDrawPoints = true
+                
+                var j:Int = 0
+                while j<=Spins.count-1{
+                    
+                    if Spins[j] == 1 {//should pixel be drawn
+                        
+                        for k in 1...100{//height of pixel
+                            
+                            for q in 1...100{ //width of pixel
+                                
+                        displayView.addPoint(xPointa:Double(k), yPointb: Double(j+q), radiusPointc: 1, colord: "RED")
+                            }
+                        }
                     }
-                }
-                displayView.tellGUItoDisplay()
-            }*/
+                    j = j+100
+                        }
+                displayView.shouldIClear = false
+                displayView.tellGuiToDisplay()
+                            }*/
     }
         
         

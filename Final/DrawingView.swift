@@ -107,7 +107,7 @@ class DrawingView: NSView {
         // Draw a rectangle of size 1 by 1 pixel at each point
         
         
-        let aRect :NSRect = NSMakeRect(CGFloat(Float(xPoint)), CGFloat(Float(yPoint)), 1.0, 1.0)
+        let aRect :NSRect = NSMakeRect(CGFloat(Float(xPoint)), CGFloat(Float(yPoint)), 10.0, 10.0)
     
             
         NSRectFill(aRect)

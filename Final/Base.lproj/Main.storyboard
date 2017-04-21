@@ -686,7 +686,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1528" height="576"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HJ7-Nl-E3f">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HJ7-Nl-E3f" customClass="DrawingView" customModule="Final" customModuleProvider="target">
                                 <rect key="frame" x="484" y="56" width="500" height="500"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </customView>
@@ -709,7 +709,7 @@
                     </view>
                     <connections>
                         <outlet property="GenerateMetropolis" destination="czu-UR-Qks" id="YL9-v4-caE"/>
-                        <outlet property="displayView" destination="HJ7-Nl-E3f" id="LWq-Mx-P9q"/>
+                        <outlet property="displayView" destination="HJ7-Nl-E3f" id="Gny-LI-VKf"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
