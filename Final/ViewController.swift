@@ -37,7 +37,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
     @IBAction func generateMetropolis(_ sender: Any) {
         
-        
+        generateMetropolisSystem(numberofSpins:5, maxIterations:100, Dimentions:1, T:10, B:1, J:1, J2: 1, Plot:0)
         
         
         
@@ -48,6 +48,40 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 
 
+func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double, B:Double,J:Double, J2: Double, Plot:Int) -> [Int8] { //This is in the View Controller so that Hosting View can be accessed
+        
+    var Spins:[Int8] = [1,1,1,1,1] //Should be replaced by a function
+        
+    var oldEnergy:Double = 0
+    var newSpins:[Int8] = []
+    var newEnergy:Double = 0
+    var acceptNewState:Bool = false
+        
+        
+        
+    for i in 0...maxIterations-1{
+            
+        oldEnergy = generate1DEnergy(Spins: Spins, B: B, J: J)
+        newSpins = SpinFlip1D(Spins:Spins)
+        newEnergy = generate1DEnergy(Spins: newSpins, B: B, J: J)
+            
+        acceptNewState = metropolisRelativeProbability(oldEnergy:oldEnergy, newEnergy:newEnergy, T:T)
+        print(acceptNewState)
+        if acceptNewState==true{
+            oldEnergy=newEnergy
+            Spins=newSpins
+        }
+        print(Spins)
+            
+        /*
+            if Plot=1{
+             
+            }*/
+    }
+        
+        
+    return [0,1,0,1,0] //PlaceHolder
+}
 
 
 

@@ -75,11 +75,6 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, B:Double,J:Double) -> [Int8] {
-    var Spins:[Int8] = [1,1,1,1,1] //Should be replaced by a function
-    
-    return [0,1,0,1] //PlaceHolder
-}
 
 
 
