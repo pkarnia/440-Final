@@ -18,6 +18,11 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     @IBOutlet weak var hostingView: CPTGraphHostingView!
     
+    
+    @IBOutlet weak var displayView: DrawingView!
+    
+    
+    
     typealias plotDataType = [CPTScatterPlotField : Double]
     private var dataForPlot = [plotDataType]()
 
@@ -71,16 +76,21 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
             oldEnergy=newEnergy
             Spins=newSpins
         }
-        print(Spins)
+        //print(Spins)
             
-        /*
-            if Plot=1{
-             
+        
+           /* if Plot==1{
+                for j in 0...Spins.count-1{
+                    if Spins[j] == 1 {
+                displayView.drawPoint(xPoint:1,yPoint:Double(j),radiusPoint:1)
+                    }
+                }
+                displayView.tellGUItoDisplay()
             }*/
     }
         
         
-    return [0,1,0,1,0] //PlaceHolder
+    return Spins
 }
 
 

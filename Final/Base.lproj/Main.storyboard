@@ -709,6 +709,7 @@
                     </view>
                     <connections>
                         <outlet property="GenerateMetropolis" destination="czu-UR-Qks" id="YL9-v4-caE"/>
+                        <outlet property="displayView" destination="HJ7-Nl-E3f" id="LWq-Mx-P9q"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
