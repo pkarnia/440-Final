@@ -36,6 +36,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 
 
+    @IBOutlet weak var GenerateMetropolis: NSButton!
 
 
 
