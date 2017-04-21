@@ -35,8 +35,15 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     }
 
 
+    @IBAction func generateMetropolis(_ sender: Any) {
+        
+        
+        
+        
+        
+    }
 
-    @IBOutlet weak var GenerateMetropolis: NSButton!
+    
 
 
 

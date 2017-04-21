@@ -47,9 +47,44 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], B:Double, J:Double, J2:Do
 
 }
 
-func SpinFlip1D(Spins:[Int8]) -> [Int8] {
+func SpinFlip1D(Spins:[Int8]) -> [Int8] { //swaps the spin of a random index
     var newSpins:[Int8] = Spins
     let randomNumber: Int = Int.getRandomNumber(lower: 0,upper: Spins.count-1)
     newSpins[randomNumber] = -Spins[randomNumber]
     return newSpins
 }
+
+
+func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double) -> Bool {
+    //Calculates Relative probability and true is new Spins should be accepted
+    
+    let euler: Double = 2.7182818284590452353602874713527
+    //let boltzmannConstant:Double = 1.38064852*pow(10,-23) // J/K
+    //GUI should have T in terms of KbT
+    
+    let relativeProbability: Double = pow(euler,-(newEnergy-oldEnergy)/(T))
+    
+    let randomNumber: Double = Double.getRandomNumber(lower:0, upper:1)
+    
+    if relativeProbability>randomNumber || newEnergy<oldEnergy{
+        return true
+    }
+    else{
+        return false
+    }
+    
+}
+
+func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, B:Double,J:Double) -> [Int8] {
+    var Spins:[Int8] = [1,1,1,1,1] //Should be replaced by a function
+    
+    return [0,1,0,1] //PlaceHolder
+}
+
+
+
+
+
+
+
+
