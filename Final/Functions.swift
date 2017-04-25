@@ -75,7 +75,14 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-
+func generateDensityofStates(Spins:[Int8]) -> [Double]{
+    
+    var stateDensity:[Double] = []
+    
+    
+    
+    return [23.0]
+}
 
 
 

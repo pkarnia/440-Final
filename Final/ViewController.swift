@@ -49,30 +49,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         
         
-        //for k in 1...10{
-            
-        var j:Int = 1
         
-        for l in 1...100{
-            displayView.shouldIClear=true
-            displayView.allThePoints.removeAll()
-            displayView.tellGuiToDisplay()
-            
-        j = 1
-        while j<=200{
-            if Int.getRandomNumber(lower:0,upper:10)<3 {
-                displayView.addPoint(xPointa:1, yPointb: Double(j), radiusPointc: 1, colord: "RED")
-            }
-            j = j+20
-        }
-        
-            
-        displayView.shouldIClear=false
-        displayView.shouldIDrawPoints = true
-        displayView.tellGuiToDisplay()
-        
-            }
-     
     }
     
 
