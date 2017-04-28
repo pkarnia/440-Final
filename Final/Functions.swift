@@ -71,9 +71,9 @@ func generateDensityofStates(Spins:[Int8], J:Double) -> [Double]{ //initializes 
     var possibleEnergies:[Double] = generatePossibleEnergies(Spins:Spins, J:J)
     
     var EnergyDensity:[Double] = []
-    let numberofStates:Double = pow(2.0,Double(Spins.count))
+    let numberofEnergies:Int = possibleEnergies.count
     
-    for i in 0...Int(numberofStates)-1 {
+    for i in 0...numberofEnergies-1 {
         EnergyDensity.append(1)
     }
     
@@ -93,6 +93,65 @@ func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all p
 }
 
 
+func WLSRelativeProbability(oldDensity:Double, newDensity:Double) -> Bool { //generates and compares relative probability for WLS. If 1 is returned then the new state should be accepted.
+    
+    let relativeProbability:Double = oldDensity/newDensity
+    let randomNumber:Double = Double.getRandomNumber(lower:0, upper:1)
+    
+    if relativeProbability>randomNumber || newEnergy<oldEnergy{
+        return true
+    }
+    else{
+        return false
+    }
+}
 
 
 
+func addtoWLSHistogram(currentHistogram:[Int],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Int8], isFlat:Bool){
+    
+    var Histogram:[Int] = currentHistogram
+    newEnergies = newEnergies.sorted
+    
+    var Duplicate: (Check: Bool, index: Int)? = nil
+    
+    if clear{
+        Histogram.clear
+    }
+    
+    
+    for i in 0...newEnergies.count-1{
+        Duplicate = isDuplicate(Value:newEnergies[i],Array:histogramEnergies)
+        if Duplicate.Check{
+            Histogram[Duplicate.index] = Histogram[Duplicate.index] + 1
+        }
+        else{
+            Histogram.append(1)
+            histogramEnergies.append(newEnergies[i])
+        }
+    }
+    
+    let flattness:Double = (Histogram.max()! - Histogram.min()! )/(Histogram.max()! + Histogram.min()!)
+    var isFlat:Bool = 0
+    
+    if flattness < 0.2{
+        isFlat = 1
+    }
+    
+    return (Histogram, isFlat)
+    
+}
+
+func isDuplicate(Value:Double,Array:[Double]) -> (Check:Bool, index:Int) {//generic function to check if a value is in the array. Will be used to fill the Histogram. Returns 1 if the value is a duplicate.
+   
+    var whattoReturn: (Check: Bool, index: Int)? = (Check:0, index:0)
+    
+    for i in 0...Array.count-1{
+        if value-Array[i]<pow(10,-10){
+            whattoReturn.Check = 1
+            whattoReturn.index = i
+            break
+        }
+    }
+    return whattoReturn
+}
