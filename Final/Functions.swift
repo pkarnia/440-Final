@@ -8,32 +8,23 @@
 
 import Foundation
 
-func generate1DEnergy(Spins:[Int8], B:Double, J:Double) -> Double {
-    let bohrmagneton:Double = 1
+func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
+    var Energy:Double = 0
     
-    //There are two sums for Energy
     var sum1:Double = Double(Spins[0])*Double(Spins[Spins.count-1]) //Periodic Boundary Condition
-    var sum2:Double = 0
     
     for i in 0...Spins.count-2 { //sums over S*S+1
         sum1 = sum1 + Double(Spins[i])*Double(Spins[i+1])
     }
-    sum1 = J*sum1/4 //4 comes from the binary nature of Spins
-    
-    for j in 0...Spins.count-1 {
-        sum2 = sum2+Double(Spins[j])
-    }
-    sum2 = B*bohrmagneton*sum2/2
-    
-    let Energy:Double = -(sum1+sum2)
+    Energy = J*sum1/4 //4 comes from the binary nature of Spins
     
     return Energy
 }
 
-func generate1DNextNearestNeighborEnergy(Spins:[Int8], B:Double, J:Double, J2:Double) -> Double {
+func generate1DNextNearestNeighborEnergy(Spins:[Int8], J:Double, J2:Double) -> Double {
     //J2 is the next nearest neighbors coupling constant, typically around .5J
     
-    var Energy:Double = generate1DEnergy(Spins:Spins ,B:B ,J:J) //Nearest Neighbor Energy
+    var Energy:Double = generate1DEnergy(Spins:Spins,J:J) //Nearest Neighbor Energy
     
     var sum3:Double = Double(Spins[0])*Double(Spins[Spins.count-2]) + Double(Spins[1])*Double(Spins[Spins.count-1]) //Next Nearest Neighbor Boundary Conditions
 
@@ -84,8 +75,11 @@ func generateDensityofStates(Spins:[Int8]) -> [Double]{ //initializes the energy
         EnergyDensity.append(1)
     }
     
+    
+    
     return EnergyDensity
 }
+
 
 
 
