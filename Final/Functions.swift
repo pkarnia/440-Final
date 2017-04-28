@@ -108,7 +108,7 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double) -> Bool { //ge
 
 
 
-func addtoWLSHistogram(currentHistogram:[Int],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Int8], isFlat:Bool){
+func addtoWLSHistogram(currentHistogram:[Int],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Int8], isFlat:Bool){ //adds onto the existing Histogram. The function is constructed in a way that allows for N new energies to be added, then the flattness of the histogram to be calculated. We cannot know the flattness of the histogram until we have the histogram, and we keep making the histogram until it is flat enough.
     
     var Histogram:[Int] = currentHistogram
     newEnergies = newEnergies.sorted
@@ -120,12 +120,14 @@ func addtoWLSHistogram(currentHistogram:[Int],histogramEnergies:[Double], newEne
     }
     
     
-    for i in 0...newEnergies.count-1{
+    for i in 0...newEnergies.count-1{ //checks if the newEnergy is already in the Histogram
         Duplicate = isDuplicate(Value:newEnergies[i],Array:histogramEnergies)
-        if Duplicate.Check{
+        
+        if Duplicate.Check{ //if the new energy is already in the histogram the index where gets added onto
             Histogram[Duplicate.index] = Histogram[Duplicate.index] + 1
         }
-        else{
+        
+        else{ // if the new energy is not in the Histogram then a new index is formed.
             Histogram.append(1)
             histogramEnergies.append(newEnergies[i])
         }
@@ -134,7 +136,7 @@ func addtoWLSHistogram(currentHistogram:[Int],histogramEnergies:[Double], newEne
     let flattness:Double = (Histogram.max()! - Histogram.min()! )/(Histogram.max()! + Histogram.min()!)
     var isFlat:Bool = 0
     
-    if flattness < 0.2{
+    if flattness < 0.2{ //checks if the histogram is flat enough
         isFlat = 1
     }
     
