@@ -16,7 +16,7 @@ func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
     for i in 0...Spins.count-2 { //sums over S*S+1
         sum1 = sum1 + Double(Spins[i])*Double(Spins[i+1])
     }
-    Energy = J*sum1/4 //4 comes from the binary nature of Spins
+    Energy = J*2*sum1 //2 because every contribution needs to be counted twice
     
     return Energy
 }
@@ -32,7 +32,7 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], J:Double, J2:Double) -> D
         sum3 = sum3 + Double(Spins[i])*Double(Spins[i+2])
     }
     
-    Energy = Energy - J2*sum3
+    Energy = Energy - J2*2*sum3
     
     return Energy
 
@@ -66,7 +66,9 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateDensityofStates(Spins:[Int8]) -> [Double]{ //initializes the energy density of states g = 1.
+func generateDensityofStates(Spins:[Int8], J:Double) -> [Double]{ //initializes the energy density of states g = 1.
+    
+    var possibleEnergies:[Double] = generatePossibleEnergies(Spins:Spins, J:J)
     
     var EnergyDensity:[Double] = []
     let numberofStates:Double = pow(2.0,Double(Spins.count))
@@ -75,13 +77,20 @@ func generateDensityofStates(Spins:[Int8]) -> [Double]{ //initializes the energy
         EnergyDensity.append(1)
     }
     
-    
-    
     return EnergyDensity
 }
 
 
-
+func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all possible values for Energy. Will be used to determine of density of states, which is a function of Energy. Some of these values will never be accessed and will have to be removed after the simulation has run its course. These Energies will have g(E) = 1 and E =/= 2N
+    
+    var Energies:[Double] = []
+    
+    for i in 0...Spins.count-1{
+        Energies.append(J*Double(-Spins.count+i))
+    }
+    
+   return Energies
+}
 
 
 
