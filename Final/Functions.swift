@@ -216,7 +216,7 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     var isFlat:Bool = false
     
     
-    while (multiplicitiveFactor-1)<pow(10,-8){
+    while (multiplicitiveFactor-1)>pow(10,-8){
         while !isFlat{
             for i in 1...10000{
                 oldEnergy = generate1DEnergy(Spins: Spins, J: J)
