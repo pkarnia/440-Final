@@ -44,8 +44,10 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     @IBAction func generateMetropolis(_ sender: Any) {
         displayView.display()
         
-        var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
+        //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
         //print(Derp)
+        
+        generateWLSSystem(numberofSpins: 5, maxIterations: 1000, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0)
         
         
         

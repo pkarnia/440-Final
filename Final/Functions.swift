@@ -66,14 +66,13 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateDensityofStates(Spins:[Int8], J:Double) -> [Double]{ //initializes the energy density of states g = 1.
+func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double]) -> [Double]{ //initializes the energy density of states g = 1.
     
-    var possibleEnergies:[Double] = generatePossibleEnergies(Spins:Spins, J:J)
     
     var EnergyDensity:[Double] = []
     let numberofEnergies:Int = possibleEnergies.count
     
-    for i in 0...numberofEnergies-1 {
+    for _ in 0...numberofEnergies-1 {
         EnergyDensity.append(1)
     }
     
@@ -81,7 +80,7 @@ func generateDensityofStates(Spins:[Int8], J:Double) -> [Double]{ //initializes 
 }
 
 
-func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all possible values for Energy. Will be used to determine of density of states, which is a function of Energy. Some of these values will never be accessed and will have to be removed after the simulation has run its course. These Energies will have g(E) = 1 and E =/= 2N
+func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all possible values for Energy. Will be used to determine of density of states, which is a function of Energy. Some of these values will never be accessed and will have to be removed after the simulation has run its course. These Energies will have g(E) = 1 and E =/= 2N. Should be done in Histogram function
     
     var Energies:[Double] = []
     
@@ -111,7 +110,7 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double) -> Bool { //ge
 
 
 
-func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Double], isFlat:Bool){ //adds onto the existing Histogram. The function is constructed in a way that allows for N new energies to be added, then the flattness of the histogram to be calculated. We cannot know the flattness of the histogram until we have the histogram, and we keep making the histogram until it is flat enough.
+func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Double], isFlat:Bool, histogramEnergies:[Double]){ //adds onto the existing Histogram. The function is constructed in a way that allows for N new energies to be added, then the flattness of the histogram to be calculated. We cannot know the flattness of the histogram until we have the histogram, and we keep making the histogram until it is flat enough.
     
     var Histogram:[Double] = currentHistogram
     var currentEnergies:[Double] = histogramEnergies
@@ -143,7 +142,7 @@ func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], new
         isFlat = true
     }
     
-    return (Histogram, isFlat)
+    return (Histogram, isFlat, currentEnergies)
     
 }
 
@@ -160,3 +159,120 @@ func isDuplicate(Value:Double,Array:[Double]) -> (Check:Bool, index:Int) {//gene
     }
     return whattoReturn!
 }
+
+func updateDensityofStates(densityofStates:[Double],Energy:Double, energyArray:[Double], multiplicitivefactor:Double) -> [Double] { //updates density of states function
+    
+    var DegeneracyFactor:[Double] = densityofStates //DegeneracyFactor and density of states are the same thing
+    let index:Int = isDuplicate(Value: Energy, Array: energyArray).index //determines which index to update
+    
+    DegeneracyFactor[index] = multiplicitivefactor * DegeneracyFactor[index]
+    
+    return DegeneracyFactor
+}
+
+func updateMultiplicitiveFactor(multiplicitiveFactor:Double) -> Double { //takes square root of the factor and checks if it is one yet
+    
+    var isOne:Bool = false
+    
+    
+    return pow(multiplicitiveFactor,1/2)
+}
+
+func getDensity(Energy:Double, densityofStates:[Double]) -> Double { //gets Energy density from a given energy
+    
+    var density:Double = 0
+    
+    let index:Int = isDuplicate(Value: Energy, Array: densityofStates).index
+    
+    density = densityofStates[index]
+    
+    return density
+}
+
+
+func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8]  {
+    //generateSpins
+    
+    var Spins:[Int8] = [1,-1,1,1,1,-1]
+    var newSpins:[Int8] = []
+    
+    var possibleEnergies:[Double] = generatePossibleEnergies(Spins: Spins, J: J)
+    var densityofStates:[Double] = generateDensityofStates(Spins: Spins, J: J, possibleEnergies:possibleEnergies)
+    
+    var oldEnergy:Double = generate1DEnergy(Spins: Spins, J: J)
+    var oldDensity:Double = 0
+    
+    var newEnergy:Double = 0
+    var newDensity:Double = 0
+    
+    var visitedEnergies:[Double] = [oldEnergy]
+    
+    var multiplicitiveFactor:Double = 2.71828
+    
+    var histogramEnergies:[Double] = [oldEnergy]
+    var Histogram:[Double] = [1]
+    
+    var histogramTuple:(Histogram:[Double], isFlat: Bool, histogramEnergies:[Double]) = ([0],false,[0])
+    var isFlat:Bool = false
+    
+    
+    while (multiplicitiveFactor-1)<pow(10,-8){
+        while !isFlat{
+            for i in 1...10000{
+                oldEnergy = generate1DEnergy(Spins: Spins, J: J)
+                oldDensity = getDensity(Energy: oldEnergy, densityofStates: densityofStates)
+        
+                newSpins = SpinFlip1D(Spins: Spins)
+        
+                newEnergy = generate1DEnergy(Spins: newSpins, J: J)
+                newDensity = getDensity(Energy: newEnergy, densityofStates: densityofStates)
+        
+                visitedEnergies.append(newEnergy)
+        
+                    if WLSRelativeProbability(oldDensity: oldDensity, newDensity: newDensity){
+                        oldEnergy = newEnergy
+                        Spins = newSpins
+                        print(Spins)
+                        densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: newEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor)
+                    }//end of if
+            }//end of 1000 iterations
+            
+            histogramTuple = addtoWLSHistogram(currentHistogram: Histogram, histogramEnergies: histogramEnergies, newEnergies: visitedEnergies, clear: false)
+            Histogram = histogramTuple.Histogram
+            histogramEnergies = histogramTuple.histogramEnergies
+            isFlat = histogramTuple.isFlat
+            print(isFlat)
+            
+        }//end of flat check
+        
+        multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)
+        
+        Histogram.removeAll()
+        histogramEnergies.removeAll()
+        visitedEnergies.removeAll()
+        isFlat = false
+    }//end of multiplicitivefactor updates
+
+    return Spins
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
