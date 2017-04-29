@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CorePlot
 
 func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
     var Energy:Double = 0
@@ -97,10 +98,7 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double) -> Bool { //ge
     let relativeProbability:Double = oldDensity/newDensity
     let randomNumber:Double = Double.getRandomNumber(lower:0, upper:1)
     
-    if relativeProbability>randomNumber {
-        return true
-    }
-    if newDensity < oldDensity {
+    if relativeProbability>randomNumber || newDensity < oldDensity{
         return true
     }
     else{
@@ -123,7 +121,7 @@ func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], new
     
     
     for i in 0...newEnergies.count-1{ //checks if the newEnergy is already in the Histogram
-        Duplicate = isDuplicate(Value:newEnergies[i],Array:histogramEnergies)
+        Duplicate = isDuplicate(Value:newEnergies[i],Array:currentEnergies)
         
         if (Duplicate?.Check)!{ //if the new energy is already in the histogram the index where gets added onto
             Histogram[(Duplicate?.index)!] = Histogram[(Duplicate?.index)!] + 1
@@ -189,7 +187,7 @@ func getDensity(Energy:Double, densityofStates:[Double]) -> Double { //gets Ener
     return density
 }
 
-
+/*
 func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8]  {
     //generateSpins
     
@@ -216,8 +214,8 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     var isFlat:Bool = false
     
     
-    while (multiplicitiveFactor-1)>pow(10,-8){
-        while !isFlat{
+    //while (multiplicitiveFactor-1)>pow(10,-8){
+        //while !isFlat{
             for i in 1...10000{
                 oldEnergy = generate1DEnergy(Spins: Spins, J: J)
                 oldDensity = getDensity(Energy: oldEnergy, densityofStates: densityofStates)
@@ -227,12 +225,14 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
                 newEnergy = generate1DEnergy(Spins: newSpins, J: J)
                 newDensity = getDensity(Energy: newEnergy, densityofStates: densityofStates)
         
+                //print(newEnergy)
+                
                 visitedEnergies.append(newEnergy)
         
                     if WLSRelativeProbability(oldDensity: oldDensity, newDensity: newDensity){
                         oldEnergy = newEnergy
                         Spins = newSpins
-                        print(Spins)
+                        //print(Spins)
                         densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: newEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor)
                     }//end of if
             }//end of 1000 iterations
@@ -242,19 +242,21 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
             histogramEnergies = histogramTuple.histogramEnergies
             isFlat = histogramTuple.isFlat
             print(isFlat)
+    
+        Plot2(Xaxis:histogramEnergies, Yaxis:Histogram, Xlabel:"derp", Ylabel:"herp")
             
-        }//end of flat check
+        //}//end of flat check
         
         multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)
         
-        Histogram.removeAll()
+        /*Histogram.removeAll()
         histogramEnergies.removeAll()
         visitedEnergies.removeAll()
-        isFlat = false
-    }//end of multiplicitivefactor updates
+        isFlat = false*/
+    //}//end of multiplicitivefactor updates
 
     return Spins
-}
+}*/
 
 
 
