@@ -98,7 +98,10 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double) -> Bool { //ge
     let relativeProbability:Double = oldDensity/newDensity
     let randomNumber:Double = Double.getRandomNumber(lower:0, upper:1)
     
-    if relativeProbability>randomNumber || newEnergy<oldEnergy{
+    if relativeProbability>randomNumber {
+        return true
+    }
+    if newDensity < oldDensity {
         return true
     }
     else{
@@ -108,36 +111,36 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double) -> Bool { //ge
 
 
 
-func addtoWLSHistogram(currentHistogram:[Int],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Int8], isFlat:Bool){ //adds onto the existing Histogram. The function is constructed in a way that allows for N new energies to be added, then the flattness of the histogram to be calculated. We cannot know the flattness of the histogram until we have the histogram, and we keep making the histogram until it is flat enough.
+func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Double], isFlat:Bool){ //adds onto the existing Histogram. The function is constructed in a way that allows for N new energies to be added, then the flattness of the histogram to be calculated. We cannot know the flattness of the histogram until we have the histogram, and we keep making the histogram until it is flat enough.
     
-    var Histogram:[Int] = currentHistogram
-    newEnergies = newEnergies.sorted
+    var Histogram:[Double] = currentHistogram
+    var currentEnergies:[Double] = histogramEnergies
     
     var Duplicate: (Check: Bool, index: Int)? = nil
     
     if clear{
-        Histogram.clear
+        Histogram.removeAll()
     }
     
     
     for i in 0...newEnergies.count-1{ //checks if the newEnergy is already in the Histogram
         Duplicate = isDuplicate(Value:newEnergies[i],Array:histogramEnergies)
         
-        if Duplicate.Check{ //if the new energy is already in the histogram the index where gets added onto
-            Histogram[Duplicate.index] = Histogram[Duplicate.index] + 1
+        if (Duplicate?.Check)!{ //if the new energy is already in the histogram the index where gets added onto
+            Histogram[(Duplicate?.index)!] = Histogram[(Duplicate?.index)!] + 1
         }
         
         else{ // if the new energy is not in the Histogram then a new index is formed.
             Histogram.append(1)
-            histogramEnergies.append(newEnergies[i])
+            currentEnergies.append(newEnergies[i])
         }
     }
     
-    let flattness:Double = (Histogram.max()! - Histogram.min()! )/(Histogram.max()! + Histogram.min()!)
-    var isFlat:Bool = 0
+    let flattness:Double = (Histogram.max()! - Histogram.min()!)/(Histogram.max()! + Histogram.min()!)
+    var isFlat:Bool = false
     
     if flattness < 0.2{ //checks if the histogram is flat enough
-        isFlat = 1
+        isFlat = true
     }
     
     return (Histogram, isFlat)
@@ -146,14 +149,14 @@ func addtoWLSHistogram(currentHistogram:[Int],histogramEnergies:[Double], newEne
 
 func isDuplicate(Value:Double,Array:[Double]) -> (Check:Bool, index:Int) {//generic function to check if a value is in the array. Will be used to fill the Histogram. Returns 1 if the value is a duplicate.
    
-    var whattoReturn: (Check: Bool, index: Int)? = (Check:0, index:0)
+    var whattoReturn: (Check: Bool, index: Int)? = (Check:false, index:0)
     
     for i in 0...Array.count-1{
-        if value-Array[i]<pow(10,-10){
-            whattoReturn.Check = 1
-            whattoReturn.index = i
+        if (Value-Array[i])<pow(10,-10){
+            whattoReturn?.Check = true
+            whattoReturn?.index = i
             break
         }
     }
-    return whattoReturn
+    return whattoReturn!
 }
