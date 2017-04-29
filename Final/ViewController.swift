@@ -43,8 +43,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     func patrickTest()
     {
-        let test = create2D(size: 3, type: "RANDOM")
-        
+        let test = create2D(size: 10, type: "RANDOM")
+
         for var x in 0..<test.count {
             var line = ""
             for var y in 0..<test[x].count {
@@ -55,8 +55,9 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         }
         
         print()
-        //print(test)
         
+        //print(test)
+
         let map = (findDomains2D(input: test))
         
         for var x in 0..<map.count {
