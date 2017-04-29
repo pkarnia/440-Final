@@ -19,6 +19,10 @@ func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
     }
     Energy = -J*2*sum1 //2 because every contribution needs to be counted twice
     
+    if Energy == -0.0{
+        Energy = -Energy
+    }
+    
     return Energy
 }
 

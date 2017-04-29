@@ -77,7 +77,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
         //print(Derp)
         
-        generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0)
+        generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true)
         
         
         
@@ -150,24 +150,29 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         
         //while (multiplicitiveFactor-1)>pow(10,-8){
         //while !isFlat{
-        for i in 1...10000{
+        for i in 1...20{
+            
+            
             oldEnergy = generate1DEnergy(Spins: Spins, J: J)
             oldDensity = getDensity(Energy: oldEnergy, densityofStates: densityofStates)
             
+            //generate new state
             newSpins = SpinFlip1D(Spins: Spins)
-            
-            
             newEnergy = generate1DEnergy(Spins: newSpins, J: J)
             newDensity = getDensity(Energy: newEnergy, densityofStates: densityofStates)
             
             //print(newEnergy)
             
+            //checks if new state should be accepted
             if WLSRelativeProbability(oldDensity: oldDensity, newDensity: newDensity, Log:Log){
+                //if accepted overwrite old spins and energies
                 oldEnergy = newEnergy
                 Spins = newSpins
                 //print(Spins)
             }//end of if
-            densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: newEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor, Log:Log)
+            
+            //update density of states and visited energies, which is an input for the histogram
+            densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: oldEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor, Log:Log)
             
             visitedEnergies.append(newEnergy)
         }//end of 10000 iterations
@@ -180,12 +185,13 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         print(isFlat)
         
         //Plot(Xaxis:histogramEnergies, Yaxis:densityofStates, Xlabel:"derp", Ylabel:"herp")
-        //print(visitedEnergies)
+        print(visitedEnergies)
         print(histogramEnergies)
         //print(Histogram.max()!,Histogram.min()!)
-        print(possibleEnergies)
-        print(densityofStates)
-        //print(Histogram)
+        //print(possibleEnergies)
+        //print(densityofStates)
+        print(Histogram)
+        print(histogramEnergies[1] - possibleEnergies[1])
         
         //Plot2(Xaxis: histogramEnergies, Yaxis: Histogram, Xlabel: "derp", Ylabel: "herp")
         //Plot2(Xaxis: possibleEnergies, Yaxis: densityofStates, Xlabel: "derp", Ylabel: "herp")
