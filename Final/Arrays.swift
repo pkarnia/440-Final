@@ -41,7 +41,7 @@ func createSpin(type: String) -> Int8
 func create1D(size: Int, type: String) -> Array<Int8>
 {
     var result = [Int8](repeating: 0, count:size)
-    for x in 0...size
+    for x in 0..<size
     {
         result[x] = createSpin(type: type)
     }
@@ -55,9 +55,9 @@ func create1D(size: Int, type: String) -> Array<Int8>
 func create2D(size: Int, type: String) -> [Array<Int8>]
 {
     var result = [[Int8]](repeating: [Int8](repeating: 0, count:size), count: size)
-    for x in 0...size
+    for x in 0..<size
     {
-        for y in 0...size
+        for y in 0..<size
         {
             result[x][y] = createSpin(type: type)
         }
