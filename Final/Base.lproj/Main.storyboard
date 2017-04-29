@@ -690,7 +690,7 @@
                                 <rect key="frame" x="484" y="56" width="500" height="500"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="da5-sy-47W">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="da5-sy-47W" customClass="CPTGraphHostingView">
                                 <rect key="frame" x="1008" y="56" width="500" height="500"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </customView>
@@ -710,6 +710,7 @@
                     <connections>
                         <outlet property="GenerateMetropolis" destination="czu-UR-Qks" id="YL9-v4-caE"/>
                         <outlet property="displayView" destination="HJ7-Nl-E3f" id="Gny-LI-VKf"/>
+                        <outlet property="hostingView" destination="da5-sy-47W" id="aau-VZ-jTN"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
