@@ -174,7 +174,7 @@ func isDuplicate(Value:Double,Array:[Double]) -> (Check:Bool, index:Int) {//gene
     var whattoReturn: (Check: Bool, index: Int)? = (Check:false, index:0)
     
     for i in 0...Array.count-1{
-        if (Value-Array[i])<pow(10,-10){
+        if Value == Array[i] {
             whattoReturn?.Check = true
             whattoReturn?.index = i
             break
@@ -202,11 +202,11 @@ func updateMultiplicitiveFactor(multiplicitiveFactor:Double) -> Double { //takes
     
 }
 
-func getDensity(Energy:Double, densityofStates:[Double]) -> Double { //gets Energy density from a given energy
+func getDensity(Energy:Double, densityofStates:[Double], energyArray:[Double]) -> Double { //gets Energy density from a given energy
     
     var density:Double = 0
     
-    let index:Int = isDuplicate(Value: Energy, Array: densityofStates).index
+    let index:Int = isDuplicate(Value: Energy, Array: energyArray).index
     
     density = densityofStates[index]
     
