@@ -112,7 +112,7 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
     func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int, Log:Bool) -> [Int8]  {
         //generateSpins
         
-        var Spins:[Int8] = [1,-1,-1,-1,-1,1,1,-1,1,-1]
+        var Spins:[Int8] = [1,1,1,1]
         var newSpins:[Int8] = []
         
         var possibleEnergies:[Double] = generatePossibleEnergies(Spins: Spins, J: J)
@@ -126,8 +126,7 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         
         var visitedEnergies:[Double] = [oldEnergy]
         
-        var multiplicitiveFactor:Double = 1.1
-        //2.71828
+        var multiplicitiveFactor:Double = 2.71828
         
         var histogramEnergies:[Double] = [oldEnergy]
         var Histogram:[Double] = [1.0]
@@ -144,22 +143,20 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
             
             newSpins = SpinFlip1D(Spins: Spins)
             
+            
             newEnergy = generate1DEnergy(Spins: newSpins, J: J)
             newDensity = getDensity(Energy: newEnergy, densityofStates: densityofStates)
             
             //print(newEnergy)
             
-            densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: newEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor, Log:Log)
-            
-            //visitedEnergies.append(newEnergy)
-            
             if WLSRelativeProbability(oldDensity: oldDensity, newDensity: newDensity, Log:Log){
-                visitedEnergies.append(newEnergy)
                 oldEnergy = newEnergy
                 Spins = newSpins
                 //print(Spins)
-                //densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: newEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor)
             }//end of if
+            densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: newEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor, Log:Log)
+            
+            visitedEnergies.append(newEnergy)
         }//end of 10000 iterations
         
         histogramTuple = addtoWLSHistogram(currentHistogram: Histogram, histogramEnergies: histogramEnergies, newEnergies: visitedEnergies, clear: false)
@@ -171,12 +168,14 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         
         //Plot(Xaxis:histogramEnergies, Yaxis:densityofStates, Xlabel:"derp", Ylabel:"herp")
         //print(visitedEnergies)
-        //print(histogramEnergies)
-        print(Histogram.max()!,Histogram.min()!)
-        //print(densityofStates)
-        print(Histogram)
-        //Plot2(Xaxis: histogramEnergies, Yaxis: Histogram, Xlabel: "derp", Ylabel: "herp")
+        print(histogramEnergies)
+        //print(Histogram.max()!,Histogram.min()!)
+        print(possibleEnergies)
+        print(densityofStates)
+        //print(Histogram)
         
+        //Plot2(Xaxis: histogramEnergies, Yaxis: Histogram, Xlabel: "derp", Ylabel: "herp")
+        //Plot2(Xaxis: possibleEnergies, Yaxis: densityofStates, Xlabel: "derp", Ylabel: "herp")
         //}//end of flat check
         
         multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)

@@ -17,7 +17,7 @@ func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
     for i in 0...Spins.count-2 { //sums over S*S+1
         sum1 = sum1 + Double(Spins[i])*Double(Spins[i+1])
     }
-    Energy = J*2*sum1 //2 because every contribution needs to be counted twice
+    Energy = -J*2*sum1 //2 because every contribution needs to be counted twice
     
     return Energy
 }
@@ -75,13 +75,13 @@ func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double],L
     
     if Log{
         for _ in 0...numberofEnergies-1 {
-            EnergyDensity.append(log(Double(1.1)))
+            EnergyDensity.append(log(Double(1)))
         }
 
     }
     else{
         for _ in 0...numberofEnergies-1 {
-            EnergyDensity.append(1.1)
+            EnergyDensity.append(1)
         }
     }
     return EnergyDensity
@@ -90,11 +90,17 @@ func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double],L
 
 func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all possible values for Energy. Will be used to determine of density of states, which is a function of Energy. Some of these values will never be accessed and will have to be removed after the simulation has run its course. These Energies will have g(E) = 1 and E =/= 2N. Should be done in Histogram function
     
-    var Energies:[Double] = []
+    var Energies:[Double] = [-2*Double(Spins.count)]
     
-    for i in 0...Spins.count-1{
-        Energies.append(J*Double(-Spins.count+i))
+    var counter:Int = 0
+    while (Energies[counter] - 2*Double(Spins.count)) < -pow(10,-10){
+        Energies.append(Energies[counter] + 8.0)
+        counter = counter + 1
     }
+    
+    /*for i in 0...Spins.count-1{
+        Energies.append(2*J*Double(-Spins.count+i*4))
+    }*/
     
    return Energies
 }
@@ -105,7 +111,7 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> B
     var relativeProbability:Double = 0
     
     if Log{
-        relativeProbability = exp(log(Double(oldDensity))) - exp(log(Double(newDensity)))
+        relativeProbability = exp(oldDensity - newDensity)
     }
     else{
         relativeProbability = oldDensity/newDensity
@@ -113,7 +119,7 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> B
     
     let randomNumber:Double = Double.getRandomNumber(lower:0, upper:1)
     
-    if relativeProbability>randomNumber || newDensity <= oldDensity{
+    if relativeProbability >= randomNumber || newDensity <= oldDensity{
         return true
     }
     else{
