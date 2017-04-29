@@ -45,28 +45,15 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
 {
     var map = [[Int]](repeating: [Int](repeating: 0, count: input.count), count: input.count)
     var index = 1
-    for y in 0..<input.count
-    {
+    
     for x in 0..<input.count
     {
-        if(map[y][x] == 0)
+        for y in 0..<input.count
         {
-            map[y][x] = index
-            for i in 1..<(input.count - x)
-            {
-                if(input[y][(x+i)] == input[y][x])
-                {
-                    map[y][(x+i)] = index
-                }
-                else
-                {
-                    break
-                }
-            }
-            index += 1
+            
         }
     }
-    }
+    
     return map
 }
 

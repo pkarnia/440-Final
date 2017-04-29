@@ -42,19 +42,31 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     func patrickTest()
     {
-        let test = create2D(size: 4, type: "RANDOM")
+        let test = create2D(size: 3, type: "RANDOM")
         
-        // Loop over array and all nested arrays.
-        for x in 0..<test.count
-        {
+        for var x in 0..<test.count {
             var line = ""
-            for y in 0..<test[x].count
-            {
+            for var y in 0..<test[x].count {
                 line += String(test[x][y])
                 line += " "
             }
             print(line)
         }
+        
+        print()
+        //print(test)
+        
+        let map = (findDomains2D(input: test))
+        
+        for var x in 0..<map.count {
+            var line = ""
+            for var y in 0..<map[x].count {
+                line += String(map[x][y])
+                line += " "
+            }
+            print(line)
+        }
+        //print(totalMagnetization2D(input: test))
     }
 
 
@@ -64,7 +76,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
         //print(Derp)
         
-        generateWLSSystem(numberofSpins: 5, maxIterations: 1000, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0)
+        generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0)
         
         
         
@@ -76,7 +88,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8] { //This is in the View Controller so that Hosting View can be accessed - The current animation plan didnt work so this is here for no particular reason.
         
-    var Spins:[Int8] = [1,1,1,1,1] //Should be replaced by a function
+    var Spins = create1D(size: 5, type: "UP")   //Should be replaced by a function
         
     var oldEnergy:Double = 0
     var newSpins:[Int8] = []
