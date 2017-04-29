@@ -67,16 +67,23 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double]) -> [Double]{ //initializes the energy density of states g = 1.
+func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double],Log:Bool) -> [Double]{ //initializes the energy density of states g = 1.
     
     
     var EnergyDensity:[Double] = []
     let numberofEnergies:Int = possibleEnergies.count
     
-    for _ in 0...numberofEnergies-1 {
-        EnergyDensity.append(1)
+    if Log{
+        for _ in 0...numberofEnergies-1 {
+            EnergyDensity.append(log(Double(1.1)))
+        }
+
     }
-    
+    else{
+        for _ in 0...numberofEnergies-1 {
+            EnergyDensity.append(1.1)
+        }
+    }
     return EnergyDensity
 }
 
@@ -93,12 +100,20 @@ func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all p
 }
 
 
-func WLSRelativeProbability(oldDensity:Double, newDensity:Double) -> Bool { //generates and compares relative probability for WLS. If 1 is returned then the new state should be accepted.
+func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> Bool { //generates and compares relative probability for WLS. If 1 is returned then the new state should be accepted.
     
-    let relativeProbability:Double = oldDensity/newDensity
+    var relativeProbability:Double = 0
+    
+    if Log{
+        relativeProbability = exp(log(Double(oldDensity))) - exp(log(Double(newDensity)))
+    }
+    else{
+        relativeProbability = oldDensity/newDensity
+    }
+    
     let randomNumber:Double = Double.getRandomNumber(lower:0, upper:1)
     
-    if relativeProbability>randomNumber || newDensity < oldDensity{
+    if relativeProbability>randomNumber || newDensity <= oldDensity{
         return true
     }
     else{
@@ -158,22 +173,23 @@ func isDuplicate(Value:Double,Array:[Double]) -> (Check:Bool, index:Int) {//gene
     return whattoReturn!
 }
 
-func updateDensityofStates(densityofStates:[Double],Energy:Double, energyArray:[Double], multiplicitivefactor:Double) -> [Double] { //updates density of states function
+func updateDensityofStates(densityofStates:[Double],Energy:Double, energyArray:[Double], multiplicitivefactor:Double, Log:Bool) -> [Double] { //updates density of states function
     
     var DegeneracyFactor:[Double] = densityofStates //DegeneracyFactor and density of states are the same thing
     let index:Int = isDuplicate(Value: Energy, Array: energyArray).index //determines which index to update
-    
-    DegeneracyFactor[index] = multiplicitivefactor * DegeneracyFactor[index]
-    
+    if Log{
+        DegeneracyFactor[index] = DegeneracyFactor[index] + log(Double(multiplicitivefactor))
+    }
+    else{
+        DegeneracyFactor[index] = multiplicitivefactor * DegeneracyFactor[index]
+    }
     return DegeneracyFactor
 }
 
-func updateMultiplicitiveFactor(multiplicitiveFactor:Double) -> Double { //takes square root of the factor and checks if it is one yet
-    
-    var isOne:Bool = false
-    
+func updateMultiplicitiveFactor(multiplicitiveFactor:Double) -> Double { //takes square root of the factor
     
     return pow(multiplicitiveFactor,1/2)
+    
 }
 
 func getDensity(Energy:Double, densityofStates:[Double]) -> Double { //gets Energy density from a given energy
