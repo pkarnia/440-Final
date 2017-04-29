@@ -45,30 +45,43 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
 {
     var map = [[Int]](repeating: [Int](repeating: 0, count: input.count), count: input.count)
     var index = 1
-    for y in 0..<input.count
-    {
+    
     for x in 0..<input.count
     {
-        if(map[y][x] == 0)
+        for y in 0..<input.count
         {
-            map[y][x] = index
-            for i in 1..<(input.count - x)
+            if(map[x][y] == 0)
             {
-                if(input[y][(x+i)] == input[y][x])
+                map[x][y] = index
+                for i in 0..<(input.count-x)
                 {
-                    map[y][(x+i)] = index
+                    if(input[x][y] == input[x+i][y])
+                    {
+                        map[x+i][y] = index
+                    }
+                    else
+                    {
+                        break
+                    }
                 }
-                else
+                for i in 0..<(input.count-y)
                 {
-                    break
+                    if(input[x][y] == input[x][y+i])
+                    {
+                        map[x][y+i] = index
+                    }
+                    else
+                    {
+                        break
+                    }
                 }
+                index += 1
             }
-            index += 1
         }
-    }
     }
     return map
 }
+
 
 //  Calculate total magentization for 1D array
 //  Returns Double
