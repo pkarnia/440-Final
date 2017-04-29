@@ -29,7 +29,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        patrickTest()
         // Do any additional setup after loading the view.
         
     }
@@ -37,6 +37,23 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
+        }
+    }
+    
+    func patrickTest()
+    {
+        let test = create2D(size: 4, type: "RANDOM")
+        
+        // Loop over array and all nested arrays.
+        for x in 0..<test.count
+        {
+            var line = ""
+            for y in 0..<test[x].count
+            {
+                line += String(test[x][y])
+                line += " "
+            }
+            print(line)
         }
     }
 
