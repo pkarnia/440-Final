@@ -5,6 +5,9 @@
 //  Created by Patrick Karnia on 4/22/17.
 //  Copyright © 2017 Patrick Karnia. All rights reserved.
 //
+//  Functions to handle generation and manipulation of spin arrays.
+//
+//
 
 import Foundation
 
@@ -12,9 +15,9 @@ import Foundation
 let lookup: [Int8] = [-1,1]
 
 
-//Generates Spin
-//Returns Int8
-//Usage:    "UP"    returns 1
+//  Generates Spin
+//  Returns Int8
+//  Usage:  "UP"    returns 1
 //          "DOWN"  returns -1
 //          "RANDOM returns -1 or 1
 //          empty   returns 0
@@ -34,9 +37,9 @@ func createSpin(type: String) -> Int8
 }
 
 
-//Generates 1D array of spins
-//Returns Array[Int8]
-//Usage:    size    Int legnth of array
+//  Generates 1D array of spins
+//  Returns Array[Int8]
+//  Usage:  size    Int legnth of array
 //          type    String kind of spins to make up array       "UP", "DOWN", "RANDOM"
 func create1D(size: Int, type: String) -> Array<Int8>
 {
@@ -48,9 +51,9 @@ func create1D(size: Int, type: String) -> Array<Int8>
     return result
 }
 
-//Generates 2D square array of spins
-//Returns Array[[Int8]]
-//Usage:    size    Int legnth of array
+//  Generates 2D square array of spins
+//  Returns Array[[Int8]]
+//  Usage:  size    Int legnth of array
 //          type    String kind of spins to make up array       "UP", "DOWN", "RANDOM"
 func create2D(size: Int, type: String) -> [Array<Int8>]
 {
