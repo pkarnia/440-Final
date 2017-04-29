@@ -43,8 +43,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     func patrickTest()
     {
-        let test = create2D(size: 3, type: "RANDOM")
-        
+        let test = create2D(size: 10, type: "RANDOM")
+
         for var x in 0..<test.count {
             var line = ""
             for var y in 0..<test[x].count {
@@ -55,8 +55,9 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         }
         
         print()
-        //print(test)
         
+        //print(test)
+
         let map = (findDomains2D(input: test))
         
         for var x in 0..<map.count {
@@ -77,7 +78,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
         //print(Derp)
         
-        generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0)
+        //generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0)
         
         
         
