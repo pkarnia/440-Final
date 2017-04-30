@@ -29,8 +29,12 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     private var dataForPlot = [plotDataType]()
 
     override func viewDidLoad() {
+        let queue = DispatchQueue(label: "parent", attributes: .concurrent)
         super.viewDidLoad()
-        patrickTest()
+        queue.async
+        {
+            self.patrickTest()
+        }
         // Do any additional setup after loading the view.
         
     }
@@ -43,7 +47,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     func patrickTest()
     {
-        let test = create2D(size: 10, type: "RANDOM")
+        let test = create2D(size: 500, type: "RANDOM")
 
         for var x in 0..<test.count {
             var line = ""

@@ -91,6 +91,7 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
 //  Usage:  Feed in [[Int8]] get 2D domain array 1...x
 func findDomains2D(input: [[Int8]]) -> [[Int]]
 {
+    let queue = DispatchQueue(label: "expansion", attributes: .concurrent)
     var map = [[Int]](repeating: [Int](repeating: 0, count: input.count), count: input.count)
     var index = 1
     var modified = false
@@ -108,6 +109,7 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
                     var u = 0
                     for row in map
                     {
+                        queue.sync{
                         var v = 0
                         for cell in row
                         {
@@ -129,10 +131,12 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
                             }
                             v += 1
                         }
+                        }
                         u += 1
                     }
                 }
                 while(modified == true)
+                
                 index += 1
             }
         }
