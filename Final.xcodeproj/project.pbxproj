@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8C20D77A1EB67437001C3F49 /* energyFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C20D7791EB67437001C3F49 /* energyFunctions.swift */; };
+		8C20D7891EB676D3001C3F49 /* MetropolisFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C20D7881EB676D3001C3F49 /* MetropolisFunctions.swift */; };
+		8C20D7971EB6773A001C3F49 /* WLSfunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C20D7961EB6773A001C3F49 /* WLSfunctions.swift */; };
 		8C355B431EAAAA5200C0D89D /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C355B421EAAAA5200C0D89D /* DrawingView.swift */; };
 		8CC750E61EA16E140062F09A /* RandomNumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */; };
 		8CDEBFE61EA56D040009269F /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CDEBFD71EA56C2A0009269F /* CorePlot.framework */; };
@@ -119,6 +121,8 @@
 
 /* Begin PBXFileReference section */
 		8C20D7791EB67437001C3F49 /* energyFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = energyFunctions.swift; sourceTree = "<group>"; };
+		8C20D7881EB676D3001C3F49 /* MetropolisFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetropolisFunctions.swift; sourceTree = "<group>"; };
+		8C20D7961EB6773A001C3F49 /* WLSfunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLSfunctions.swift; sourceTree = "<group>"; };
 		8C355B421EAAAA5200C0D89D /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberExtensions.swift; sourceTree = "<group>"; };
 		8CDEBFC61EA56C2A0009269F /* CorePlot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CorePlot.xcodeproj; path = "core-plot-release-2.3/framework/CorePlot.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -206,9 +210,11 @@
 				FA201F731EA16A960027AA79 /* AppDelegate.swift */,
 				FA201F751EA16A960027AA79 /* ViewController.swift */,
 				8CDEBFEB1EA580740009269F /* Functions.swift */,
+				8C20D7791EB67437001C3F49 /* energyFunctions.swift */,
+				8C20D7881EB676D3001C3F49 /* MetropolisFunctions.swift */,
+				8C20D7961EB6773A001C3F49 /* WLSfunctions.swift */,
 				CD5174B91EB4D3D3003D89FE /* Arrays.swift */,
 				CD5174C71EB4F59B003D89FE /* Magnetization.swift */,
-				8C20D7791EB67437001C3F49 /* energyFunctions.swift */,
 				8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */,
 				8C355B421EAAAA5200C0D89D /* DrawingView.swift */,
 				8CDEBFC61EA56C2A0009269F /* CorePlot.xcodeproj */,
@@ -437,6 +443,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C20D7891EB676D3001C3F49 /* MetropolisFunctions.swift in Sources */,
 				8CC750E61EA16E140062F09A /* RandomNumberExtensions.swift in Sources */,
 				CD5174C81EB4F59B003D89FE /* Magnetization.swift in Sources */,
 				CD5174BA1EB4D3D3003D89FE /* Arrays.swift in Sources */,
@@ -444,6 +451,7 @@
 				FA201F761EA16A960027AA79 /* ViewController.swift in Sources */,
 				8C355B431EAAAA5200C0D89D /* DrawingView.swift in Sources */,
 				8CDEBFEC1EA580740009269F /* Functions.swift in Sources */,
+				8C20D7971EB6773A001C3F49 /* WLSfunctions.swift in Sources */,
 				FA201F741EA16A960027AA79 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

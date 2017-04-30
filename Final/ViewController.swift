@@ -75,7 +75,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
     
 
-func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8] { //This is in the View Controller so that Hosting View can be accessed - The current animation plan didnt work so this is here for no particular reason.
+/*func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8] { //This is in the View Controller so that Hosting View can be accessed - The current animation plan didnt work so this is here for no particular reason.
         
     var Spins = create1D(size: 5, type: "UP")   //Should be replaced by a function
         
@@ -106,7 +106,7 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         
         
     return Spins
-}
+}*/
 
 
 

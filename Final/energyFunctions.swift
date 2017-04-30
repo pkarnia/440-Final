@@ -42,6 +42,8 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], J:Double, J2:Double) -> D
     
 }
 
+//Our system is limited to a grid
+//2D energy is calculated by parsing the 2D array into a series of 1D arrays
 func generate2DNearestNeighborsEnergy(Spins:[[Int8]], J:Double) -> Double {
     
     var Energy:Double = 0
