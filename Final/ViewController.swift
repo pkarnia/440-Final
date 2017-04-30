@@ -47,32 +47,18 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     func patrickTest()
     {
-        let test = create2D(size: 500, type: "RANDOM")
-
-        for var x in 0..<test.count {
-            var line = ""
-            for var y in 0..<test[x].count {
-                line += String(test[x][y])
-                line += " "
-            }
-            print(line)
-        }
+        let test = create2D(size: 10, type: "RANDOM")
+        
+        print2dArrayInt8(input: test)
         
         print()
         
-        //print(test)
-
-        let map = (findDomains2D(input: test))
+        let domains = findDomains2D(input: test)
         
-        for var x in 0..<map.count {
-            var line = ""
-            for var y in 0..<map[x].count {
-                line += String(map[x][y])
-                line += " "
-            }
-            print(line)
-        }
-        //print(totalMagnetization2D(input: test))
+        print2dArray(input: domains)
+        
+        
+        print(avgDomainSize2D(input: domains))
     }
 
 

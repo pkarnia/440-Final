@@ -145,6 +145,58 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
     return map
 }
 
+//
+//
+//
+//
+//
+func avgDomainSize1D(input: [Int]) -> Double
+{
+    var total = 0.0
+    var count = 0.0
+    for x in 1..<input.count
+    {
+        let temp = input.filter{ $0 == x }
+        if(temp.count > 0)
+        {
+            total += Double(temp.count)
+            count += 1
+        }
+        else
+        {
+            break
+        }
+    }
+    return total / count
+}
+
+//
+//
+//
+//
+//
+func avgDomainSize2D(input: [[Int]]) -> Double
+{
+    var total = 0.0
+    var count = 0.0
+    for row in input
+    {
+        for x in 1..<row.count
+        {
+            let temp = row.filter{ $0 == x }
+            if(temp.count > 0)
+            {
+                total += Double(temp.count)
+                count += 1
+            }
+            else
+            {
+                break
+            }
+        }
+    }
+    return total / count
+}
 
 //  Calculate total magentization for 1D array
 //  Returns Double

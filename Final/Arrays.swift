@@ -67,3 +67,27 @@ func create2D(size: Int, type: String) -> [Array<Int8>]
     }
     return result
 }
+
+func print2dArray(input: [[Int]]) -> Void
+{
+    for x in 0..<input.count {
+        var line = ""
+        for y in 0..<input[x].count {
+            line += String(input[x][y])
+            line += " "
+        }
+        print(line)
+    }
+}
+
+func print2dArrayInt8(input: [[Int8]]) -> Void
+{
+    for x in 0..<input.count {
+        var line = ""
+        for y in 0..<input[x].count {
+            line += String(input[x][y])
+            line += " "
+        }
+        print(line)
+    }
+}
