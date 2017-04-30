@@ -9,11 +9,20 @@
 import Foundation
 import CorePlot
 
-
-func SpinFlip1D(Spins:[Int8]) -> [Int8] { //swaps the spin of a random index
+//swaps the spin of a random index
+func SpinFlip1D(Spins:[Int8]) -> [Int8] {
     var newSpins:[Int8] = Spins
     let randomNumber: Int = Int.getRandomNumber(lower: 0,upper: Spins.count-1)
     newSpins[randomNumber] = -Spins[randomNumber]
+    return newSpins
+}
+
+//swaps the spin of a random index
+func SpinFlip2D(Spins:[[Int8]]) -> [[Int8]] {
+    var newSpins:[[Int8]] = Spins
+    let rng1: Int = Int.getRandomNumber(lower: 0,upper: Spins.count-1)
+    let rng2: Int = Int.getRandomNumber(lower: 0,upper: Spins.count-1)
+    newSpins[rng1][rng2] = -Spins[rng1][rng2]
     return newSpins
 }
 
