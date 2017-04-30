@@ -89,11 +89,11 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
 //  Identify domains in a 2D spin array. Domain count is index 1.
 //  Returns [[Int]]
 //  Usage:  Feed in [[Int8]] get 2D domain array 1...x
-func findDomains2D(input: [[Int8]]) -> [[Int]]
+func findDomains2D(input: [[Int8]]) -> [[UInt16]]
 {
     let queue = DispatchQueue(label: "expansion", attributes: .concurrent)
-    var map = [[Int]](repeating: [Int](repeating: 0, count: input.count), count: input.count)
-    var index = 1
+    var map = [[UInt16]](repeating: [UInt16](repeating: 0, count: input.count), count: input.count)
+    var index: UInt16 = 1
     var modified = false
     
     for x in 0..<input.count
@@ -175,7 +175,7 @@ func avgDomainSize1D(input: [Int]) -> Double
 //
 //
 //
-func avgDomainSize2D(input: [[Int]]) -> Double
+func avgDomainSize2D(input: [[UInt16]]) -> Double
 {
     var total = 0.0
     var count = 0.0
@@ -183,7 +183,7 @@ func avgDomainSize2D(input: [[Int]]) -> Double
     {
         for x in 1..<row.count
         {
-            let temp = row.filter{ $0 == x }
+            let temp = row.filter{ $0 == UInt16(x) }
             if(temp.count > 0)
             {
                 total += Double(temp.count)

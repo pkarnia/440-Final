@@ -68,7 +68,7 @@ func create2D(size: Int, type: String) -> [Array<Int8>]
     return result
 }
 
-func print2dArray(input: [[Int]]) -> Void
+func print2dArrayUInt16(input: [[UInt16]]) -> Void
 {
     for x in 0..<input.count {
         var line = ""
