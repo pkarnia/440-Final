@@ -9,7 +9,7 @@
 import Foundation
 import CorePlot
 
-func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
+/*func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
     var Energy:Double = 0
     
     var sum1:Double = Double(Spins[0])*Double(Spins[Spins.count-1]) //Periodic Boundary Condition
@@ -41,7 +41,7 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], J:Double, J2:Double) -> D
     
     return Energy
 
-}
+}*/
 
 func SpinFlip1D(Spins:[Int8]) -> [Int8] { //swaps the spin of a random index
     var newSpins:[Int8] = Spins
@@ -115,7 +115,7 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> B
     var relativeProbability:Double = 0
     
     if Log{
-        relativeProbability = exp(oldDensity - newDensity)
+        relativeProbability = exp(oldDensity) - exp(newDensity)
     }
     else{
         relativeProbability = oldDensity/newDensity
@@ -213,6 +213,26 @@ func getDensity(Energy:Double, densityofStates:[Double], energyArray:[Double]) -
     return density
 }
 
+func normalizeDensityofStates(densityofStates:[Double], Spins:[Int8]) -> [Double] {
+    var normalizedDOS:[Double] = []
+    
+    let numberofSpins:Double = Double(Spins.count)
+    
+    var normalization:Double = 0
+    
+    for i in 0...densityofStates.count-1 {
+        normalization = normalization + densityofStates[i]
+    }
+    
+    normalization = pow(2, numberofSpins) / normalization
+    
+    for j in 0...densityofStates.count-1 {
+        normalizedDOS.append(normalization * densityofStates[j])
+    }
+    
+    return normalizedDOS
+}
+
 /*
 func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8]  {
     //generateSpins
@@ -284,13 +304,62 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     return Spins
 }*/
 
+/*func generate2DNearestNeighborsEnergy(Spins:[[Int8]], J:Double) -> Double {
+    
+    var Energy:Double = 0
+    var transposedSpins:[[Int8]] = transpose2(input: Spins)
+    
+    var length = Spins.count
+    
+    for i in 0...length-1 { //columns
+        Energy = Energy + generate1DEnergy(Spins: Spins[i], J: J)
+    }
+
+    
+    for j in 0...length-1 { //rows
+        Energy = Energy + generate1DEnergy(Spins: transposedSpins[j], J: J)
+    }
+    
+    
+    return Energy
+}
+
+func generate2DNextNearestNeighborsEnergy(Spins:[[Int8]], J:Double, J2:Double) -> Double{
+    
+    var Energy:Double = 0
+    var transposedSpins:[[Int8]] = transpose2(input: Spins)
+    
+    var length = Spins.count
+    
+    
+    for i in 0...length-1 { //columns
+        Energy = Energy + generate1DNextNearestNeighborEnergy(Spins: Spins[i], J: J, J2:J2)
+    }
+    
+    
+    for j in 0...length-1 { //rows
+        Energy = Energy + generate1DNextNearestNeighborEnergy(Spins: transposedSpins[j], J: J, J2:J2)
+    }
+
+    //future home of diagonal contributions
+    
+    
+    return Energy
+}*/
 
 
-
-
-
-
-
+public func transpose2<T>(input: [[T]]) -> [[T]] { //generic transpose function I stole from the internet
+    if input.isEmpty { return [[T]]() }
+    let count = input[0].count
+    var out = [[T]](repeating: [T](), count: count)
+    for outer in input {
+        for (index, inner) in outer.enumerated() {
+            out[index].append(inner)
+        }
+    }
+    
+    return out
+}
 
 
 

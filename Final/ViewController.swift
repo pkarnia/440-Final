@@ -68,12 +68,9 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
         //print(Derp)
         
-        print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
+        //generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true)
         
-        
-        
-        
-    }
+            }
     
 
     
@@ -116,7 +113,7 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
     func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int, Log:Bool) -> [Double]  {
         //generateSpins
         
-        var Spins:[Int8] = [1,1,1,1]
+        var Spins:[Int8] = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         var newSpins:[Int8] = []
         
         var possibleEnergies:[Double] = generatePossibleEnergies(Spins: Spins, J: J)
@@ -138,14 +135,20 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         var histogramTuple:(Histogram:[Double], isFlat: Bool, histogramEnergies:[Double]) = ([0],false,[0])
         var isFlat:Bool = false
         
+        var accepted:Int = 0
+        var declined:Int = 0
         
-        while (multiplicitiveFactor-1)>pow(10,-8){
-        while !isFlat{
+        
+        //while (multiplicitiveFactor-1)>pow(10,-8){
+        //while !isFlat{
         for i in 1...10000{
             
             
             oldEnergy = generate1DEnergy(Spins: Spins, J: J)
             oldDensity = getDensity(Energy: oldEnergy, densityofStates: densityofStates, energyArray:possibleEnergies)
+            
+            //print(oldEnergy)
+            //print(oldDensity)
             
             //generate new state
             newSpins = SpinFlip1D(Spins: Spins)
@@ -153,15 +156,19 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
             newDensity = getDensity(Energy: newEnergy, densityofStates: densityofStates,energyArray:possibleEnergies)
             
             //print(newEnergy)
+            //print(newDensity)
             
             //checks if new state should be accepted
             if WLSRelativeProbability(oldDensity: oldDensity, newDensity: newDensity, Log:Log){
-                
                 //if accepted overwrite old spins and energies
                 oldEnergy = newEnergy
                 Spins = newSpins
+                accepted = accepted + 1
                 
             }//end of if
+            else{
+                declined = declined + 1
+            }
             
             //update density of states and visited energies, which is an input for the histogram
             densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: oldEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor, Log:Log)
@@ -175,12 +182,14 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         Histogram = histogramTuple.Histogram
         histogramEnergies = histogramTuple.histogramEnergies
         isFlat = histogramTuple.isFlat
-        print(isFlat)
+        //print(isFlat)
+            //print(Histogram)
         
-        } //end of flat check
+       // } //end of flat check
         
         multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)
-        
+        print(histogramEnergies)
+        print(possibleEnergies)
          Histogram.removeAll()
          Histogram.append(1)
         
@@ -191,8 +200,16 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
          visitedEnergies.append(oldEnergy)
         
          isFlat = false
-        }//end of multiplicitivefactor updates
+       // }//end of multiplicitivefactor updates
+        /*for k in 0...densityofStates.count-1{
+            
+        densityofStates[k] = exp(densityofStates[k])
+        }*/
         
+        //var normalizedDOS:[Double] = normalizeDensityofStates(densityofStates: densityofStates, Spins:Spins)
+        //print(densityofStates)
+        //print("A",accepted)
+        //print("D",declined)
         return densityofStates
     }
 
