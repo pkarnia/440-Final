@@ -28,9 +28,20 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8] {
+func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Double, J2: Double, startType:Int) -> [Int8] {
     
-    var Spins = create1D(size: 5, type: "UP")   //Should be replaced by a function
+    var Spins:[Int8] = []
+    
+    if startType==1{
+        Spins = create1D(size: numberofSpins, type: "RANDOM")
+    }
+    if startType==(-1){
+        Spins = create1D(size: numberofSpins, type: "Down")
+    }
+    else{
+        Spins = create1D(size: numberofSpins, type: "UP")
+    }
+    
     
     var oldEnergy:Double = 0
     var newSpins:[Int8] = []
@@ -51,7 +62,7 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
             oldEnergy=newEnergy
             Spins=newSpins
         }
-        print(Spins)
+        //print(Spins)
         
         
         

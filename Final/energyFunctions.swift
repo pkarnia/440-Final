@@ -49,7 +49,7 @@ func generate2DNearestNeighborsEnergy(Spins:[[Int8]], J:Double) -> Double {
     var Energy:Double = 0
     var transposedSpins:[[Int8]] = transpose2(input: Spins)
     
-    var length = Spins.count
+    let length = Spins.count
     
     for i in 0...length-1 { //columns
         Energy = Energy + generate1DEnergy(Spins: Spins[i], J: J)
@@ -69,7 +69,7 @@ func generate2DNextNearestNeighborsEnergy(Spins:[[Int8]], J:Double, J2:Double) -
     var Energy:Double = 0
     var transposedSpins:[[Int8]] = transpose2(input: Spins)
     
-    var length = Spins.count
+    let length = Spins.count
     
     
     for i in 0...length-1 { //columns
