@@ -82,7 +82,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
         //print(Derp)
         
-        //generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0)
+        print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
         
         
         
@@ -127,7 +127,7 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
 
 
 
-    func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int, Log:Bool) -> [Int8]  {
+    func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int, Log:Bool) -> [Double]  {
         //generateSpins
         
         var Spins:[Int8] = [1,1,1,1]
@@ -153,33 +153,35 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         var isFlat:Bool = false
         
         
-        //while (multiplicitiveFactor-1)>pow(10,-8){
-        //while !isFlat{
-        for i in 1...20{
+        while (multiplicitiveFactor-1)>pow(10,-8){
+        while !isFlat{
+        for i in 1...10000{
             
             
             oldEnergy = generate1DEnergy(Spins: Spins, J: J)
-            oldDensity = getDensity(Energy: oldEnergy, densityofStates: densityofStates)
+            oldDensity = getDensity(Energy: oldEnergy, densityofStates: densityofStates, energyArray:possibleEnergies)
             
             //generate new state
             newSpins = SpinFlip1D(Spins: Spins)
             newEnergy = generate1DEnergy(Spins: newSpins, J: J)
-            newDensity = getDensity(Energy: newEnergy, densityofStates: densityofStates)
+            newDensity = getDensity(Energy: newEnergy, densityofStates: densityofStates,energyArray:possibleEnergies)
             
             //print(newEnergy)
             
             //checks if new state should be accepted
             if WLSRelativeProbability(oldDensity: oldDensity, newDensity: newDensity, Log:Log){
+                
                 //if accepted overwrite old spins and energies
                 oldEnergy = newEnergy
                 Spins = newSpins
-                //print(Spins)
+                
             }//end of if
             
             //update density of states and visited energies, which is an input for the histogram
             densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: oldEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor, Log:Log)
             
-            visitedEnergies.append(newEnergy)
+            visitedEnergies.append(oldEnergy)
+            
         }//end of 10000 iterations
         
         histogramTuple = addtoWLSHistogram(currentHistogram: Histogram, histogramEnergies: histogramEnergies, newEnergies: visitedEnergies, clear: false)
@@ -189,28 +191,23 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
         isFlat = histogramTuple.isFlat
         print(isFlat)
         
-        //Plot(Xaxis:histogramEnergies, Yaxis:densityofStates, Xlabel:"derp", Ylabel:"herp")
-        print(visitedEnergies)
-        print(histogramEnergies)
-        //print(Histogram.max()!,Histogram.min()!)
-        //print(possibleEnergies)
-        //print(densityofStates)
-        print(Histogram)
-        print(histogramEnergies[1] - possibleEnergies[1])
-        
-        //Plot2(Xaxis: histogramEnergies, Yaxis: Histogram, Xlabel: "derp", Ylabel: "herp")
-        //Plot2(Xaxis: possibleEnergies, Yaxis: densityofStates, Xlabel: "derp", Ylabel: "herp")
-        //}//end of flat check
+        } //end of flat check
         
         multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)
         
-        /*Histogram.removeAll()
-         histogramEnergies.removeAll()
-         visitedEnergies.removeAll()
-         isFlat = false*/
-        //}//end of multiplicitivefactor updates
+         Histogram.removeAll()
+         Histogram.append(1)
         
-        return Spins
+         histogramEnergies.removeAll()
+         histogramEnergies.append(oldEnergy)
+        
+         visitedEnergies.removeAll()
+         visitedEnergies.append(oldEnergy)
+        
+         isFlat = false
+        }//end of multiplicitivefactor updates
+        
+        return densityofStates
     }
 
 
