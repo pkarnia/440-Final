@@ -69,14 +69,68 @@ public func transpose2<T>(input: [[T]]) -> [[T]] { //generic transpose function 
 }
 
 
+//this will not work for next nearest neighbors. The theory simply doesn't exist
+func analyticInternalEnergy(Spins:[Int8], T:Double,J:Double) -> Double {
+   
+    var internalEnergy:Double = 0
+    
+    let coefficient:Double = J * Double(Spins.count)
+    
+    let exponentialFactor:Double = J/T
+    
+    internalEnergy = -coefficient*(exp(exponentialFactor)-exp(-exponentialFactor))/(exp(exponentialFactor)+exp(-exponentialFactor))
+    
+    return internalEnergy
+}
+
+//1D only
+//eqn taken from book, Set B = 0 and this is what it is.
+func analyticMagnetization(T:Double, J:Double) -> Double {
+    
+    
+    var magnetization:Double = exp(J/T)
+    
+    return magnetization
+}
+
+//generic average function
+//will be used to calculate average internal energy over several runs
+func calculateAverage(Array:[Double]) -> Double {
+    var average:Double = 0
+    var count:Int = Array.count
+    
+    for i in 0...count-1{
+        average = average + Array[i]
+    }
+    
+    average = average/Double(count)
+    
+    return average
+}
+
+//average of squared values over several runs
+func energyFlucuations(energyArray:[Double]) -> Double {
+    var flux:Double = 0
+    var count:Int = energyArray.count
+    
+    for i in 0...count-1{
+        flux = flux + energyArray[i]*energyArray[i]
+    }
+    
+    flux = flux/Double(count)
+    
+    return flux
+
+}
 
 
-
-
-
-
-
-
-
-
-
+func calculateSpecificHeat(energyArray:[Double],Spins:[Int8],J:Double,T:Double) -> Double {
+    var specificHeat:Double = 0
+    
+    var averageEnergy:Double = calculateAverage(Array: energyArray)
+    var energyFlux:Double = energyFlucuations(energyArray: energyArray)
+    
+    specificHeat = (energyFlux-pow(averageEnergy,2))/(pow(T,2)*pow(Double(Spins.count),2))
+    
+    return specificHeat
+}

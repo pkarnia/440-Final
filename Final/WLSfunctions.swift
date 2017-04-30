@@ -8,7 +8,8 @@
 
 import Foundation
 
-func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double],Log:Bool) -> [Double]{ //initializes the energy density of states g = 1.
+//initializes the energy density of states g = 1.
+func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double],Log:Bool) -> [Double]{
     
     
     var EnergyDensity:[Double] = []
@@ -28,8 +29,8 @@ func generateDensityofStates(Spins:[Int8], J:Double, possibleEnergies:[Double],L
     return EnergyDensity
 }
 
-
-func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> Bool { //generates and compares relative probability for WLS. If 1 is returned then the new state should be accepted.
+//generates and compares relative probability for WLS. If true is returned then the new state should be accepted.
+func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> Bool {
     
     var relativeProbability:Double = 0
     
@@ -51,8 +52,8 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> B
 }
 
 
-
-func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Double], isFlat:Bool, histogramEnergies:[Double]){ //adds onto the existing Histogram. The function is constructed in a way that allows for N new energies to be added, then the flattness of the histogram to be calculated. We cannot know the flattness of the histogram until we have the histogram, and we keep making the histogram until it is flat enough.
+//adds onto the existing Histogram. The function is constructed in a way that allows for N new energies to be added, then the flattness of the histogram to be calculated. We cannot know the flattness of the histogram until we have the histogram, and we keep making the histogram until it is flat enough.
+func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], newEnergies:[Double],clear:Bool) -> (Histogram:[Double], isFlat:Bool, histogramEnergies:[Double]){
     
     var Histogram:[Double] = currentHistogram
     var currentEnergies:[Double] = histogramEnergies
@@ -67,11 +68,13 @@ func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], new
     for i in 0...newEnergies.count-1{ //checks if the newEnergy is already in the Histogram
         Duplicate = isDuplicate(Value:newEnergies[i],Array:currentEnergies)
         
-        if (Duplicate?.Check)!{ //if the new energy is already in the histogram the index where gets added onto
-            Histogram[(Duplicate?.index)!] = Histogram[(Duplicate?.index)!] + 1
+        //if the new energy is already in the histogram the index where gets added onto
+        if (Duplicate?.Check)!{             Histogram[(Duplicate?.index)!] = Histogram[(Duplicate?.index)!] + 1
         }
-            
-        else{ // if the new energy is not in the Histogram then a new index is formed.
+         
+        // if the new energy is not in the Histogram then a new index is formed.
+        // we don't car about the order the energies are in as the only thing that matters is the flattness of the histogram
+        else{
             Histogram.append(1)
             currentEnergies.append(newEnergies[i])
         }
@@ -88,10 +91,16 @@ func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], new
     
 }
 
-func updateDensityofStates(densityofStates:[Double],Energy:Double, energyArray:[Double], multiplicitivefactor:Double, Log:Bool) -> [Double] { //updates density of states function
+//updates density of states function
+func updateDensityofStates(densityofStates:[Double],Energy:Double, energyArray:[Double], multiplicitivefactor:Double, Log:Bool) -> [Double] {
     
-    var DegeneracyFactor:[Double] = densityofStates //DegeneracyFactor and density of states are the same thing
-    let index:Int = isDuplicate(Value: Energy, Array: energyArray).index //determines which index to update
+    //DegeneracyFactor and density of states are the same thing
+    var DegeneracyFactor:[Double] = densityofStates
+    
+    //determines which index to update
+    let index:Int = isDuplicate(Value: Energy, Array: energyArray).index
+    
+    //inputs are already in log format
     if Log{
         DegeneracyFactor[index] = DegeneracyFactor[index] + log(Double(multiplicitivefactor))
     }
@@ -101,7 +110,9 @@ func updateDensityofStates(densityofStates:[Double],Energy:Double, energyArray:[
     return DegeneracyFactor
 }
 
-func updateMultiplicitiveFactor(multiplicitiveFactor:Double) -> Double { //takes square root of the factor
+//takes square root of the factor
+//Should only be called when the Histogram is flat enough to be reset
+func updateMultiplicitiveFactor(multiplicitiveFactor:Double) -> Double {
     
     return pow(multiplicitiveFactor,1/2)
     
