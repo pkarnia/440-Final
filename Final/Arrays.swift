@@ -68,6 +68,59 @@ func create2D(size: Int, type: String) -> [Array<Int8>]
     return result
 }
 
+//  Draws 1D Array
+//  Returns void
+//  Usage:  feed in [Int8] and DrawingView
+//
+func draw1DArray(input: [Int8], plot: DrawingView)
+{
+    let upColor = "Blue"
+    let downColor = "Red"
+    
+    let scaleFactor = 500.0/Double(input.count)
+    
+    for x in 0..<input.count
+    {
+        switch input[x]
+        {
+        case 1:
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: scaleFactor,radiusPointc: 2.0*scaleFactor,colord: upColor)
+        case -1:
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: scaleFactor,radiusPointc: 2.0*scaleFactor,colord: downColor)
+        default:
+            break
+        }
+    }
+}
+
+//  Draws 2D Array
+//  Returns void
+//  Usage:  feed in [[Int8]] and DrawingView
+//
+func draw2DArray(input: [[Int8]], plot: DrawingView)
+{
+    let upColor = "Blue"
+    let downColor = "Red"
+    
+    let scaleFactor = 500.0/Double(input.count)
+    
+    for x in 0..<input.count
+    {
+        for y in 0..<input.count
+        {
+        switch input[x][y]
+        {
+        case 1:
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: (Double(y)*scaleFactor)+(0.5*scaleFactor),radiusPointc: 1.0*scaleFactor,colord: upColor)
+        case -1:
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: (Double(y)*scaleFactor)+(0.5*scaleFactor),radiusPointc: 1.0*scaleFactor,colord: downColor)
+        default:
+            break
+        }
+        }
+    }
+}
+
 func print2dArrayUInt16(input: [[UInt16]]) -> Void
 {
     for x in 0..<input.count {

@@ -86,3 +86,14 @@ func generate2DNextNearestNeighborsEnergy(Spins:[[Int8]], J:Double, J2:Double) -
     
     return Energy
 }
+
+
+//  Compare enegies function
+//  Returns true if
+//
+/*
+func compareEnergies(: Double, input2: Double) -> Bool
+{
+    return 0.0;
+}
+*/

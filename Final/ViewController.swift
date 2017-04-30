@@ -47,18 +47,11 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     func patrickTest()
     {
-        let test = create2D(size: 10, type: "RANDOM")
+        let test = create2D(size: 100, type: "RANDOM")
         
-        print2dArrayInt8(input: test)
-        
-        print()
-        
-        let domains = findDomains2D(input: test)
-        
-        print2dArray(input: domains)
+        draw2DArray(input: test, plot: displayView)
         
         
-        print(avgDomainSize2D(input: domains))
     }
 
 
