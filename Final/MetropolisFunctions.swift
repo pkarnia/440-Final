@@ -28,7 +28,7 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Double, J2: Double, startType:Int, energyType:Int) -> [Int8] {
+func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Double, J2: Double, startType:Int, energyType:Int, Plot: DrawingView) -> [Int8] {
     
     var Spins:[Int8] = []
     
@@ -70,7 +70,9 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Do
             oldEnergy=newEnergy
             Spins=newSpins
         }
-        //print(Spins)
+        
+        //Plot to GUI - Not currently working. No animation :(
+        //draw1DArray(input: Spins, plot: Plot)
         
         
         

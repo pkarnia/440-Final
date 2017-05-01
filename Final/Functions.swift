@@ -178,7 +178,7 @@ func algorithmSwitch(Dimentions:Int, energyType:Int, nearestNeighborCoupling:Dou
     //Generating Array
         if Dimentions == 1{
         //1D metropolis
-        spins1D = generateMetropolisSystem(numberofSpins:Numberof2DSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
+        //spins1D = generateMetropolisSystem(numberofSpins:Numberof2DSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
     }
     if Dimentions == 2{
         // 2D metropolis

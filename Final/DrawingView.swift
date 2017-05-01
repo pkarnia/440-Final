@@ -103,16 +103,12 @@ class DrawingView: NSView {
     ///   - radiusPoint: radius of the point but this is unneeded in this routine. Just for passing the tuple
     func drawPoints(xPoint: Double, yPoint: Double, radiusPoint: Double ){
         
-        
         // Draw a rectangle of size 1 by 1 pixel at each point
         
         
-        let aRect :NSRect = NSMakeRect(CGFloat(Float(xPoint)), CGFloat(Float(yPoint)), 10.0, 10.0)
+        let aRect :NSRect = NSMakeRect(CGFloat(Float(xPoint)), CGFloat(Float(yPoint)), CGFloat(radiusPoint), CGFloat(radiusPoint))
     
-            
         NSRectFill(aRect)
-        
-    
         
     }
     

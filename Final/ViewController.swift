@@ -91,7 +91,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     for _ in 1...10
                     {
                     xAvg += log(Double(temperature))
-                    yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                        yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView))))
                     }
                     
                     
@@ -107,7 +107,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 {
                 case 1:
                     xPoints.append(Double(temperature))
-                    yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                    yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView))))
                 case 2:
                     xPoints.append(Double(temperature))
                     yPoints.append(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
@@ -122,6 +122,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
 
     @IBAction func generateMetropolis(_ sender: Any) {
+        //let queue = DispatchQueue(label: "userInit", attributes: .concurrent)
+        
         displayView.display()
         
         let NumberofSpins:Int = Int(numberofSpins.doubleValue)
@@ -136,23 +138,24 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         if Dimentions == 2{
             var metropolis2D:[[Int8]] = generate2DMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
             
-            draw2DArray(input: metropolis2D, plot: displayView)
+            draw2DArray(input: metropolis2D, plot: self.displayView)
             //print2dArrayInt8(input: metropolis2D)
         }
         else{
             
             
-            var metropolis:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
+            var metropolis:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType, Plot: self.displayView)
         
-            draw1DArray(input: metropolis, plot: displayView)
+            draw1DArray(input: metropolis, plot: self.displayView)
         
         }
         
         
-        print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
+        //print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
         
         
             }
+        
     
 //not operational yet
     /*
@@ -255,7 +258,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let EnergyType:Int = Int(energyType.doubleValue)
         
         
-        var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot:0, Log:true)
+        var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
         
         
         var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
