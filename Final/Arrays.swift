@@ -74,6 +74,8 @@ func create2D(size: Int, type: String) -> [Array<Int8>]
 //
 func draw1DArray(input: [Int8], plot: DrawingView)
 {
+    plot.allThePoints = []
+    plot.clear()
     let upColor = "Blue"
     let downColor = "Red"
     
@@ -84,9 +86,9 @@ func draw1DArray(input: [Int8], plot: DrawingView)
         switch input[x]
         {
         case 1:
-            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: scaleFactor,radiusPointc: 2.0*scaleFactor,colord: upColor)
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: 0.0,radiusPointc: 2.0*scaleFactor,colord: upColor)
         case -1:
-            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: scaleFactor,radiusPointc: 2.0*scaleFactor,colord: downColor)
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: 0.0,radiusPointc: 2.0*scaleFactor,colord: downColor)
         default:
             break
         }
@@ -99,6 +101,8 @@ func draw1DArray(input: [Int8], plot: DrawingView)
 //
 func draw2DArray(input: [[Int8]], plot: DrawingView)
 {
+    plot.allThePoints = []
+    plot.clear()
     let upColor = "Blue"
     let downColor = "Red"
     
