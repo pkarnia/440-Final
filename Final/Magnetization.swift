@@ -91,7 +91,7 @@ func findDomains2D(input: [[Int8]]) -> [[Int]]
 //  Usage:  Feed in [[Int8]] get 2D domain array 1...x
 func findDomains2D(input: [[Int8]]) -> [[UInt16]]
 {
-    let queue = DispatchQueue(label: "expansion", attributes: .concurrent)
+    let queue = DispatchQueue(label: "expansion", qos: DispatchQoS.userInteractive, attributes: .concurrent)
     var map = [[UInt16]](repeating: [UInt16](repeating: 0, count: input.count), count: input.count)
     var index: UInt16 = 1
     var modified = false

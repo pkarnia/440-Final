@@ -142,7 +142,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         var xPoints = [Double]()
         var yPoints = [Double]()
         let xRange = 50.0
-        let queue = DispatchQueue(label: "Temperature", attributes: .concurrent)
+        let queue = DispatchQueue(label: "Temperature", qos: DispatchQoS.userInteractive, attributes: .concurrent)
         queue.sync{
         for temperature in 1...Int(xRange)
         {
@@ -197,7 +197,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 }
             }
         }
-        }
+        } //End of queue
         Plot2(Xaxis: xPoints, Yaxis: yPoints, Xlabel: "Temperature", Ylabel: "Domain Size")
     }
 
