@@ -29,7 +29,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     @IBOutlet weak var NNNCoupling: NSTextField!
     @IBOutlet weak var startType: NSTextField!
     @IBOutlet weak var numberofDimentions: NSTextField!
-    
+    @IBOutlet weak var energyType: NSTextField!
     
     typealias plotDataType = [CPTScatterPlotField : Double]
     private var dataForPlot = [plotDataType]()
@@ -72,14 +72,26 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
         let StartType:Int = Int(startType.doubleValue)
         let Dimentions:Int = Int(numberofDimentions.doubleValue)
+        let EnergyType:Int = Int(energyType.doubleValue)
+        
+        if Dimentions == 2{
+            var metropolis2D:[[Int8]] = generate2DMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
+            
+            draw2DArray(input: metropolis2D, plot: displayView)
+            //print2dArrayInt8(input: metropolis2D)
+        }
+        else{
+            
+            
+            var metropolis:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
+        
+            draw1DArray(input: metropolis, plot: displayView)
+        
+        }
         
         
-        
-        var Derp:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType)
-        //print(Derp)
-        
-        draw1DArray(input: Derp, plot: displayView)
         //generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true)
+        
         
             }
     
