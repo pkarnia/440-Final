@@ -160,10 +160,11 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     @IBAction func plotInternalEnergyvsTemp(_ sender: Any) {
         
         let NumberofSpins:Int = 25
+        let Numberof2DSpins:Int = 10
         let MaxIterations:Int = 1000
         
         var temperature:Double = 0.1
-        let temperatureChange:Double = 0.1
+        let temperatureChange:Double = 0.5
         
         let nearestNeighborCoupling:Double = 1
         let nextNearestNeighborCoupling:Double = 0.5
@@ -173,37 +174,38 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let EnergyType:Int = Int(whatEnergy.doubleValue)
         let Algorithm:Int = Int(whatAlgorithm.doubleValue)
         
-        var metropolis:[Int8] = []
-        var metropolis2D:[[Int8]] = [[]]
+        var spins1D:[Int8] = []
+        var spins2D:[[Int8]] = [[]]
+        
         
         var internalEnergyArray:[Double] = []
         var temperatureArray:[Double] = []
         var energyArray:[Double] = []
-
         
+        //derpherp
         
-        for j in 0...100{
-        for i in 0...100{
-            
-            
-            if Algorithm == 1{
-                //WLS code here
+        for j in 0...19{
+            for i in 0...59{
+                
+                var spinTuple = algorithmSwitch(Dimentions:Dimentions, Algorithm:Algorithm, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
+                
+                spins1D = spinTuple.spins1D
+                spins2D = spinTuple.spins2D
+                
+                
+                energyArray.append(energySwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, array1D:spins1D, array2D:spins2D))
+                
             }
-            else{
-                metropolis = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
-            }
             
-            
-            energyArray.append(generate1DEnergy(Spins:metropolis, J:nearestNeighborCoupling))
+            internalEnergyArray.append(calculateAverage(Array:energyArray))
+            temperatureArray.append(temperature)
+            temperature = temperature + temperatureChange
+            energyArray.removeAll()
         }
-
-        internalEnergyArray.append(calculateAverage(Array:energyArray))
-        temperatureArray.append(temperature)
-        temperature = temperature + temperatureChange
-        energyArray.removeAll()
-    }
         
-     Plot2(Xaxis:temperatureArray, Yaxis:internalEnergyArray, Xlabel:"KbT", Ylabel:"U")
+        Plot2(Xaxis:temperatureArray, Yaxis:internalEnergyArray, Xlabel:"KbT", Ylabel:"U")
+        
+
         
     }
 
