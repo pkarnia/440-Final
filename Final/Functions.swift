@@ -143,3 +143,54 @@ func calculateSpecificHeat(energyArray:[Double],Spins:[Int8],J:Double,T:Double) 
     
     return specificHeat
 }
+
+//Picks an energy function given dimentions and energy Type
+func energySwitch(Dimentions:Int, energyType:Int, nearestNeighborCoupling:Double, nextNearestNeighborCoupling:Double, array1D:[Int8], array2D:[[Int8]]) -> Double {
+    //Generating Energy
+    if energyType == 0 && Dimentions == 1{
+        //NN 1D Energy
+        return generate1DEnergy(Spins:array1D, J:nearestNeighborCoupling)
+    }
+    if energyType == 0 && Dimentions == 2{
+        // NN 2D Energy
+        return generate2DNearestNeighborsEnergy(Spins:array2D,J:nearestNeighborCoupling)
+    }
+    if energyType == 1 && Dimentions == 1{
+        // NNN 1D Energy
+        return generate1DNextNearestNeighborEnergy(Spins:array1D, J:nearestNeighborCoupling, J2:nextNearestNeighborCoupling)
+    }
+    if energyType == 1 && Dimentions == 2{
+        // NNN 2D Energy
+        return generate2DNextNearestNeighborsEnergy(Spins:array2D, J:nearestNeighborCoupling, J2:nextNearestNeighborCoupling)
+    }
+    else{
+        return 404
+    }
+    
+}
+
+func algorithmSwitch(Dimentions:Int, Algorithm:Int, energyType:Int, nearestNeighborCoupling:Double, nextNearestNeighborCoupling:Double, startType:Int, maxiterations:Int, temperature:Double, NumberofSpins:Int, Numberof2DSpins:Int) -> (spins1D:[Int8],spins2D:[[Int8]]) {
+    
+    var spins1D:[Int8] = []
+    var spins2D:[[Int8]] = [[]]
+    
+    
+    //Generating Array
+    if Algorithm == 1 && Dimentions == 1{
+        // 1D WLS code here
+    }
+    if Algorithm == 1 && Dimentions == 2{
+        // 2D WLS Code Here
+    }
+    if Algorithm == 0 && Dimentions == 1{
+        //1D metropolis
+        spins1D = generateMetropolisSystem(numberofSpins:Numberof2DSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
+    }
+    if Algorithm == 0 && Dimentions == 2{
+        // 2D metropolis
+        spins2D = generate2DMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
+    }
+    return (spins1D, spins2D)
+}
+
+
