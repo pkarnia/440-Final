@@ -70,25 +70,46 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     }
     
     
-    
+    //  Plotting Average Domain Size versus Temperature
+    //  Done: Metropolis 1D, 2D
     @IBAction func domainVtemp(_ sender: Any)
     {
+        let Log = false
         var xPoints = [Double]()
         var yPoints = [Double]()
+        var xPointsLog = [Double]()
+        var yPointsLog = [Double]()
         let xRange = 50.0
         for temperature in 1...Int(xRange)
         {
-            switch numberofDimentions.intValue
+            switch Log
             {
-            case 1:
-                xPoints.append(Double(temperature))
-                yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
-            case 2:
-                displayView.allThePoints.append((Double(temperature)*500/xRange, avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))*500/xRange, 1.0, "Red"))
-            default:
-                break
+            case true:
+                switch numberofDimentions.intValue
+                {
+                case 1:
+                    xPoints.append(log(Double(temperature)))
+                    yPoints.append(log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))))
+                case 2:
+                    xPoints.append(log(Double(temperature)))
+                    yPoints.append(log(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))))
+                
+                default:
+                    break
+                }
+            case false:
+                switch numberofDimentions.intValue
+                {
+                case 1:
+                    xPoints.append(Double(temperature))
+                    yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                case 2:
+                    xPoints.append(Double(temperature))
+                    yPoints.append(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                default:
+                    break
+                }
             }
-            
         }
         Plot2(Xaxis: xPoints, Yaxis: yPoints, Xlabel: "Temperature", Ylabel: "Domain Size")
     }
