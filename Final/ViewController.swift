@@ -49,7 +49,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     {
         let test = create2D(size: 100, type: "RANDOM")
         
-        draw2DArray(input: test, plot: displayView)
+        //draw2DArray(input: test, plot: displayView)
         
         
     }
@@ -61,7 +61,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
         //print(Derp)
         
-        //generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true)
+        print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
         
             }
     
