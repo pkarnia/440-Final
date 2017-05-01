@@ -68,17 +68,21 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         
     }
+    
+    
+    
     @IBAction func domainVtemp(_ sender: Any)
     {
-        displayView.allThePoints = []
-        displayView.clear()
+        var xPoints = [Double]()
+        var yPoints = [Double]()
         let xRange = 50.0
         for temperature in 1...Int(xRange)
         {
             switch numberofDimentions.intValue
             {
             case 1:
-                displayView.allThePoints.append((Double(temperature)*500.0/xRange, avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))*500/xRange, 1.0, "Red"))
+                xPoints.append(Double(temperature))
+                yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
             case 2:
                 displayView.allThePoints.append((Double(temperature)*500/xRange, avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))*500/xRange, 1.0, "Red"))
             default:
@@ -86,7 +90,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
             }
             
         }
-        displayView.tellGuiToDisplay()
+        Plot2(Xaxis: xPoints, Yaxis: yPoints, Xlabel: "Temperature", Ylabel: "Domain Size")
     }
 
     
@@ -125,6 +129,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
             }
     
 //not operational yet
+    /*
     @IBAction func plotDomainSizevsTemp(_ sender: Any) {
         
         let NumberofSpins:Int = 25
@@ -155,6 +160,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         
     }
+    */
     
 
     @IBAction func plotInternalEnergyvsTemp(_ sender: Any) {
