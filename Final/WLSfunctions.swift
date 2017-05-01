@@ -169,7 +169,7 @@ func normalizeDensityofStates(densityofStates:[Double], Spins:[Int8]) -> [Double
 func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int, Log:Bool) -> [Double]  {
     //generateSpins
     
-    var Spins:[Int8] = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    var Spins:[Int8] = create1D(size: numberofSpins, type: "RANDOM")
     print(Spins.count)
     var newSpins:[Int8] = []
     
