@@ -1015,6 +1015,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="magVtemp:" target="XfG-lQ-9wD" id="c8z-20-ZnU"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tgK-hc-dQv">
                                 <rect key="frame" x="703" y="248" width="189" height="32"/>
@@ -1043,6 +1046,7 @@
                         <outlet property="domainVtemp" destination="bBs-Gh-GJK" id="hhF-AP-QgZ"/>
                         <outlet property="energyType" destination="ao2-8l-ZDg" id="pJN-FA-EEd"/>
                         <outlet property="hostingView" destination="da5-sy-47W" id="aau-VZ-jTN"/>
+                        <outlet property="magVtemp" destination="Xzn-gH-Vb5" id="HJL-8t-NLp"/>
                         <outlet property="maxIterations" destination="0f7-Jr-Q8r" id="gQj-TU-2Q6"/>
                         <outlet property="numberofDimentions" destination="z2D-uf-ied" id="eRB-pn-dMF"/>
                         <outlet property="numberofSpins" destination="ItW-2H-IXq" id="gnP-0v-Vbx"/>

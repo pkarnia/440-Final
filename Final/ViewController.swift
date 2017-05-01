@@ -69,6 +69,70 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
     }
     
+    //  Plotting Total Magnetization verus Temperature
+    //  Started
+    @IBAction func magVtemp(_ sender: Any)
+    {
+        let Log = true
+        var xPoints = [Double]()
+        var yPoints = [Double]()
+        let xRange = 50.0
+
+        for temperature in 1...Int(xRange)
+        {
+            var yAvg = 0.0
+            switch Log
+            {
+            case true:
+                switch numberofDimentions.intValue
+                {
+                case 1:
+                    yAvg = 0.0
+                    for _ in 1...10
+                    {
+                        yAvg += log(totalMagnetization1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
+                    }
+                    xPoints.append(Double(temperature))
+                    yPoints.append(yAvg/10.0)
+                    
+                case 2:
+                    yAvg = 0.0
+                    for _ in 1...10
+                    {
+                        yAvg += log(totalMagnetization2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
+                    }
+                    xPoints.append(Double(temperature))
+                    yPoints.append(yAvg/10.0)
+                default:
+                    break
+                }
+            case false:
+                switch numberofDimentions.intValue
+                {
+                case 1:
+                    yAvg = 0.0
+                    for _ in 1...10
+                    {
+                        yAvg += abs(totalMagnetization1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
+                    }
+                    xPoints.append(Double(temperature))
+                    yPoints.append(yAvg/10.0)
+                    
+                case 2:
+                    yAvg = 0.0
+                    for _ in 1...10
+                    {
+                        yAvg += abs(totalMagnetization2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
+                    }
+                    xPoints.append(Double(temperature))
+                    yPoints.append(yAvg/10.0)
+                default:
+                    break
+                }
+            }
+        }
+        Plot2(Xaxis: xPoints, Yaxis: yPoints, Xlabel: "Temperature", Ylabel: "Total Magnetization")
+    }
     
     //  Plotting Average Domain Size versus Temperature
     //  Done: Metropolis 1D, 2D
