@@ -228,8 +228,8 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     // } //end of flat check
     
     multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)
-    print(histogramEnergies)
-    print(possibleEnergies)
+    //print(histogramEnergies)
+    //print(possibleEnergies)
     Histogram.removeAll()
     Histogram.append(1)
     
@@ -250,5 +250,7 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     //print(densityofStates)
     //print("A",accepted)
     //print("D",declined)
+    //print(densityofStates.count)
+    //print(possibleEnergies.count)
     return densityofStates
 }
