@@ -86,13 +86,14 @@ func draw1DArray(input: [Int8], plot: DrawingView)
         switch input[x]
         {
         case 1:
-            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: 0.0,radiusPointc: 2.0*scaleFactor,colord: upColor)
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: 0.0,radiusPointc: 1.0*scaleFactor,colord: upColor)
         case -1:
-            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: 0.0,radiusPointc: 2.0*scaleFactor,colord: downColor)
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: 0.0,radiusPointc: 1.0*scaleFactor,colord: downColor)
         default:
             break
         }
     }
+    
     plot.tellGuiToDisplay()
 }
 
@@ -116,9 +117,9 @@ func draw2DArray(input: [[Int8]], plot: DrawingView)
         switch input[x][y]
         {
         case 1:
-            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: (Double(y)*scaleFactor)+(0.5*scaleFactor),radiusPointc: 1.0*scaleFactor,colord: upColor)
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: (Double(y)*scaleFactor),radiusPointc: 1.0*scaleFactor,colord: upColor)
         case -1:
-            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: (Double(y)*scaleFactor)+(0.5*scaleFactor),radiusPointc: 1.0*scaleFactor,colord: downColor)
+            plot.addPoint(xPointa: (Double(x)*scaleFactor),yPointb: (Double(y)*scaleFactor),radiusPointc: 1.0*scaleFactor,colord: downColor)
         default:
             break
         }

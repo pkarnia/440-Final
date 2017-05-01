@@ -166,7 +166,7 @@ func normalizeDensityofStates(densityofStates:[Double], Spins:[Int8]) -> [Double
 }
 
 
-func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int, Log:Bool) -> [Double]  {
+func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot: DrawingView, Log:Bool) -> [Double]  {
     //generateSpins
     
     var Spins:[Int8] = create1D(size: numberofSpins, type: "RANDOM")
@@ -226,6 +226,9 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
         else{
             declined = declined + 1
         }
+        
+        //Plot to GUI
+        //draw1DArray(input: Spins, plot: Plot)
         
         //update density of states and visited energies, which is an input for the histogram
         densityofStates = updateDensityofStates(densityofStates: densityofStates, Energy: oldEnergy, energyArray: possibleEnergies, multiplicitivefactor: multiplicitiveFactor, Log:Log)
