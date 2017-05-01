@@ -92,8 +92,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     yAvg = 0.0
                     for _ in 1...10
                     {
-                    xAvg += log(Double(temperature))
-                        yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                    yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     xPoints.append(Double(temperature))
                     yPoints.append(yAvg/10.0)
@@ -116,10 +115,11 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     yAvg = 0.0
                     for _ in 1...10
                     {
-                        yAvg += avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView)))
+                        yAvg += avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                    yPoints.append(yAvg/10.0)
+                    
                 case 2:
                     yAvg = 0.0
                     for _ in 1...10
@@ -350,13 +350,13 @@ func makePlot(xLabel: String, yLabel: String, xMin: Double, xMax: Double, yMin: 
     let axisSet = newGraph.axisSet as! CPTXYAxisSet
     
     if let x = axisSet.xAxis {
-        x.majorIntervalLength   = 1.0
+        x.majorIntervalLength   = 5.0
         x.orthogonalPosition    = 0.0
-        x.minorTicksPerInterval = 3
+        x.minorTicksPerInterval = 0
     }
     
     if let y = axisSet.yAxis {
-        y.majorIntervalLength   = 0.5
+        y.majorIntervalLength   = 5.0
         y.minorTicksPerInterval = 0
         y.orthogonalPosition    = 0.0
         y.delegate = self
