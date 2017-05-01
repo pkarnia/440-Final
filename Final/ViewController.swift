@@ -80,25 +80,29 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let xRange = 50.0
         for temperature in 1...Int(xRange)
         {
+            var yAvg = 0.0
             switch Log
             {
             case true:
                 switch numberofDimentions.intValue
                 {
                 case 1:
-                    var xAvg = 0.0
-                    var yAvg = 0.0
+                    yAvg = 0.0
                     for _ in 1...10
                     {
-                    xAvg += log(Double(temperature))
                         yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView))))
                     }
-                    
+                    xPoints.append(Double(temperature))
+                    yPoints.append(yAvg/10.0)
                     
                 case 2:
-                    xPoints.append(log(Double(temperature)))
-                    yPoints.append(log(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))))
-                
+                    yAvg = 0.0
+                    for _ in 1...10
+                    {
+                    yAvg += log(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                    }
+                    xPoints.append(Double(temperature))
+                    yPoints.append(yAvg/10.0)
                 default:
                     break
                 }
@@ -106,11 +110,22 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 switch numberofDimentions.intValue
                 {
                 case 1:
+                    yAvg = 0.0
+                    for _ in 1...10
+                    {
+                        yAvg += avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView)))
+                    }
                     xPoints.append(Double(temperature))
-                    yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView))))
+                    yPoints.append(yAvg/10.0)
+                    
                 case 2:
+                    yAvg = 0.0
+                    for _ in 1...10
+                    {
+                        yAvg += avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
+                    }
                     xPoints.append(Double(temperature))
-                    yPoints.append(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                    yPoints.append(yAvg/10.0)
                 default:
                     break
                 }
@@ -155,41 +170,6 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         
             }
-        
-    
-//not operational yet
-    /*
-    @IBAction func plotDomainSizevsTemp(_ sender: Any) {
-        
-        let NumberofSpins:Int = 25
-        let MaxIterations:Int = 1000
-        
-        let temperature:Double = 0.1
-        let temperatureChange:Double = 0.1
-        
-        let nearestNeighborCoupling:Double = 1
-        let nextNearestNeighborCoupling:Double = 0.5
-        let StartType:Int = 0
-        
-        let Dimentions:Int = Int(whatDimention.doubleValue)
-        let EnergyType:Int = Int(whatEnergy.doubleValue)
-        let Algorithm:Int = Int(whatAlgorithm.doubleValue)
-        
-        var metropolis:[Int8] = []
-        var metropolis2D:[[Int8]] = [[]]
-        
-        
-        for i in 0...100{
-             metropolis = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
-            
-            
-        }
-        
-        
-        
-        
-    }
-    */
     
 
     @IBAction func plotInternalEnergyvsTemp(_ sender: Any) {
