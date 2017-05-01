@@ -36,13 +36,21 @@ func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all p
         counter = counter + 1
     }
     
-    /*for i in 0...Spins.count-1{
-     Energies.append(2*J*Double(-Spins.count+i*4))
-     }*/
-    
     return Energies
 }
 
+func generatePossible2DEnergies(Spins:[[Int8]],J:Double) -> [Double] { //gives all possible values for Energy. Will be used to determine of density of states, which is a function of Energy.
+    
+    var Energies:[Double] = [-2*pow(Double(Spins.count),2)]
+    
+    var counter:Int = 0
+    while (Energies[counter] - 2.0*pow(Double(Spins.count),2)) < -pow(10,-10){
+        Energies.append(Energies[counter] + 8.0)
+        counter = counter + 1
+    }
+    
+    return Energies
+}
 
 
 
@@ -178,7 +186,7 @@ func algorithmSwitch(Dimentions:Int, energyType:Int, nearestNeighborCoupling:Dou
     //Generating Array
         if Dimentions == 1{
         //1D metropolis
-        //spins1D = generateMetropolisSystem(numberofSpins:Numberof2DSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
+        spins1D = generateMetropolisSystem(numberofSpins:Numberof2DSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
     }
     if Dimentions == 2{
         // 2D metropolis

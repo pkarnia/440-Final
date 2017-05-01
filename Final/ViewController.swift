@@ -91,7 +91,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     for _ in 1...10
                     {
                     xAvg += log(Double(temperature))
-                        yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView))))
+                        yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     
                     
@@ -107,7 +107,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 {
                 case 1:
                     xPoints.append(Double(temperature))
-                    yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue), Plot: displayView))))
+                    yPoints.append(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                 case 2:
                     xPoints.append(Double(temperature))
                     yPoints.append(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
@@ -144,7 +144,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         else{
             
             
-            var metropolis:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType, Plot: self.displayView)
+            var metropolis:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
         
             draw1DArray(input: metropolis, plot: self.displayView)
         
@@ -258,15 +258,22 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let EnergyType:Int = Int(energyType.doubleValue)
         
         
-        var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
+        //var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
         
         
-        var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
+        var DOS:[Double] = generate2DWLSSystem(numberofSpins:NumberofSpins, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Log:true)
         
-        var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
         
-        print(DOS.count)
-        print(energies.count)
+        
+        //var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
+        var spins:[[Int8]] = create2D(size: NumberofSpins, type: "UP")
+        
+        //var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
+        
+        var energies:[Double] = generatePossible2DEnergies(Spins:spins,J:nearestNeighborCoupling)
+        
+        //print(DOS.count)
+        //print(energies.count)
         
         Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
         
@@ -367,7 +374,7 @@ func makePlot(xLabel: String, yLabel: String, xMin: Double, xMax: Double, yMin: 
     
     if let y = axisSet.yAxis {
         y.majorIntervalLength   = 0.5
-        y.minorTicksPerInterval = 5
+        y.minorTicksPerInterval = 0
         y.orthogonalPosition    = 0.0
         y.delegate = self
     }

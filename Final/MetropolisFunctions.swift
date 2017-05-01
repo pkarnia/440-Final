@@ -28,7 +28,7 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Double, J2: Double, startType:Int, energyType:Int, Plot: DrawingView) -> [Int8] {
+func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Double, J2: Double, startType:Int, energyType:Int) -> [Int8] {
     
     var Spins:[Int8] = []
     
