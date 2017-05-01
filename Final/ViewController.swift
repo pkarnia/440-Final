@@ -216,8 +216,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         //derpherp
         
-        for j in 0...19{
-            for i in 0...59{
+        for j in 0...100{
+            for i in 0...10{
                 
                 var spinTuple = algorithmSwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
                 
@@ -243,6 +243,34 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 
     
+    @IBAction func generateWLS(_ sender: Any) {
+        
+        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
+        let MaxIterations:Int = Int(maxIterations.doubleValue)
+        let temperature:Double = Temperature.doubleValue
+        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
+        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
+        let StartType:Int = Int(startType.doubleValue)
+        let Dimentions:Int = Int(numberofDimentions.doubleValue)
+        let EnergyType:Int = Int(energyType.doubleValue)
+        
+        
+        var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot:0, Log:true)
+        
+        
+        var spins:[Int8] = create1D(size: 22, type: "UP")
+        
+        var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
+        
+        //print(DOS.count)
+        //print(energies.count)
+        
+        Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
+        
+        
+        
+        
+    }
 
 
 
