@@ -305,23 +305,23 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let EnergyType:Int = Int(energyType.doubleValue)
         
         
-        //var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
+        var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
         
         
-        var DOS:[Double] = generate2DWLSSystem(numberofSpins:NumberofSpins, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Log:true)
+        //var DOS:[Double] = generate2DWLSSystem(numberofSpins:NumberofSpins, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Log:true)
         
         
         
-        //var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
-        var spins:[[Int8]] = create2D(size: NumberofSpins, type: "UP")
+        var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
+        //var spins:[[Int8]] = create2D(size: NumberofSpins, type: "UP")
         
-        //var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
+        var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
         
-        var energies:[Double] = generatePossible2DEnergies(Spins:spins,J:nearestNeighborCoupling)
+        //var energies:[Double] = generatePossible2DEnergies(Spins:spins,J:nearestNeighborCoupling)
         
         //print(DOS.count)
         //print(energies.count)
-        
+        print(DOS)
         Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
         
         

@@ -84,7 +84,7 @@ func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], new
     let flattness:Double = avgArrayValue1D(input: currentEnergies)
     var isFlat:Bool = false
     
-    if(Double(currentEnergies.min()!) >= (0.8*flattness)) //checks if the histogram is flat enough
+    if(Double(Histogram.min()!) >= (0.8*flattness)) //checks if the histogram is flat enough
     {
         isFlat = true
     }
@@ -196,6 +196,7 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     
     
     while (multiplicitiveFactor-1)>pow(10,-8){
+    
     while !isFlat{
     for i in 1...10000{
         
@@ -222,9 +223,9 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
             accepted = accepted + 1
             
         }//end of if
-        else{
+        //else{
             declined = declined + 1
-        }
+        //}
         
         //Plot to GUI
         //draw1DArray(input: Spins, plot: Plot)
@@ -241,12 +242,14 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     Histogram = histogramTuple.Histogram
     histogramEnergies = histogramTuple.histogramEnergies
     isFlat = histogramTuple.isFlat
-    //print(isFlat)
+    print(isFlat)
     //print(Histogram)
     
-     } //end of flat check
+    } //end of flat check
     
     multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)
+    print(multiplicitiveFactor)
+        
     //print(histogramEnergies)
     //print(possibleEnergies)
     Histogram.removeAll()
@@ -259,7 +262,7 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     visitedEnergies.append(oldEnergy)
     
     isFlat = false
-     }//end of multiplicitivefactor updates
+    }//end of multiplicitivefactor updates
     
     
     
