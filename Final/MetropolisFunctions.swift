@@ -28,7 +28,19 @@ func metropolisRelativeProbability(oldEnergy:Double, newEnergy:Double, T:Double)
     
 }
 
-func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot:Int) -> [Int8] {
+func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Double, J2: Double, startType:Int, energyType:Int) -> [Int8] {
+    
+    var Spins:[Int8] = []
+    
+    if startType==1{
+        Spins = create1D(size: numberofSpins, type: "UP")
+    }
+    if startType==(-1){
+        Spins = create1D(size: numberofSpins, type: "Down")
+    }
+    else{
+        Spins = create1D(size: numberofSpins, type: "RANDOM")
+    }
     
     var Spins = create1D(size: numberofSpins, type: "UP")   //Should be replaced by a function
     
@@ -41,9 +53,71 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, Dimentions:In
     
     for i in 0...maxIterations-1{
         
-        oldEnergy = generate1DEnergy(Spins: Spins, J: J)
+        
         newSpins = SpinFlip1D(Spins:Spins)
-        newEnergy = generate1DEnergy(Spins: newSpins, J: J)
+        
+        if energyType == 1{
+            oldEnergy = generate1DEnergy(Spins: Spins, J: J)
+            newEnergy = generate1DEnergy(Spins: newSpins, J: J)
+        }
+        else{
+            oldEnergy = generate1DEnergy(Spins: Spins, J: J)
+            newEnergy = generate1DEnergy(Spins: newSpins, J: J)
+        }
+        
+        
+        acceptNewState = metropolisRelativeProbability(oldEnergy:oldEnergy, newEnergy:newEnergy, T:T)
+        //print(acceptNewState)
+        if acceptNewState==true{
+            oldEnergy=newEnergy
+            Spins=newSpins
+        }
+        //print(Spins)
+        
+        
+        
+    }
+    
+    
+    return Spins
+}
+
+func generate2DMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Double, J2: Double, startType:Int, energyType:Int) -> [[Int8]] {
+    
+    var Spins:[[Int8]] = []
+    
+    if startType==1{
+        Spins = create2D(size: numberofSpins, type: "UP")
+    }
+    if startType==(-1){
+        Spins = create2D(size: numberofSpins, type: "Down")
+    }
+    else{
+        Spins = create2D(size: numberofSpins, type: "RANDOM")
+    }
+    
+    
+    var oldEnergy:Double = 0
+    var newSpins:[[Int8]] = [[]]
+    var newEnergy:Double = 0
+    var acceptNewState:Bool = false
+    
+    
+    
+    for i in 0...maxIterations-1{
+        
+        
+        newSpins = SpinFlip2D(Spins:Spins)
+        
+        if energyType == 1{
+            oldEnergy = generate2DNearestNeighborsEnergy(Spins: Spins, J: J)
+            newEnergy = generate2DNearestNeighborsEnergy(Spins: newSpins, J: J)
+        }
+        else{
+            oldEnergy = generate2DNextNearestNeighborsEnergy(Spins: Spins, J: J, J2:J2)
+            newEnergy = generate2DNextNearestNeighborsEnergy(Spins: newSpins, J: J, J2:J2)
+        }
+        
         
         acceptNewState = metropolisRelativeProbability(oldEnergy:oldEnergy, newEnergy:newEnergy, T:T)
         //print(acceptNewState)

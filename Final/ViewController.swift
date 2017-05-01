@@ -22,8 +22,14 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     
     @IBOutlet weak var displayView: DrawingView!
-    
-    
+    @IBOutlet weak var numberofSpins: NSTextField!
+    @IBOutlet weak var maxIterations: NSTextField!
+    @IBOutlet weak var Temperature: NSTextField!
+    @IBOutlet weak var NNCoupling: NSTextField!
+    @IBOutlet weak var NNNCoupling: NSTextField!
+    @IBOutlet weak var startType: NSTextField!
+    @IBOutlet weak var numberofDimentions: NSTextField!
+    @IBOutlet weak var energyType: NSTextField!
     
     typealias plotDataType = [CPTScatterPlotField : Double]
     private var dataForPlot = [plotDataType]()
@@ -33,7 +39,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         super.viewDidLoad()
         queue.async
         {
-            self.patrickTest()
+           // self.patrickTest()
         }
         // Do any additional setup after loading the view.
         
@@ -58,10 +64,33 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     @IBAction func generateMetropolis(_ sender: Any) {
         displayView.display()
         
-        //var Derp:[Int8] = generateMetropolisSystem(numberofSpins:5, maxIterations:1000, Dimentions:1, T:5, J:1, J2: 1/2, Plot:1)
-        //print(Derp)
+        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
+        let MaxIterations:Int = Int(maxIterations.doubleValue)
+        let temperature:Double = Temperature.doubleValue
+        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
+        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
+        let StartType:Int = Int(startType.doubleValue)
+        let Dimentions:Int = Int(numberofDimentions.doubleValue)
+        let EnergyType:Int = Int(energyType.doubleValue)
+        
+        if Dimentions == 2{
+            var metropolis2D:[[Int8]] = generate2DMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
+            
+            draw2DArray(input: metropolis2D, plot: displayView)
+            //print2dArrayInt8(input: metropolis2D)
+        }
+        else{
+            
+            
+            var metropolis:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
+        
+            draw1DArray(input: metropolis, plot: displayView)
+        
+        }
+        
         
         print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
+        
         
             }
     
