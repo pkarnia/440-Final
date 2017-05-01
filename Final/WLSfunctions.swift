@@ -74,21 +74,37 @@ func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], new
          
         // if the new energy is not in the Histogram then a new index is formed.
         // we don't car about the order the energies are in as the only thing that matters is the flattness of the histogram
-        else{
+        else if(newEnergies[i] != 0.0) //changed to ignore zero energies
+        {
             Histogram.append(1)
             currentEnergies.append(newEnergies[i])
         }
     }
     
-    let flattness:Double = (Histogram.max()! - Histogram.min()!)/(Histogram.max()! + Histogram.min()!)
+    let flattness:Double = avgArrayValue1D(input: currentEnergies)
     var isFlat:Bool = false
     
-    if flattness < 0.2{ //checks if the histogram is flat enough
+    if(Double(currentEnergies.min()!) >= (0.8*flattness)) //checks if the histogram is flat enough
+    {
         isFlat = true
     }
     
     return (Histogram, isFlat, currentEnergies)
-    
+}
+
+//  Calculate avg value of 1D array
+//  Returns Double
+//
+func avgArrayValue1D(input: [Double]) -> Double
+{
+    var total = 0.0
+    var count = 0.0
+    for i in 0..<input.count
+    {
+        total += input[i]
+        count += 1.0
+    }
+    return total / count
 }
 
 //updates density of states function
