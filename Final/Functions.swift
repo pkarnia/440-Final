@@ -169,24 +169,18 @@ func energySwitch(Dimentions:Int, energyType:Int, nearestNeighborCoupling:Double
     
 }
 
-func algorithmSwitch(Dimentions:Int, Algorithm:Int, energyType:Int, nearestNeighborCoupling:Double, nextNearestNeighborCoupling:Double, startType:Int, maxiterations:Int, temperature:Double, NumberofSpins:Int, Numberof2DSpins:Int) -> (spins1D:[Int8],spins2D:[[Int8]]) {
+func algorithmSwitch(Dimentions:Int, energyType:Int, nearestNeighborCoupling:Double, nextNearestNeighborCoupling:Double, startType:Int, maxiterations:Int, temperature:Double, NumberofSpins:Int, Numberof2DSpins:Int) -> (spins1D:[Int8],spins2D:[[Int8]]) {
     
     var spins1D:[Int8] = []
     var spins2D:[[Int8]] = [[]]
     
     
     //Generating Array
-    if Algorithm == 1 && Dimentions == 1{
-        // 1D WLS code here
-    }
-    if Algorithm == 1 && Dimentions == 2{
-        // 2D WLS Code Here
-    }
-    if Algorithm == 0 && Dimentions == 1{
+        if Dimentions == 1{
         //1D metropolis
         spins1D = generateMetropolisSystem(numberofSpins:Numberof2DSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
     }
-    if Algorithm == 0 && Dimentions == 2{
+    if Dimentions == 2{
         // 2D metropolis
         spins2D = generate2DMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:maxiterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:startType, energyType:energyType)
     }

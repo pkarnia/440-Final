@@ -33,7 +33,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     
     
-    @IBOutlet weak var whatAlgorithm: NSTextField!
+   // @IBOutlet weak var whatAlgorithm: NSTextField!
     @IBOutlet weak var whatEnergy: NSTextField!
     @IBOutlet weak var whatDimention: NSTextField!
     
@@ -199,7 +199,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         let Dimentions:Int = Int(whatDimention.doubleValue)
         let EnergyType:Int = Int(whatEnergy.doubleValue)
-        let Algorithm:Int = Int(whatAlgorithm.doubleValue)
+        //let Algorithm:Int = Int(whatAlgorithm.doubleValue)
         
         var spins1D:[Int8] = []
         var spins2D:[[Int8]] = [[]]
@@ -214,7 +214,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         for j in 0...19{
             for i in 0...59{
                 
-                var spinTuple = algorithmSwitch(Dimentions:Dimentions, Algorithm:Algorithm, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
+                var spinTuple = algorithmSwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
                 
                 spins1D = spinTuple.spins1D
                 spins2D = spinTuple.spins2D
