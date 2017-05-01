@@ -258,12 +258,12 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot:0, Log:true)
         
         
-        var spins:[Int8] = create1D(size: 22, type: "UP")
+        var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
         
         var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
         
-        //print(DOS.count)
-        //print(energies.count)
+        print(DOS.count)
+        print(energies.count)
         
         Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
         

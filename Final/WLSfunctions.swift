@@ -35,7 +35,7 @@ func WLSRelativeProbability(oldDensity:Double, newDensity:Double, Log:Bool) -> B
     var relativeProbability:Double = 0
     
     if Log{
-        relativeProbability = exp(oldDensity) - exp(newDensity)
+        relativeProbability = exp(oldDensity - newDensity)
     }
     else{
         relativeProbability = oldDensity/newDensity
@@ -170,7 +170,7 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     //generateSpins
     
     var Spins:[Int8] = create1D(size: numberofSpins, type: "RANDOM")
-    print(Spins.count)
+    //print(Spins.count)
     var newSpins:[Int8] = []
     
     var possibleEnergies:[Double] = generatePossibleEnergies(Spins: Spins, J: J)
