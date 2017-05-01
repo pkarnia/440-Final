@@ -93,6 +93,7 @@ func draw1DArray(input: [Int8], plot: DrawingView)
             break
         }
     }
+    plot.tellGuiToDisplay()
 }
 
 //  Draws 2D Array
@@ -123,6 +124,7 @@ func draw2DArray(input: [[Int8]], plot: DrawingView)
         }
         }
     }
+    plot.tellGuiToDisplay()
 }
 
 func print2dArrayUInt16(input: [[UInt16]]) -> Void
