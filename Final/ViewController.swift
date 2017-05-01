@@ -77,8 +77,6 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let Log = false
         var xPoints = [Double]()
         var yPoints = [Double]()
-        var xPointsLog = [Double]()
-        var yPointsLog = [Double]()
         let xRange = 50.0
         for temperature in 1...Int(xRange)
         {
@@ -88,8 +86,15 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 switch numberofDimentions.intValue
                 {
                 case 1:
-                    xPoints.append(log(Double(temperature)))
-                    yPoints.append(log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))))
+                    var xAvg = 0.0
+                    var yAvg = 0.0
+                    for _ in 1...10
+                    {
+                    xAvg += log(Double(temperature))
+                    yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
+                    }
+                    
+                    
                 case 2:
                     xPoints.append(log(Double(temperature)))
                     yPoints.append(log(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))))
