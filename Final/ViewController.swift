@@ -238,6 +238,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 
     
+    @IBAction func generateWLS(_ sender: Any) {
+    }
 
 
 
