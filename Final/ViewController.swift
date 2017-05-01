@@ -211,8 +211,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         //derpherp
         
-        for j in 0...19{
-            for i in 0...59{
+        for j in 0...100{
+            for i in 0...10{
                 
                 var spinTuple = algorithmSwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
                 
