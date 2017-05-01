@@ -42,7 +42,6 @@ func generateMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:Do
         Spins = create1D(size: numberofSpins, type: "RANDOM")
     }
     
-    
     var oldEnergy:Double = 0
     var newSpins:[Int8] = []
     var newEnergy:Double = 0

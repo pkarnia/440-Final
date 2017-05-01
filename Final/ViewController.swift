@@ -64,8 +64,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     {
         let test = create2D(size: 100, type: "RANDOM")
         
-        
-        draw2DArray(input: test, plot: displayView)
+        //draw2DArray(input: test, plot: displayView)
         
         
     }
@@ -99,7 +98,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         }
         
         
-        //generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true)
+        print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
         
         
             }
