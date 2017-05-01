@@ -59,7 +59,28 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         
     }
+    @IBAction func domainVtemp(_ sender: Any)
+    {
+        displayView.allThePoints = []
+        displayView.clear()
+        let xRange = 50.0
+        for temperature in 1...Int(xRange)
+        {
+            switch numberofDimentions.intValue
+            {
+            case 1:
+                displayView.allThePoints.append((Double(temperature)*500.0/xRange, avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))*500/xRange, 1.0, "Red"))
+            case 2:
+                displayView.allThePoints.append((Double(temperature)*500/xRange, avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))*500/xRange, 1.0, "Red"))
+            default:
+                break
+            }
+            
+        }
+        displayView.tellGuiToDisplay()
+    }
 
+    
 
     @IBAction func generateMetropolis(_ sender: Any) {
         displayView.display()
