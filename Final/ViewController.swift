@@ -31,6 +31,15 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     @IBOutlet weak var numberofDimentions: NSTextField!
     @IBOutlet weak var energyType: NSTextField!
     
+    
+    
+    @IBOutlet weak var whatAlgorithm: NSTextField!
+    @IBOutlet weak var whatEnergy: NSTextField!
+    @IBOutlet weak var whatDimention: NSTextField!
+    
+    
+    
+    
     typealias plotDataType = [CPTScatterPlotField : Double]
     private var dataForPlot = [plotDataType]()
 
@@ -115,10 +124,88 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
             }
     
-
+//not operational yet
+    @IBAction func plotDomainSizevsTemp(_ sender: Any) {
+        
+        let NumberofSpins:Int = 25
+        let MaxIterations:Int = 1000
+        
+        let temperature:Double = 0.1
+        let temperatureChange:Double = 0.1
+        
+        let nearestNeighborCoupling:Double = 1
+        let nextNearestNeighborCoupling:Double = 0.5
+        let StartType:Int = 0
+        
+        let Dimentions:Int = Int(whatDimention.doubleValue)
+        let EnergyType:Int = Int(whatEnergy.doubleValue)
+        let Algorithm:Int = Int(whatAlgorithm.doubleValue)
+        
+        var metropolis:[Int8] = []
+        var metropolis2D:[[Int8]] = [[]]
+        
+        
+        for i in 0...100{
+             metropolis = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
+            
+            
+        }
+        
+        
+        
+        
+    }
     
 
+    @IBAction func plotInternalEnergyvsTemp(_ sender: Any) {
+        
+        let NumberofSpins:Int = 25
+        let MaxIterations:Int = 1000
+        
+        var temperature:Double = 0.1
+        let temperatureChange:Double = 0.1
+        
+        let nearestNeighborCoupling:Double = 1
+        let nextNearestNeighborCoupling:Double = 0.5
+        let StartType:Int = 0
+        
+        let Dimentions:Int = Int(whatDimention.doubleValue)
+        let EnergyType:Int = Int(whatEnergy.doubleValue)
+        let Algorithm:Int = Int(whatAlgorithm.doubleValue)
+        
+        var metropolis:[Int8] = []
+        var metropolis2D:[[Int8]] = [[]]
+        
+        var internalEnergyArray:[Double] = []
+        var temperatureArray:[Double] = []
+        var energyArray:[Double] = []
 
+        
+        
+        for j in 0...100{
+        for i in 0...100{
+            
+            
+            if Algorithm == 1{
+                //WLS code here
+            }
+            else{
+                metropolis = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
+            }
+            
+            
+            energyArray.append(generate1DEnergy(Spins:metropolis, J:nearestNeighborCoupling))
+        }
+
+        internalEnergyArray.append(calculateAverage(Array:energyArray))
+        temperatureArray.append(temperature)
+        temperature = temperature + temperatureChange
+        energyArray.removeAll()
+    }
+        
+     Plot2(Xaxis:temperatureArray, Yaxis:internalEnergyArray, Xlabel:"KbT", Ylabel:"U")
+        
+    }
 
 
     
