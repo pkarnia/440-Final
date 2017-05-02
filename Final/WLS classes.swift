@@ -128,27 +128,17 @@ class WLS {
         isFlat = false
         
         for j in 0...Histogram.count-1{
-            if !(Histogram[j] == 0){
+            if (Histogram[j] != 0){
                 noZeroHistogram.append(Histogram[j])
             }
         }
         
-        //flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
-        
-        var average:Double = 0
-        
-        for k in 0...noZeroHistogram.count-1{
-            average = average + noZeroHistogram[k]
-        }
-        average = average/Double(noZeroHistogram.count-1)
-        
-        if noZeroHistogram.min()! > 0.8*average{
-           isFlat = true
-        }
-        print("min:",noZeroHistogram.min()!,"    0.8Average", 0.8*average)
-        
-        //print(flattness)
-        if flattness < 0.2{
+        flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
+        print(flattness)
+        //if flattness < 0.2
+        print("Min:   ", Double(noZeroHistogram.min()!), "    Avg:", avgArrayValue1D(input: noZeroHistogram))
+        if(Double(noZeroHistogram.min()!) >= avgArrayValue1D(input: noZeroHistogram))
+        {
             isFlat = true
         }
         
