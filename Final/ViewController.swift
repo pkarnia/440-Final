@@ -356,16 +356,33 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         var J:Double = 1
         
-        
         var Array = create2D(size: 4, type: "RANDOM")
         
         var energy = generate2DNearestNeighborsEnergy(Spins:Array, J:J)
+        var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
         
+        var acceptState:Bool = false
         
         testclass.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
-    
+        testWLS.initialize(possibleEnergies: possibleEnergies)
         
         
+        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
+        while !(testWLS.isFlat){
+        for i in 0...9999{
+        testWLS.relativeProbability(oldEnergy: testclass.Energy, energyChange: testclass.calculateEnergyChange())
+        
+        acceptState = testWLS.acceptState
+        
+        if acceptState{
+            testclass.commitToSpinFlip()
+        }
+        
+        testWLS.updateWLS(newEnergy: testclass.Energy)
+        }
+        testWLS.checkFlat()
+        }
+    }
     }
 
 

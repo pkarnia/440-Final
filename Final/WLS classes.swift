@@ -13,9 +13,13 @@ class WLSSpinArray2D {
     var Energy:Double = 0
     var Arraylength:Int = 0
     var J:Double = 1
+    
+    //Held to flip spin if New state is accepted
     var newrow:Int = 0
     var newcolumn:Int = 0
     
+    //should be passed into WLS
+    var energyChange:Double = 0
     
     func initialize(newArray:[[Int8]],newEnergy:Double,newArraylength:Int){
         Array = newArray
@@ -26,7 +30,7 @@ class WLSSpinArray2D {
     func calculateEnergyChange() -> Double{
         var row = Int.getRandomNumber(lower:0, upper:Arraylength-1)
         var column = Int.getRandomNumber(lower:0, upper:Arraylength-1)
-        var energyChange:Double = 0
+        
         print(Arraylength)
         
         //4 corners Boundary Conditions
@@ -76,6 +80,7 @@ class WLSSpinArray2D {
     
     func commitToSpinFlip() {
         Array[newcolumn][newrow] = -Array[newcolumn][newrow]
+        Energy = Energy + energyChange
     }
  
 }
@@ -92,6 +97,9 @@ class WLS {
     
     //should be passed into array class
     var acceptState:Bool = false
+    
+    
+    var isFlat:Bool = false
     
     // initialize Histogram and DOS to 0 for every E
     func initialize(possibleEnergies:[Double]) {
@@ -115,10 +123,10 @@ class WLS {
     //Checks if Histogram is flat
     //resets histogram to 0 and updates multiplicitive Factor
     func checkFlat() {
-        
         var noZeroHistogram:[Double] = []
-        var isFlat:Bool = false
         var flattness:Double = 100
+        
+        isFlat = false
         
         for j in 0...Histogram.count-1{
             if !(Histogram[j] == 0){
@@ -140,6 +148,7 @@ class WLS {
         }
     }
     
+    //checks if new state should be accepted
     
     func relativeProbability(oldEnergy:Double, energyChange:Double){
         var newEnergy = oldEnergy + energyChange
