@@ -356,7 +356,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         var J:Double = 1
         
-        var Array = create2D(size: 4, type: "RANDOM")
+        var Array = create2D(size: 4, type: "UP")
         
         var energy = generate2DNearestNeighborsEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
@@ -367,7 +367,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         testWLS.initialize(possibleEnergies: possibleEnergies)
         
         
-        //while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
+        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
         while !(testWLS.isFlat){
         for i in 0...9999{
         testWLS.relativeProbability(oldEnergy: testclass.Energy, energyChange: testclass.calculateEnergyChange())
@@ -383,7 +383,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         testWLS.checkFlat()
             print(testWLS.isFlat)
         }//end of flat check
-   // }//end uf F updates
+    }//end of F updates
         
         Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
