@@ -66,7 +66,7 @@ class WLSSpinArray2D {
             energyChange = Double(Array[column][row] * (Array[column][row-1] + Array[column][row+1] + Array[column-1][row] + Array[column+1][row]))
         }
  
-        energyChange = -2*J*energyChange
+        energyChange = 2*J*energyChange
         
         if energyChange == -0.0 {
             energyChange = -1*energyChange
@@ -176,7 +176,7 @@ class WLS {
         
         var relativeProbability:Double = exp(log(density1)-log(density2))
         var rng:Double = Double.getRandomNumber(lower:0, upper:1)
-        print("rng",rng)
+        //print("rng",rng)
         
         if relativeProbability >= rng || density2 <= density1{
             acceptState =  true
