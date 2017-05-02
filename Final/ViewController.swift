@@ -60,13 +60,29 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         }
     }
     
+   
+    
     func patrickTest()
     {
-        let test = create2D(size: 100, type: "RANDOM")
+        var data = wlsData()
+        data.spinArray = create1D(size: Int(numberofSpins.doubleValue), type: "RANDOM")
+        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
+        let MaxIterations:Int = Int(maxIterations.doubleValue)
+        let temperature:Double = Temperature.doubleValue
+        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
+        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
+        let StartType:Int = Int(startType.doubleValue)
+        let Dimentions:Int = Int(numberofDimentions.doubleValue)
+        let EnergyType:Int = Int(energyType.doubleValue)
         
-        //draw2DArray(input: test, plot: displayView)
+        var DOS:[Double] = generateWLSSystemNew(spins: data, maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
         
+        var energies:[Double] = generatePossibleEnergies(Spins: data.spinArray,J:nearestNeighborCoupling)
         
+        print(DOS.count)
+        print(energies.count)
+        print(DOS)
+        Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
     }
     
     //  Plotting Total Magnetization verus Temperature
@@ -90,16 +106,15 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     yAvg = 0.0
                     for _ in 1...10
                     {
-                        yAvg += log(totalMagnetization1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
+                        yAvg += log(abs(totalMagnetization1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     xPoints.append(Double(temperature))
                     yPoints.append(yAvg/10.0)
-                    
                 case 2:
                     yAvg = 0.0
                     for _ in 1...10
                     {
-                        yAvg += log(totalMagnetization2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
+                        yAvg += log(abs(totalMagnetization2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     xPoints.append(Double(temperature))
                     yPoints.append(yAvg/10.0)
@@ -295,6 +310,10 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     @IBAction func generateWLS(_ sender: Any) {
         
+        patrickTest()
+        
+        /*
+        
         let NumberofSpins:Int = Int(numberofSpins.doubleValue)
         let MaxIterations:Int = Int(maxIterations.doubleValue)
         let temperature:Double = Temperature.doubleValue
@@ -324,8 +343,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         print(DOS)
         Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
         
-        
-        
+        */
         
     }
 
