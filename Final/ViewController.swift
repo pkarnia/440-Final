@@ -352,6 +352,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     @IBAction func test(_ sender: Any) {
         
         var testclass = WLSSpinArray2D()
+        var testWLS = WLS()
         
         var J:Double = 1
         
@@ -362,10 +363,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         
         testclass.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
-        
-        for i in 0...99{
-            print(testclass.calculateEnergyChange())
-        }
+    
         
         
     }
