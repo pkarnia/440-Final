@@ -66,7 +66,7 @@ class WLSSpinArray2D {
             energyChange = Double(Array[column][row] * (Array[column][row-1] + Array[column][row+1] + Array[column-1][row] + Array[column+1][row]))
         }
  
-        energyChange = -2*J*energyChange
+        energyChange = 2*J*energyChange
         
         if energyChange == -0.0 {
             energyChange = -1*energyChange
@@ -133,10 +133,12 @@ class WLS {
             }
         }
         
-        flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
-        print(flattness)
+        //flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
+        //print(flattness)
         //if flattness < 0.2
-        print("Min:   ", Double(noZeroHistogram.min()!), "    Avg:", avgArrayValue1D(input: noZeroHistogram))
+        
+        
+        print("Min:   ", Double(noZeroHistogram.min()!), "    Avg:", 0.8*avgArrayValue1D(input: noZeroHistogram))
         if(Double(noZeroHistogram.min()!) >= avgArrayValue1D(input: noZeroHistogram))
         {
             isFlat = true
@@ -166,7 +168,7 @@ class WLS {
         
         var relativeProbability:Double = exp(log(density1)-log(density2))
         var rng:Double = Double.getRandomNumber(lower:0, upper:1)
-        print("rng",rng)
+        //print("rng",rng)
         
         if relativeProbability >= rng || density2 <= density1{
             acceptState =  true
