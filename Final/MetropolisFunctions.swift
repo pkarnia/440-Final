@@ -102,7 +102,7 @@ func generate2DMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:
     var newEnergy:Double = 0
     var acceptNewState:Bool = false
     
-    
+    oldEnergy = generate2DNearestNeighborsEnergy(Spins: Spins, J: J)
     
     for i in 0...maxIterations-1{
         
@@ -110,12 +110,7 @@ func generate2DMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:
         newSpins = SpinFlip2D(Spins:Spins)
         
         if energyType == 1{
-            oldEnergy = generate2DNearestNeighborsEnergy(Spins: Spins, J: J)
-            newEnergy = generate2DNearestNeighborsEnergy(Spins: newSpins, J: J)
-        }
-        else{
-            oldEnergy = generate2DNextNearestNeighborsEnergy(Spins: Spins, J: J, J2:J2)
-            newEnergy = generate2DNextNearestNeighborsEnergy(Spins: newSpins, J: J, J2:J2)
+            newEnergy = oldEnergy + generate2DNearestNeighborsEnergy(Spins: newSpins, J: J)
         }
         
         

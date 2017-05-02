@@ -46,6 +46,58 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], J:Double, J2:Double) -> D
 //2D energy is calculated by parsing the 2D array into a series of 1D arrays
 func generate2DNearestNeighborsEnergy(Spins:[[Int8]], J:Double) -> Double {
     
+    var Arraylength = Spins.count
+    var Array = Spins
+    
+    var row = Int.getRandomNumber(lower:0, upper:Arraylength-1)
+    var column = Int.getRandomNumber(lower:0, upper:Arraylength-1)
+    
+    var energyChange: Double = 0.0
+    
+    //print(Arraylength)
+    
+    //4 corners Boundary Conditions
+    if row == 0 && column == 0{
+        energyChange = Double(Array[column][row] * (Array[1][0] + Array[0][1] + Array[0][Arraylength-1] + Array[Arraylength-1][0]))
+    }
+    if row == Arraylength-1 && column == 0{
+        energyChange = Double(Array[column][row] * (Array[1][Arraylength-1] + Array[0][Arraylength-2] + Array[0][0] + Array[Arraylength-1][Arraylength-1]))
+    }
+    if row == 0 && column == Arraylength-1{
+        energyChange = Double(Array[column][row] * (Array[Arraylength-2][0] + Array[Arraylength-1][1] + Array[0][0] + Array[Arraylength-1][Arraylength-1]))
+    }
+    if row == Arraylength-1 && column == Arraylength-1{
+        energyChange = Double(Array[column][row] * (Array[Arraylength-1][Arraylength-2] + Array[Arraylength-2][Arraylength-1] + Array[0][Arraylength-1] + Array[Arraylength-1][0]))
+    }
+    
+    //4 sides but not Corners Boundary Conditions
+    if row == 0 && !(column == 0) && !(column == Arraylength-1){
+        energyChange = Double(Array[column][row] * (Array[column-1][row] + Array[column+1][row] + Array[column][row+1] + Array[column][Arraylength-1]))
+    }
+    if row == Arraylength-1 && !(column == 0) && !(column == Arraylength-1){
+        energyChange = Double(Array[column][row] * (Array[column-1][row] + Array[column+1][row] + Array[column][row-1] + Array[column][0]))
+    }
+    if column == 0 && !(row == 0) && !(row == Arraylength-1){
+        energyChange = Double(Array[column][row] * (Array[column][row-1] + Array[column][row+1] + Array[column+1][row] + Array[Arraylength-1][row]))
+    }
+    if column == Arraylength-1 && !(row == 0) && !(row == Arraylength-1){
+        energyChange = Double(Array[column][row] * (Array[column][row-1] + Array[column][row+1] + Array[column-1][row] + Array[0][row]))
+    }
+    
+    //General Case
+    if !(column == 0) && !(column == Arraylength-1) && !(row == 0) && !(row == Arraylength-1) {
+        energyChange = Double(Array[column][row] * (Array[column][row-1] + Array[column][row+1] + Array[column-1][row] + Array[column+1][row]))
+    }
+    
+    energyChange = 2*J*energyChange
+    
+    if energyChange == -0.0 {
+        energyChange = -1*energyChange
+    }
+    
+    return energyChange
+    
+    /*
     var Energy:Double = 0
     var transposedSpins:[[Int8]] = transpose2(input: Spins)
     
@@ -62,9 +114,12 @@ func generate2DNearestNeighborsEnergy(Spins:[[Int8]], J:Double) -> Double {
     
     
     return Energy
+ */
 }
 
 func generate2DNextNearestNeighborsEnergy(Spins:[[Int8]], J:Double, J2:Double) -> Double{
+    
+    
     
     var Energy:Double = 0
     var transposedSpins:[[Int8]] = transpose2(input: Spins)
