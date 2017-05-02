@@ -197,12 +197,12 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...20
+                    for _ in 1...10
                     {
                         yAvg += avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/20.0)
+                    yPoints.append(yAvg/10.0)
                 default:
                     break
                 }
