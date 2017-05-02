@@ -306,38 +306,54 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     @IBAction func generateWLS(_ sender: Any) {
         
-        //patrickTest()
+        var classArray = WLSSpinArray2D()
+        var classWLS = WLS()
+        
+        var J:Double = 1
+        
+        var Array = create2D(size: 4, type: "RANDOM")
+        
+        var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
+        var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
+        
+        var acceptState:Bool = false
+        
+        classArray.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
+        classWLS.initialize(possibleEnergies: possibleEnergies)
         
         
+        while classWLS.multiplicitiveFactor > 1 + pow(10,-8){
+            //for g in 0...Dimentions{
+            while !(classWLS.isFlat){
+                
+                for i in 0...9999{
+                    
+                    classArray.calculateEnergyChange()
+                    
+                    classWLS.relativeProbability(oldEnergy: classArray.Energy, energyChange: classArray.energyChange)
+                    
+                    acceptState = classWLS.acceptState
+                    
+                    if acceptState{
+                        classArray.commitToSpinFlip()
+                    }
+                    //print(testclass.Energy)
+                    classWLS.updateWLS(newEnergy: classArray.Energy)
+                }
+                
+                classWLS.checkFlat()
+                //print(testWLS.isFlat)
+                //print(testWLS.multiplicitiveFactor)
+            }//end of flat check
+            // } //end of extra test
+            classWLS.isFlat = false
+        }//end of F updates
         
-        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
-        let MaxIterations:Int = Int(maxIterations.doubleValue)
-        let temperature:Double = Temperature.doubleValue
-        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
-        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
-        let StartType:Int = Int(startType.doubleValue)
-        let Dimentions:Int = Int(numberofDimentions.doubleValue)
-        let EnergyType:Int = Int(energyType.doubleValue)
+        classWLS.removeDOSZeroes()
+        classWLS.normalize()
+        //classWLS.eulerDOS()
+        Plot2(Xaxis: classWLS.Energies, Yaxis: classWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
-        
-        //var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
-        
-        
-        var DOS:[Double] = generate2DWLSSystem(numberofSpins:NumberofSpins, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Log:true)
-        
-        
-        
-        //var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
-        var spins:[[Int8]] = create2D(size: NumberofSpins, type: "UP")
-        
-        //var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
-        
-        var energies:[Double] = generatePossible2DEnergies(Spins:spins,J:nearestNeighborCoupling)
-        
-        //print(DOS.count)
-        //print(energies.count)
-        //print(DOS)
-        Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
         
         
         
@@ -346,7 +362,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 
     @IBAction func test(_ sender: Any) {
-        let Dimentions:Int = Int(whatDimention.doubleValue)
+        
         var testclass = WLSSpinArray2D()
         var testWLS = WLS()
         
