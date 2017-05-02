@@ -27,7 +27,7 @@ class WLSSpinArray2D {
         Arraylength = newArraylength
     }
     
-    func calculateEnergyChange() -> Double{
+    func calculateEnergyChange(){
         var row = Int.getRandomNumber(lower:0, upper:Arraylength-1)
         var column = Int.getRandomNumber(lower:0, upper:Arraylength-1)
         
@@ -75,7 +75,6 @@ class WLSSpinArray2D {
         newrow = row
         newcolumn = column
         
-        return energyChange
     }
     
     func commitToSpinFlip() {
@@ -177,6 +176,7 @@ class WLS {
         
         var relativeProbability:Double = exp(log(density1)-log(density2))
         var rng:Double = Double.getRandomNumber(lower:0, upper:1)
+        print("rng",rng)
         
         if relativeProbability >= rng || density2 <= density1{
             acceptState =  true
