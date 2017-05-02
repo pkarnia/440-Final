@@ -16,7 +16,7 @@ func generate1DEnergy(Spins:[Int8], J:Double) -> Double {
     for i in 0...Spins.count-2 { //sums over S*S+1
         sum1 = sum1 + Double(Spins[i])*Double(Spins[i+1])
     }
-    Energy = -J*2*sum1 //2 because every contribution needs to be counted twice
+    Energy = -J*sum1
     
     if Energy == -0.0{
         Energy = -Energy

@@ -81,7 +81,7 @@ func addtoWLSHistogram(currentHistogram:[Double],histogramEnergies:[Double], new
         }
     }
     
-    let flattness:Double = avgArrayValue1D(input: currentEnergies)
+    let flattness:Double = avgArrayValue1D(input: Histogram)
     var isFlat:Bool = false
     
     if(Double(Histogram.min()!) >= (0.8*flattness)) //checks if the histogram is flat enough
@@ -278,7 +278,7 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
 func generate2DWLSSystem(numberofSpins:Int, T:Double,J:Double, J2: Double, Log:Bool) -> [Double]  {
     
     //Generate 2D spin arrays
-    var Spins:[[Int8]] = create2D(size: numberofSpins, type: "RANDOM")
+    var Spins:[[Int8]] = create2D(size: numberofSpins, type: "UP")
     var newSpins:[[Int8]] = [[]]
     
     
@@ -303,9 +303,9 @@ func generate2DWLSSystem(numberofSpins:Int, T:Double,J:Double, J2: Double, Log:B
 
 
     
-    //while (multiplicitiveFactor-1)>pow(10,-8){
-        //while !isFlat{
-    for q in 0...99{
+    while (multiplicitiveFactor-1)>pow(10,-8){
+    while !isFlat{
+    //for q in 0...99{
             for i in 1...10000{
                 
                 
@@ -326,6 +326,7 @@ func generate2DWLSSystem(numberofSpins:Int, T:Double,J:Double, J2: Double, Log:B
                 //checks if new state should be accepted
                 if WLSRelativeProbability(oldDensity: oldDensity, newDensity: newDensity, Log:Log){
                     //if accepted overwrite old spins and energies
+                    //print("Counter", i, "     ", "Energy", oldEnergy-newEnergy)
                     oldEnergy = newEnergy
                     Spins = newSpins
                     
@@ -344,10 +345,11 @@ func generate2DWLSSystem(numberofSpins:Int, T:Double,J:Double, J2: Double, Log:B
             histogramEnergies = histogramTuple.histogramEnergies
             isFlat = histogramTuple.isFlat
             print(isFlat)
+            print(multiplicitiveFactor)
             //print(Histogram)
             
-        //} //end of flat check
-    }//extra
+        } //end of flat check
+    //}//extra
     
         multiplicitiveFactor = updateMultiplicitiveFactor(multiplicitiveFactor: multiplicitiveFactor)
         //print(histogramEnergies)
@@ -362,7 +364,7 @@ func generate2DWLSSystem(numberofSpins:Int, T:Double,J:Double, J2: Double, Log:B
         visitedEnergies.append(oldEnergy)
         
         isFlat = false
-   // }//end of multiplicitivefactor updates
+    }//end of multiplicitivefactor updates
 
     
     

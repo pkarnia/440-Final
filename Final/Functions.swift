@@ -32,7 +32,7 @@ func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all p
     
     var counter:Int = 0
     while (Energies[counter] - 2.0*Double(Spins.count)) < -pow(10,-10){
-        Energies.append(Energies[counter] + 8.0)
+        Energies.append(Energies[counter] + 2.0)
         counter = counter + 1
     }
     
@@ -45,7 +45,7 @@ func generatePossible2DEnergies(Spins:[[Int8]],J:Double) -> [Double] { //gives a
     
     var counter:Int = 0
     while (Energies[counter] - 2.0*pow(Double(Spins.count),2)) < -pow(10,-10){
-        Energies.append(Energies[counter] + 8.0)
+        Energies.append(Energies[counter] + 4.0)
         counter = counter + 1
     }
     
