@@ -28,7 +28,6 @@ class WLSSpinArray2D {
         var column = Int.getRandomNumber(lower:0, upper:Arraylength-1)
         var energyChange:Double = 0
         print(Arraylength)
-        //energyChange = Double(Array[0][0])
         
         //4 corners Boundary Conditions
         if row == 0 && column == 0{
@@ -87,6 +86,13 @@ class WLS {
     var DOS:[Double] = []
     var multiplicitiveFactor:Double = exp(1.0)
     
+    //used to calculate relative prob
+    var density1:Double = 0
+    var density2:Double = 0
+    
+    //should be passed into array class
+    var acceptState:Bool = false
+    
     // initialize Histogram and DOS to 0 for every E
     func initialize(possibleEnergies:[Double]) {
         Energies = possibleEnergies
@@ -133,5 +139,35 @@ class WLS {
         multiplicitiveFactor = pow(multiplicitiveFactor,2)
         }
     }
+    
+    
+    func relativeProbability(oldEnergy:Double, energyChange:Double){
+        var newEnergy = oldEnergy + energyChange
+        
+        for i in 0...Energies.count-1{
+            if oldEnergy == Energies[i]{
+                density1 = DOS[i]
+            }
+            if newEnergy == Energies[i]{
+                density2 = DOS[i]
+            }
+        }
+        
+        var relativeProbability:Double = density1/density2
+        var rng:Double = Double.getRandomNumber(lower:0, upper:1)
+        
+        if relativeProbability >= rng || density2 <= density1{
+            acceptState =  true
+        }
+        else{
+            acceptState =  false
+        }
+
+        
+        
+        
+    }
+    
+    
     
     }
