@@ -89,7 +89,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     //  Started
     @IBAction func magVtemp(_ sender: Any)
     {
-        let Log = true
+        let Log = false
         var xPoints = [Double]()
         var yPoints = [Double]()
         let xRange = 50.0
@@ -104,20 +104,20 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 {
                 case 1:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                         yAvg += log(abs(totalMagnetization1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                         yAvg += log(abs(totalMagnetization2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                 default:
                     break
                 }
@@ -126,21 +126,21 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 {
                 case 1:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                         yAvg += abs(totalMagnetization1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                     
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                         yAvg += abs(totalMagnetization2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                 default:
                     break
                 }
@@ -169,21 +169,21 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 {
                 case 1:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                     yAvg += log(avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                     
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                     yAvg += log(avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue)))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                 default:
                     break
                 }
@@ -192,21 +192,21 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 {
                 case 1:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                         yAvg += avgDomainSize1D(input: findDomains1D(input: generateMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                     
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...100
                     {
                         yAvg += avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/100.0)
                 default:
                     break
                 }
@@ -367,8 +367,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         testWLS.initialize(possibleEnergies: possibleEnergies)
         
         
-        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
-        while !(testWLS.isFlat){
+        //while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
+        //while !(testWLS.isFlat){
             
         for i in 0...9999{
             
@@ -388,8 +388,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         testWLS.checkFlat()
             //print(testWLS.isFlat)
             //print(testWLS.multiplicitiveFactor)
-        }//end of flat check
-    }//end of F updates
+        //}//end of flat check
+    //}//end of F updates
         
         Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
@@ -438,8 +438,8 @@ func makePlot(xLabel: String, yLabel: String, xMin: Double, xMax: Double, yMin: 
     
     
     
-    plotSpace.yRange = CPTPlotRange(location: NSNumber(value: yMin), length: NSNumber(value: (yMax-yMin)))
-    plotSpace.xRange = CPTPlotRange(location: NSNumber(value: xMin), length: NSNumber(value: (xMax-xMin)))
+    plotSpace.yRange = CPTPlotRange(location: NSNumber(value: yMin), length: NSNumber(value: (yMax-yMin)*1.25))
+    plotSpace.xRange = CPTPlotRange(location: NSNumber(value: xMin), length: NSNumber(value: (xMax-xMin)*1.25))
     
     
     //Anotation
@@ -477,13 +477,13 @@ func makePlot(xLabel: String, yLabel: String, xMin: Double, xMax: Double, yMin: 
     let axisSet = newGraph.axisSet as! CPTXYAxisSet
     
     if let x = axisSet.xAxis {
-        x.majorIntervalLength   = 5.0
+        x.majorIntervalLength   = 10.0
         x.orthogonalPosition    = 0.0
         x.minorTicksPerInterval = 0
     }
     
     if let y = axisSet.yAxis {
-        y.majorIntervalLength   = 5.0
+        y.majorIntervalLength   = 1.0
         y.minorTicksPerInterval = 0
         y.orthogonalPosition    = 0.0
         y.delegate = self

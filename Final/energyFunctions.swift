@@ -44,6 +44,28 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], J:Double, J2:Double) -> D
 
 //Our system is limited to a grid
 //2D energy is calculated by parsing the 2D array into a series of 1D arrays
+func initalize2DNearestNeighborsEnergy(Spins:[[Int8]], J:Double) -> Double {
+    
+    var Energy:Double = 0
+    var transposedSpins:[[Int8]] = transpose2(input: Spins)
+    
+    let length = Spins.count
+    
+    for i in 0...length-1 { //columns
+        Energy = Energy + generate1DEnergy(Spins: Spins[i], J: J)
+    }
+    
+    
+    for j in 0...length-1 { //rows
+        Energy = Energy + generate1DEnergy(Spins: transposedSpins[j], J: J)
+    }
+    
+    
+    return Energy
+}
+
+//Our system is limited to a grid
+//2D energy is calculated by parsing the 2D array into a series of 1D arrays
 func generate2DNearestNeighborsEnergy(Spins:[[Int8]], J:Double) -> Double {
     
     var Arraylength = Spins.count
