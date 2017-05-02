@@ -60,25 +60,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     func patrickTest()
     {
-        var data = wlsData()
-        data.spinArray = create1D(size: Int(numberofSpins.doubleValue), type: "RANDOM")
-        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
-        let MaxIterations:Int = Int(maxIterations.doubleValue)
-        let temperature:Double = Temperature.doubleValue
-        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
-        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
-        let StartType:Int = Int(startType.doubleValue)
-        let Dimentions:Int = Int(numberofDimentions.doubleValue)
-        let EnergyType:Int = Int(energyType.doubleValue)
         
-        var DOS:[Double] = generateWLSSystemNew(spins: data, maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
-        
-        var energies:[Double] = generatePossibleEnergies(Spins: data.spinArray,J:nearestNeighborCoupling)
-        
-        print(DOS.count)
-        print(energies.count)
-        print(DOS)
-        Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
     }
     
     //  Plotting Total Magnetization verus Temperature
@@ -232,7 +214,6 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
             var metropolis2D:[[Int8]] = generate2DMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
             
             draw2DArray(input: metropolis2D, plot: displayView)
-            //print2dArrayInt8(input: metropolis2D)
         }
         else{
             
@@ -240,14 +221,8 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
             var metropolis:[Int8] = generateMetropolisSystem(numberofSpins:NumberofSpins, maxIterations:MaxIterations, T:temperature, J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, startType:StartType, energyType:EnergyType)
         
             draw1DArray(input: metropolis, plot: displayView)
-        
         }
-        
-        
-        //print(generateWLSSystem(numberofSpins: 5, maxIterations: 10, Dimentions: 1, T: 5, J: 1, J2: 1/2, Plot: 0,Log:true))
-        
-        
-            }
+    }
     
 
     @IBAction func plotInternalEnergyvsTemp(_ sender: Any) {
@@ -297,8 +272,6 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         }
         
         Plot2(Xaxis:temperatureArray, Yaxis:internalEnergyArray, Xlabel:"KbT", Ylabel:"U")
-        
-
         
     }
 
