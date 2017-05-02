@@ -36,7 +36,7 @@ func generate1DNextNearestNeighborEnergy(Spins:[Int8], J:Double, J2:Double) -> D
         sum3 = sum3 + Double(Spins[i])*Double(Spins[i+2])
     }
     
-    Energy = Energy - J2*2*sum3
+    Energy = Energy - J2*sum3
     
     return Energy
     

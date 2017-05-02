@@ -15,6 +15,7 @@
 		8CDEBFE61EA56D040009269F /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CDEBFD71EA56C2A0009269F /* CorePlot.framework */; };
 		8CDEBFE71EA56D040009269F /* CorePlot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CDEBFD71EA56C2A0009269F /* CorePlot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8CDEBFEC1EA580740009269F /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDEBFEB1EA580740009269F /* Functions.swift */; };
+		8CF8FD381EB8D9CB00EE3155 /* WLS classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF8FD371EB8D9CB00EE3155 /* WLS classes.swift */; };
 		CD5174BA1EB4D3D3003D89FE /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5174B91EB4D3D3003D89FE /* Arrays.swift */; };
 		CD5174C81EB4F59B003D89FE /* Magnetization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5174C71EB4F59B003D89FE /* Magnetization.swift */; };
 		FA201F741EA16A960027AA79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA201F731EA16A960027AA79 /* AppDelegate.swift */; };
@@ -127,6 +128,7 @@
 		8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberExtensions.swift; sourceTree = "<group>"; };
 		8CDEBFC61EA56C2A0009269F /* CorePlot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CorePlot.xcodeproj; path = "core-plot-release-2.3/framework/CorePlot.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		8CDEBFEB1EA580740009269F /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		8CF8FD371EB8D9CB00EE3155 /* WLS classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WLS classes.swift"; sourceTree = "<group>"; };
 		CD5174B91EB4D3D3003D89FE /* Arrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
 		CD5174C71EB4F59B003D89FE /* Magnetization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Magnetization.swift; sourceTree = "<group>"; };
 		FA201F701EA16A950027AA79 /* Final.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Final.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +216,7 @@
 				8C20D7881EB676D3001C3F49 /* MetropolisFunctions.swift */,
 				8C20D7961EB6773A001C3F49 /* WLSfunctions.swift */,
 				CD5174B91EB4D3D3003D89FE /* Arrays.swift */,
+				8CF8FD371EB8D9CB00EE3155 /* WLS classes.swift */,
 				CD5174C71EB4F59B003D89FE /* Magnetization.swift */,
 				8CC750E51EA16E140062F09A /* RandomNumberExtensions.swift */,
 				8C355B421EAAAA5200C0D89D /* DrawingView.swift */,
@@ -446,6 +449,7 @@
 				8C20D7891EB676D3001C3F49 /* MetropolisFunctions.swift in Sources */,
 				8CC750E61EA16E140062F09A /* RandomNumberExtensions.swift in Sources */,
 				CD5174C81EB4F59B003D89FE /* Magnetization.swift in Sources */,
+				8CF8FD381EB8D9CB00EE3155 /* WLS classes.swift in Sources */,
 				CD5174BA1EB4D3D3003D89FE /* Arrays.swift in Sources */,
 				8C20D77A1EB67437001C3F49 /* energyFunctions.swift in Sources */,
 				FA201F761EA16A960027AA79 /* ViewController.swift in Sources */,

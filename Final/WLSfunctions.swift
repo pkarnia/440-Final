@@ -170,6 +170,21 @@ func normalizeDensityofStates(densityofStates:[Double], Spins:[Int8]) -> [Double
     return normalizedDOS
 }
 
+func otherNorm(DOS:[Double]) -> [Double]{
+    var Norm:[Double] = []
+    
+    for i in 0...DOS.count-1{
+        
+        Norm.append(DOS[i] - DOS[0] + log(2)) 
+        
+    }
+   
+    return Norm
+}
+
+
+
+
 
 func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot: DrawingView, Log:Bool) -> [Double]  {
     //generateSpins
@@ -277,7 +292,7 @@ func generateWLSSystem(numberofSpins:Int,maxIterations:Int, Dimentions:Int, T:Do
     //print("D",declined)
     //print(densityofStates.count)
     //print(possibleEnergies.count)
-    return densityofStates
+    return otherNorm(DOS: densityofStates)
 }
 
 func generateWLSSystemNew(spins: wlsData,maxIterations:Int, Dimentions:Int, T:Double,J:Double, J2: Double, Plot: DrawingView, Log:Bool) -> [Double]  {
@@ -489,6 +504,6 @@ func generate2DWLSSystem(numberofSpins:Int, T:Double,J:Double, J2: Double, Log:B
     
     
     
-    return densityofStates
+    return otherNorm(DOS: densityofStates)
 }
 

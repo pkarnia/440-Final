@@ -310,9 +310,9 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     @IBAction func generateWLS(_ sender: Any) {
         
-        patrickTest()
+        //patrickTest()
         
-        /*
+        
         
         let NumberofSpins:Int = Int(numberofSpins.doubleValue)
         let MaxIterations:Int = Int(maxIterations.doubleValue)
@@ -340,15 +340,35 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         //print(DOS.count)
         //print(energies.count)
-        print(DOS)
+        //print(DOS)
         Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
         
-        */
+        
         
     }
 
 
 
+    @IBAction func test(_ sender: Any) {
+        
+        var testclass = WLSSpinArray2D()
+        
+        var J:Double = 1
+        
+        
+        var Array = create2D(size: 4, type: "RANDOM")
+        
+        var energy = generate2DNearestNeighborsEnergy(Spins:Array, J:J)
+        
+        
+        testclass.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
+        
+        for i in 0...99{
+            print(testclass.calculateEnergyChange())
+        }
+        
+        
+    }
 
 
 
