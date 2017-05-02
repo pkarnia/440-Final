@@ -153,7 +153,7 @@ class WLS {
             }
         }
         
-        var relativeProbability:Double = density1/density2
+        var relativeProbability:Double = exp(log(density1)-log(density2))
         var rng:Double = Double.getRandomNumber(lower:0, upper:1)
         
         if relativeProbability >= rng || density2 <= density1{
