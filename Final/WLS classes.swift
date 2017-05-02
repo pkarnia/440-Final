@@ -115,6 +115,7 @@ class WLS {
             if newEnergy == Energies[i]{
                 Histogram[i] = Histogram[i] + 1
                 DOS[i] = DOS[i] + log(multiplicitiveFactor)
+               // print("H:", Histogram[i], "   DOS:", DOS[i])
             }
         }
     }
@@ -133,9 +134,9 @@ class WLS {
             }
         }
         
-        //flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
+        flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
         
-        var average:Double = 0
+        /*var average:Double = 0
         
         for k in 0...noZeroHistogram.count-1{
             average = average + noZeroHistogram[k]
@@ -145,7 +146,8 @@ class WLS {
         if noZeroHistogram.min()! > 0.8*average{
            isFlat = true
         }
-        print("min:",noZeroHistogram.min()!,"    0.8Average", 0.8*average)
+        //print("min:",noZeroHistogram.min()!,"  0.8Average", 0.8*average)
+        */
         
         //print(flattness)
         if flattness < 0.2{
@@ -153,10 +155,11 @@ class WLS {
         }
         
         if isFlat{
-        for i in 0...Energies.count-1{
-        Histogram[i] = 0
-        }
-        multiplicitiveFactor = pow(multiplicitiveFactor,2)
+            for i in 0...Energies.count-1{
+                Histogram[i] = 0
+            }
+            
+            multiplicitiveFactor = pow(multiplicitiveFactor,0.5)
         }
     }
     
@@ -173,23 +176,61 @@ class WLS {
                 density2 = DOS[i]
             }
         }
+       // print("DOS1",density1)
+        //print("DOS2",density2)
         
-        var relativeProbability:Double = exp(log(density1)-log(density2))
+        
+        var relativeProbability:Double = exp(density1-density2)
         var rng:Double = Double.getRandomNumber(lower:0, upper:1)
         //print("rng",rng)
         
-        if relativeProbability >= rng || density2 <= density1{
+        if 1-relativeProbability <= rng || density2 <= density1{
             acceptState =  true
         }
         else{
             acceptState =  false
         }
 
-        
-        
+        //print(acceptState)
         
     }
     
+    func removeDOSZeroes() {
+        
+        var newDOS:[Double] = []
+        var newEnergies:[Double] = []
+        var count:Int = Energies.count
+        
+        for j in 0...count-1{
+            if (DOS[j] != 0){
+                newDOS.append(DOS[j])
+                newEnergies.append(Energies[j])
+            }
+        }
+        DOS = newDOS
+        Energies = newEnergies
+    }
     
+    
+    func normalize(){
+        
+        var norm:[Double] = []
+        
+        for i in 0...DOS.count-1{
+            norm.append(DOS[i]-DOS[0]+log(2))
+        }
+        
+        DOS = norm
+    }
+ 
+    func eulerDOS(){
+        
+        
+        for i in 0...DOS.count-1{
+            DOS[i] = exp(DOS[i])
+        }
+        
+        
+    }
     
     }

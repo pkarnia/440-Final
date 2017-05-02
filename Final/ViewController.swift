@@ -179,12 +179,12 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...20
+                    for _ in 1...10
                     {
                         yAvg += avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/20.0)
+                    yPoints.append(yAvg/10.0)
                 default:
                     break
                 }
@@ -315,15 +315,15 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
 
 
     @IBAction func test(_ sender: Any) {
-        
+        let Dimentions:Int = Int(whatDimention.doubleValue)
         var testclass = WLSSpinArray2D()
         var testWLS = WLS()
         
         var J:Double = 1
         
-        var Array = create2D(size: 4, type: "UP")
+        var Array = create2D(size: 8, type: "UP")
         
-        var energy = generate2DNearestNeighborsEnergy(Spins:Array, J:J)
+        var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
         
         var acceptState:Bool = false
@@ -332,8 +332,9 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         testWLS.initialize(possibleEnergies: possibleEnergies)
         
         
-        //while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
-        //while !(testWLS.isFlat){
+        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
+        //for g in 0...Dimentions{
+        while !(testWLS.isFlat){
             
         for i in 0...9999{
             
@@ -346,16 +347,22 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         if acceptState{
             testclass.commitToSpinFlip()
         }
-        
+        //print(testclass.Energy)
         testWLS.updateWLS(newEnergy: testclass.Energy)
         }
             
         testWLS.checkFlat()
             //print(testWLS.isFlat)
             //print(testWLS.multiplicitiveFactor)
-        //}//end of flat check
-    //}//end of F updates
+       }//end of flat check
+       // } //end of extra test
+            testWLS.isFlat = false
+    }//end of F updates
         
+        testWLS.removeDOSZeroes()
+        testWLS.normalize()
+        testWLS.eulerDOS()
+        print(testWLS.DOS)
         Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
     }
@@ -371,7 +378,7 @@ func Plot2(Xaxis:[Double], Yaxis:[Double], Xlabel:String, Ylabel:String) {
         contentArray.append(dataPoint)
     }
     
-    makePlot(xLabel: Xlabel, yLabel: Ylabel, xMin: Xaxis.min()! - 0.1, xMax: Xaxis.max()! * 1.1, yMin: Yaxis.min()! - 0.1, yMax: Yaxis.max()! * 1.1)
+    makePlot(xLabel: Xlabel, yLabel: Ylabel, xMin: Xaxis.min()! - 0.1, xMax: Xaxis.max()! * 1.1, yMin: -0.1, yMax: Yaxis.max()! * 1.1)
     contentArray.removeAll()
 }
 
