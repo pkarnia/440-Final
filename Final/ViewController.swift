@@ -382,6 +382,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         }
         testWLS.checkFlat()
             print(testWLS.isFlat)
+            print(testWLS.multiplicitiveFactor)
         }//end of flat check
    // }//end uf F updates
         

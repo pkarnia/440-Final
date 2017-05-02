@@ -129,14 +129,17 @@ class WLS {
         isFlat = false
         
         for j in 0...Histogram.count-1{
-            if !(Histogram[j] == 0){
+            if (Histogram[j] != 0){
                 noZeroHistogram.append(Histogram[j])
             }
         }
         
         flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
         print(flattness)
-        if flattness < 0.2{
+        //if flattness < 0.2
+        print("Min:   ", Double(noZeroHistogram.min()!), "    Avg:", avgArrayValue1D(input: noZeroHistogram))
+        if(Double(noZeroHistogram.min()!) >= avgArrayValue1D(input: noZeroHistogram))
+        {
             isFlat = true
         }
         
