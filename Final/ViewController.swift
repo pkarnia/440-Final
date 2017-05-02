@@ -367,7 +367,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         testWLS.initialize(possibleEnergies: possibleEnergies)
         
         
-        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
+        //while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
         while !(testWLS.isFlat){
         for i in 0...9999{
         testWLS.relativeProbability(oldEnergy: testclass.Energy, energyChange: testclass.calculateEnergyChange())
@@ -381,8 +381,12 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         testWLS.updateWLS(newEnergy: testclass.Energy)
         }
         testWLS.checkFlat()
-        }
-    }
+            print(testWLS.isFlat)
+        }//end of flat check
+   // }//end uf F updates
+        
+        Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
+        
     }
 
 

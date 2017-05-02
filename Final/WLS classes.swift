@@ -31,7 +31,7 @@ class WLSSpinArray2D {
         var row = Int.getRandomNumber(lower:0, upper:Arraylength-1)
         var column = Int.getRandomNumber(lower:0, upper:Arraylength-1)
         
-        print(Arraylength)
+        //print(Arraylength)
         
         //4 corners Boundary Conditions
         if row == 0 && column == 0{
@@ -135,7 +135,7 @@ class WLS {
         }
         
         flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
-        
+        print(flattness)
         if flattness < 0.2{
             isFlat = true
         }
