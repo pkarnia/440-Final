@@ -34,7 +34,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     
    // @IBOutlet weak var whatAlgorithm: NSTextField!
-    @IBOutlet weak var whatEnergy: NSTextField!
+    //@IBOutlet weak var whatEnergy: NSTextField!
     @IBOutlet weak var whatDimention: NSTextField!
     
     
@@ -239,7 +239,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let StartType:Int = 0
         
         let Dimentions:Int = Int(whatDimention.doubleValue)
-        let EnergyType:Int = Int(whatEnergy.doubleValue)
+        let EnergyType:Int = 0
         //let Algorithm:Int = Int(whatAlgorithm.doubleValue)
         
         var spins1D:[Int8] = []
@@ -333,60 +333,66 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     }
 
 
+    @IBAction func plotSpecificHeat(_ sender: Any) {
+        
+        
+        let NumberofSpins:Int = 25
+        let Numberof2DSpins:Int = 10
+        let MaxIterations:Int = 10000
+        
+        var temperature:Double = 0.1
+        let temperatureChange:Double = 0.1
+        
+        let nearestNeighborCoupling:Double = 1
+        let nextNearestNeighborCoupling:Double = 0.5
+        let StartType:Int = 0
+        
+        let Dimentions:Int = Int(whatDimention.doubleValue)
+        let EnergyType:Int = 0
+        
+        var spins1D:[Int8] = []
+        var spins2D:[[Int8]] = [[]]
+        
+        var temperatureArray:[Double] = []
+        var energyArray:[Double] = []
+        var specificHeatArray:[Double] = []
+        
+        var count:Double = 0
+        
+        if Dimentions == 2{
+            count = pow(Double(Numberof2DSpins),2)
+        }
+        else{
+            count = Double(NumberofSpins)
+        }
+        
+        
+        for j in 0...100{
+            for i in 0...10{
+                
+                var spinTuple = algorithmSwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
+                
+                spins1D = spinTuple.spins1D
+                spins2D = spinTuple.spins2D
+                
+                
+                energyArray.append(energySwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, array1D:spins1D, array2D:spins2D))
+                
+            }
+            
+            temperatureArray.append(temperature)
+            specificHeatArray.append(calculateSpecificHeat(energyArray:energyArray,count:count,J:nearestNeighborCoupling,T:temperature))
+            
+            temperature = temperature + temperatureChange
+            energyArray.removeAll()
+        }
 
-    @IBAction func test(_ sender: Any) {
-        
-        var testclass = WLSSpinArray2D()
-        var testWLS = WLS()
-        
-        var J:Double = 1
-        
-        var Array = create2D(size: 8, type: "UP")
-        
-        var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
-        var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
-        
-        var acceptState:Bool = false
-        
-        testclass.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
-        testWLS.initialize(possibleEnergies: possibleEnergies)
+        print(specificHeatArray)
+       Plot2(Xaxis:temperatureArray, Yaxis:specificHeatArray, Xlabel:"KbT", Ylabel:"C")
         
         
-        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
-        //for g in 0...Dimentions{
-        while !(testWLS.isFlat){
-            
-        for i in 0...9999{
-            
-        testclass.calculateEnergyChange()
-            
-        testWLS.relativeProbability(oldEnergy: testclass.Energy, energyChange: testclass.energyChange)
-        
-        acceptState = testWLS.acceptState
-        
-        if acceptState{
-            testclass.commitToSpinFlip()
-        }
-        //print(testclass.Energy)
-        testWLS.updateWLS(newEnergy: testclass.Energy)
-        }
-            
-        testWLS.checkFlat()
-            //print(testWLS.isFlat)
-            //print(testWLS.multiplicitiveFactor)
-       }//end of flat check
-       // } //end of extra test
-            testWLS.isFlat = false
-    }//end of F updates
-        
-        testWLS.removeDOSZeroes()
-        testWLS.normalize()
-        testWLS.eulerDOS()
-        print(testWLS.DOS)
-        Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
     }
-
 
 
 
@@ -398,7 +404,7 @@ func Plot2(Xaxis:[Double], Yaxis:[Double], Xlabel:String, Ylabel:String) {
         contentArray.append(dataPoint)
     }
     
-    makePlot(xLabel: Xlabel, yLabel: Ylabel, xMin: Xaxis.min()! - 0.1, xMax: Xaxis.max()! * 1.1, yMin: -0.1, yMax: Yaxis.max()! * 1.1)
+    makePlot(xLabel: Xlabel, yLabel: Ylabel, xMin: Xaxis.min()! - 0.1, xMax: Xaxis.max()! * 1.1, yMin: Yaxis.min()!-0.1, yMax: Yaxis.max()! * 1.1)
     contentArray.removeAll()
 }
 

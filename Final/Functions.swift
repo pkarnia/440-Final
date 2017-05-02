@@ -141,13 +141,13 @@ func energyFlucuations(energyArray:[Double]) -> Double {
 }
 
 
-func calculateSpecificHeat(energyArray:[Double],Spins:[Int8],J:Double,T:Double) -> Double {
+func calculateSpecificHeat(energyArray:[Double],count:Double,J:Double,T:Double) -> Double {
     var specificHeat:Double = 0
     
     var averageEnergy:Double = calculateAverage(Array: energyArray)
     var energyFlux:Double = energyFlucuations(energyArray: energyArray)
     
-    specificHeat = (energyFlux-pow(averageEnergy,2))/(pow(T,2)*pow(Double(Spins.count),2))
+    specificHeat = 8.617*pow(10,5)*(energyFlux-pow(averageEnergy,2))/(pow(T,2)*pow(count,2))
     
     return specificHeat
 }
