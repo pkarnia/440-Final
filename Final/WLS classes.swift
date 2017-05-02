@@ -14,7 +14,7 @@ class WLSSpinArray2D {
     var Arraylength:Int = 0
     var J:Double = 1
     var newrow:Int = 0
-    var newcolumn:int = 0
+    var newcolumn:Int = 0
     
     
     func initialize(newArray:[[Int8]],newEnergy:Double,newArraylength:Int){
@@ -81,3 +81,57 @@ class WLSSpinArray2D {
  
 }
 
+class WLS {
+    var Histogram:[Double] = []
+    var Energies:[Double] = []
+    var DOS:[Double] = []
+    var multiplicitiveFactor:Double = exp(1.0)
+    
+    // initialize Histogram and DOS to 0 for every E
+    func initialize(possibleEnergies:[Double]) {
+        Energies = possibleEnergies
+        for i in 0...Energies.count-1{
+            Histogram.append(0)
+            DOS.append(0)
+        }
+    }
+    
+    //Updates Histogram and DOS given a new Energy
+    func updateWLS(newEnergy:Double) {
+        for i in 0...Energies.count-1{
+            if newEnergy == Energies[i]{
+                Histogram[i] = Histogram[i] + 1
+                DOS[i] = DOS[i] + log(multiplicitiveFactor)
+            }
+        }
+    }
+    
+    //Checks if Histogram is flat
+    //resets histogram to 0 and updates multiplicitive Factor
+    func checkFlat() {
+        
+        var noZeroHistogram:[Double] = []
+        var isFlat:Bool = false
+        var flattness:Double = 100
+        
+        for j in 0...Histogram.count-1{
+            if !(Histogram[j] == 0){
+                noZeroHistogram.append(Histogram[j])
+            }
+        }
+        
+        flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
+        
+        if flattness < 0.2{
+            isFlat = true
+        }
+        
+        if isFlat{
+        for i in 0...Energies.count-1{
+        Histogram[i] = 0
+        }
+        multiplicitiveFactor = pow(multiplicitiveFactor,2)
+        }
+    }
+    
+    }
