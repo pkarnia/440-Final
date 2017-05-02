@@ -110,7 +110,7 @@ func generate2DMetropolisSystem(numberofSpins:Int,maxIterations:Int, T:Double,J:
         newEnergy = oldEnergy + generate2DNearestNeighborsEnergy(Spins: newSpins, J: J)
         
         acceptNewState = metropolisRelativeProbability(oldEnergy:oldEnergy, newEnergy:newEnergy, T:T)
-        print(acceptNewState)
+        //print(acceptNewState)
         if acceptNewState==true{
             oldEnergy=newEnergy
             Spins=newSpins
