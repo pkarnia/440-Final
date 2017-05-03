@@ -349,6 +349,9 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let nearestNeighborCoupling:Double = 1
         let nextNearestNeighborCoupling:Double = 0.5
         let StartType:Int = 0
+        let Numberof2DSpins = 10
+        let NumberofSpins = 25
+        let MaxIterations = 1000
         
         let Dimentions:Int = Int(whatDimention.doubleValue)
         let EnergyType:Int = 0
@@ -383,19 +386,16 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                 
             }
             
-        testWLS.checkFlat()
-            //print(testWLS.isFlat)
-            //print(testWLS.multiplicitiveFactor)
-       }//end of flat check
-       // } //end of extra test
-            testWLS.isFlat = false
-    }//end of F updates
+            temperatureArray.append(temperature)
+            specificHeatArray.append(calculateSpecificHeat(energyArray:energyArray,count:count,J:nearestNeighborCoupling,T:temperature))
+            
+            temperature = temperature + temperatureChange
+            energyArray.removeAll()
+        }
+
+        print(specificHeatArray)
+       Plot2(Xaxis:temperatureArray, Yaxis:specificHeatArray, Xlabel:"KbT", Ylabel:"C")
         
-        testWLS.removeDOSZeroes()
-        testWLS.normalize()
-        //testWLS.eulerDOS()
-        print(testWLS.DOS)
-        Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
     }
 
