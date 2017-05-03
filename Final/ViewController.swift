@@ -197,12 +197,12 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...20
                     {
                         yAvg += avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/20.0)
                 default:
                     break
                 }
@@ -352,7 +352,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         var J:Double = 1
         
-        var Array = create2D(size: 8, type: "UP")
+        var Array = create2D(size: 16, type: "UP")
         
         var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
@@ -392,7 +392,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         testWLS.removeDOSZeroes()
         testWLS.normalize()
-        testWLS.eulerDOS()
+        //testWLS.eulerDOS()
         print(testWLS.DOS)
         Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
@@ -480,13 +480,13 @@ func makePlot(xLabel: String, yLabel: String, xMin: Double, xMax: Double, yMin: 
     let axisSet = newGraph.axisSet as! CPTXYAxisSet
     
     if let x = axisSet.xAxis {
-        x.majorIntervalLength   = 10.0
+        x.majorIntervalLength   = 100.0 //test
         x.orthogonalPosition    = 0.0
         x.minorTicksPerInterval = 0
     }
     
     if let y = axisSet.yAxis {
-        y.majorIntervalLength   = 1.0
+        y.majorIntervalLength   = 50.0
         y.minorTicksPerInterval = 0
         y.orthogonalPosition    = 0.0
         y.delegate = self
