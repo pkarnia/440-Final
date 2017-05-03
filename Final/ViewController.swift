@@ -47,12 +47,17 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         super.viewDidLoad()
         
         draw2DArray(input: create2D(size: 8, type: "UP"), plot: displayView)
-        
+        print(pow(Double.greatestFiniteMagnitude,0.5))
+        print(log(Double.greatestFiniteMagnitude))
+        print(log2(Double.greatestFiniteMagnitude))
     }
 
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
+
+            
+            
         }
     }
     
@@ -284,7 +289,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         var J:Double = 1
         
-        var Array = create2D(size: 4, type: "RANDOM")
+        var Array = create2D(size: 64, type: "RANDOM")
         
         var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
@@ -395,7 +400,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     }
 
 
-
+    
 //generic plot function
 func Plot2(Xaxis:[Double], Yaxis:[Double], Xlabel:String, Ylabel:String) {
     for i in 0...(Xaxis.count-1) {
