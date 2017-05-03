@@ -453,6 +453,69 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
        Plot2(Xaxis:temperatureArray, Yaxis:specificHeatArray, Xlabel:"KbT", Ylabel:"C")
         
         
+    */
+    }
+    
+    
+    @IBAction func plotSpecificHeat(_ sender: Any) {
+        
+        
+        let NumberofSpins:Int = 25
+        let Numberof2DSpins:Int = 10
+        let MaxIterations:Int = 10000
+        
+        var temperature:Double = 0.1
+        let temperatureChange:Double = 0.1
+        
+        let nearestNeighborCoupling:Double = 1
+        let nextNearestNeighborCoupling:Double = 0.5
+        let StartType:Int = 0
+        
+        let Dimentions:Int = Int(whatDimention.doubleValue)
+        let EnergyType:Int = 0
+        
+        var spins1D:[Int8] = []
+        var spins2D:[[Int8]] = [[]]
+        
+        var temperatureArray:[Double] = []
+        var energyArray:[Double] = []
+        var specificHeatArray:[Double] = []
+        
+        var count:Double = 0
+        
+        if Dimentions == 2{
+            count = pow(Double(Numberof2DSpins),2)
+        }
+        else{
+            count = Double(NumberofSpins)
+        }
+        
+        
+        for j in 0...100{
+            for i in 0...10{
+                
+                var spinTuple = algorithmSwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
+                
+                spins1D = spinTuple.spins1D
+                spins2D = spinTuple.spins2D
+                
+                
+                energyArray.append(energySwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, array1D:spins1D, array2D:spins2D))
+                
+            }
+            
+            temperatureArray.append(temperature)
+            specificHeatArray.append(calculateSpecificHeat(energyArray:energyArray,count:count,J:nearestNeighborCoupling,T:temperature))
+            
+            temperature = temperature + temperatureChange
+            energyArray.removeAll()
+        }
+        
+        print(specificHeatArray)
+        Plot2(Xaxis:temperatureArray, Yaxis:specificHeatArray, Xlabel:"KbT", Ylabel:"C")
+        
+        
+        
     }
 
 
