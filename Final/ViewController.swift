@@ -453,7 +453,6 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
        Plot2(Xaxis:temperatureArray, Yaxis:specificHeatArray, Xlabel:"KbT", Ylabel:"C")
         
         
-    */
     }
     
     
