@@ -283,12 +283,32 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     @IBAction func generateWLS(_ sender: Any) {
         
+        
+        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
+        let MaxIterations:Int = Int(maxIterations.doubleValue)
+        let temperature:Double = Temperature.doubleValue
+        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
+        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
+        let StartType:Int = Int(startType.doubleValue)
+        let Dimentions:Int = Int(numberofDimentions.doubleValue)
+        let EnergyType:Int = Int(energyType.doubleValue)
+        
+        
+        
+        
         var classArray = WLSSpinArray2D()
         var classWLS = WLS()
         
-        var J:Double = 1
+        var J:Double = nearestNeighborCoupling
         
-        var Array = create2D(size: 4, type: "RANDOM")
+        
+        
+        if Dimentions == 1 {
+            testWLS1D()
+        }
+        else{
+        
+        var Array = create2D(size: NumberofSpins, type: "RANDOM")
         
         var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
@@ -333,19 +353,31 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         
         
-        
+        }
     }
 
     
     func testWLS1D()
     {
-        let Dimentions:Int = Int(whatDimention.doubleValue)
+        
+        
+        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
+        let MaxIterations:Int = Int(maxIterations.doubleValue)
+        let temperature:Double = Temperature.doubleValue
+        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
+        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
+        let StartType:Int = Int(startType.doubleValue)
+        let Dimentions:Int = Int(numberofDimentions.doubleValue)
+        let EnergyType:Int = Int(energyType.doubleValue)
+        
+        
+        
         var classArray = WLSSpinArray1D()
         var classWLS = WLS()
         
-        var J:Double = 1
+        var J:Double = nearestNeighborCoupling
         
-        var Array = create1D(size: 8, type: "UP")
+        var Array = create1D(size: NumberofSpins, type: "RANDOM")
         
         var energy = generate1DEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossibleEnergies(Spins: Array, J: J)

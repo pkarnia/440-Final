@@ -123,11 +123,13 @@ class WLSSpinArray1D  {
         
         energyChange = 2*J*energyChange
         
+        
+        
         if energyChange == -0.0 {
             energyChange = -1*energyChange
         }
         
-        print(energyChange)
+        
         
         newIndex = index
         
