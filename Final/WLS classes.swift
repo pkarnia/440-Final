@@ -69,7 +69,7 @@ class WLSSpinArray2D {
         energyChange = 2*J*energyChange
         
         if energyChange == -0.0 {
-            energyChange = 1*energyChange
+            energyChange = -1*energyChange
         }
         
         newrow = row
@@ -110,24 +110,24 @@ class WLSSpinArray1D  {
         //Boundry Conditions
         if(index == 0)
         {
-            energyChange = Double(Array[index]*Array[index] + Array[Array.count-1] + Array[index+1])
+            energyChange = Double(Array[index]*(Array[Array.count-1] + Array[index+1]))
         }
         else if (index == Array.count-1)
         {
-            energyChange = Double(Array[index]*Array[index] + Array[index-1] + Array[0])
+            energyChange = Double(Array[index]*(Array[index-1] + Array[0]))
         }
         else
         {
-            energyChange = Double(Array[index]*Array[index] + Array[index-1] + Array[index+1])
+            energyChange = Double(Array[index]*(Array[index-1] + Array[index+1]))
         }
         
         energyChange = 2*J*energyChange
         
         if energyChange == -0.0 {
-            energyChange = 1*energyChange
+            energyChange = -1*energyChange
         }
         
-        //print(energyChange)
+        print(energyChange)
         
         newIndex = index
         
@@ -189,7 +189,6 @@ class WLS {
                 noZeroHistogram.append(Histogram[j])
             }
         }
-        
         flattness = (noZeroHistogram.max()!-noZeroHistogram.min()!)/(noZeroHistogram.max()!+noZeroHistogram.min()!)
         
         /*var average:Double = 0

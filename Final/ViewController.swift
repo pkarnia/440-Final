@@ -200,6 +200,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
 
     @IBAction func generateMetropolis(_ sender: Any) {
+        
         //let queue = DispatchQueue(label: "userInit", attributes: .concurrent)
         
         displayView.display()
@@ -287,7 +288,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         var J:Double = 1
         
-        var Array = create2D(size: 64, type: "RANDOM")
+        var Array = create2D(size: 4, type: "RANDOM")
         
         var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
@@ -339,59 +340,59 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     func testWLS1D()
     {
         let Dimentions:Int = Int(whatDimention.doubleValue)
-        var testclass = WLSSpinArray1D()
-        var testWLS = WLS()
+        var classArray = WLSSpinArray1D()
+        var classWLS = WLS()
         
         var J:Double = 1
         
-        var Array = create1D(size: 4, type: "UP")
+        var Array = create1D(size: 8, type: "UP")
         
         var energy = generate1DEnergy(Spins:Array, J:J)
         var possibleEnergies = generatePossibleEnergies(Spins: Array, J: J)
         
         var acceptState:Bool = false
         
-        testclass.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
-        testWLS.initialize(possibleEnergies: possibleEnergies)
+        classArray.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
+        classWLS.initialize(possibleEnergies: possibleEnergies)
         
         
-        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
+        while classWLS.multiplicitiveFactor > 1 + pow(10,-8){
             //for g in 0...Dimentions{
-            while !(testWLS.isFlat){
+            while !(classWLS.isFlat){
                 
                 for i in 0...9999{
                     
-                    testclass.calculateEnergyChange()
+                    classArray.calculateEnergyChange()
                     
-                    testWLS.relativeProbability(oldEnergy: testclass.Energy, energyChange: testclass.energyChange)
+                    classWLS.relativeProbability(oldEnergy: classArray.Energy, energyChange: classArray.energyChange)
                     
-                    acceptState = testWLS.acceptState
+                    acceptState = classWLS.acceptState
                     
                     if acceptState{
-                        testclass.commitToSpinFlip()
+                        classArray.commitToSpinFlip()
                     }
                     //print(testclass.Energy)
-                    testWLS.updateWLS(newEnergy: testclass.Energy)
+                    classWLS.updateWLS(newEnergy: classArray.Energy)
                 }
                 
-                testWLS.checkFlat()
+                classWLS.checkFlat()
                 //print(testWLS.isFlat)
                 //print(testWLS.multiplicitiveFactor)
             }//end of flat check
             // } //end of extra test
-            testWLS.isFlat = false
+            classWLS.isFlat = false
         }//end of F updates
         
-        testWLS.removeDOSZeroes()
-        testWLS.normalize()
+        classWLS.removeDOSZeroes()
+        classWLS.normalize()
         //testWLS.eulerDOS()
-        print(testWLS.DOS)
-        Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
+        print(classWLS.DOS)
+        Plot2(Xaxis: classWLS.Energies, Yaxis: classWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
     }
 
 
     @IBAction func test(_ sender: Any) {
-        /*
+    
         let Dimentions:Int = Int(whatDimention.doubleValue)
         var testclass = WLSSpinArray2D()
         var testWLS = WLS()
@@ -409,7 +410,6 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let NumberofSpins = 25
         let MaxIterations = 1000
         
-        let Dimentions:Int = Int(whatDimention.doubleValue)
         let EnergyType:Int = 0
         
         var spins1D:[Int8] = []
