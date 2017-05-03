@@ -35,7 +35,7 @@ func generatePossibleEnergies(Spins:[Int8],J:Double) -> [Double] { //gives all p
         Energies.append(Energies[counter] + 2.0)
         counter = counter + 1
     }
-    
+    print(Energies)
     return Energies
 }
 
