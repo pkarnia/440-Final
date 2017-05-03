@@ -69,7 +69,7 @@ class WLSSpinArray2D {
         energyChange = 2*J*energyChange
         
         if energyChange == -0.0 {
-            energyChange = -1*energyChange
+            energyChange = 1*energyChange
         }
         
         newrow = row
@@ -82,6 +82,62 @@ class WLSSpinArray2D {
         Energy = Energy + energyChange
     }
  
+}
+
+class WLSSpinArray1D  {
+    var Array:[Int8] = []
+    var Energy:Double = 0
+    var Arraylength:Int = 0
+    var J:Double = 1
+    
+    //Held to flip spin if New state is accepted
+    var newIndex:Int = 0
+    
+    //should be passed into WLS
+    var energyChange:Double = 0
+    
+    func initialize(newArray:[Int8],newEnergy:Double,newArraylength:Int){
+        Array = newArray
+        Energy = newEnergy
+        Arraylength = newArraylength
+    }
+    
+    func calculateEnergyChange(){
+        var index = Int.getRandomNumber(lower:0, upper:Arraylength-1)
+        
+        //print(Arraylength)
+        
+        //Boundry Conditions
+        if(index == 0)
+        {
+            energyChange = Double(Array[index]*Array[index] + Array[Array.count-1] + Array[index+1])
+        }
+        else if (index == Array.count-1)
+        {
+            energyChange = Double(Array[index]*Array[index] + Array[index-1] + Array[0])
+        }
+        else
+        {
+            energyChange = Double(Array[index]*Array[index] + Array[index-1] + Array[index+1])
+        }
+        
+        energyChange = 2*J*energyChange
+        
+        if energyChange == -0.0 {
+            energyChange = 1*energyChange
+        }
+        
+        //print(energyChange)
+        
+        newIndex = index
+        
+    }
+    
+    func commitToSpinFlip() {
+        Array[newIndex] = -Array[newIndex]
+        Energy = Energy + energyChange
+    }
+    
 }
 
 class WLS {
@@ -115,7 +171,7 @@ class WLS {
             if newEnergy == Energies[i]{
                 Histogram[i] = Histogram[i] + 1
                 DOS[i] = DOS[i] + log(multiplicitiveFactor)
-               // print("H:", Histogram[i], "   DOS:", DOS[i])
+                //print("H:", Histogram[i], "   DOS:", DOS[i])
             }
         }
     }
