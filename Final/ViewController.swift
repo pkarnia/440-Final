@@ -34,7 +34,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     
    // @IBOutlet weak var whatAlgorithm: NSTextField!
-    @IBOutlet weak var whatEnergy: NSTextField!
+    //@IBOutlet weak var whatEnergy: NSTextField!
     @IBOutlet weak var whatDimention: NSTextField!
     
     
@@ -53,6 +53,9 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
+
+            
+            
         }
     }
     
@@ -179,12 +182,12 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
                     
                 case 2:
                     yAvg = 0.0
-                    for _ in 1...10
+                    for _ in 1...20
                     {
                         yAvg += avgDomainSize2D(input: findDomains2D(input: generate2DMetropolisSystem(numberofSpins:Int(numberofSpins.intValue), maxIterations:Int(maxIterations.doubleValue), T: Double(temperature), J: NNCoupling.doubleValue, J2: NNNCoupling.doubleValue, startType:Int(startType.intValue), energyType:Int(energyType.intValue))))
                     }
                     xPoints.append(Double(temperature))
-                    yPoints.append(yAvg/10.0)
+                    yPoints.append(yAvg/20.0)
                 default:
                     break
                 }
@@ -239,7 +242,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         let StartType:Int = 0
         
         let Dimentions:Int = Int(whatDimention.doubleValue)
-        let EnergyType:Int = Int(whatEnergy.doubleValue)
+        let EnergyType:Int = 0
         //let Algorithm:Int = Int(whatAlgorithm.doubleValue)
         
         var spins1D:[Int8] = []
@@ -279,34 +282,54 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     
     @IBAction func generateWLS(_ sender: Any) {
         
-        let NumberofSpins:Int = Int(numberofSpins.doubleValue)
-        let MaxIterations:Int = Int(maxIterations.doubleValue)
-        let temperature:Double = Temperature.doubleValue
-        let nearestNeighborCoupling:Double = NNCoupling.doubleValue
-        let nextNearestNeighborCoupling:Double = NNNCoupling.doubleValue
-        let StartType:Int = Int(startType.doubleValue)
-        let Dimentions:Int = Int(numberofDimentions.doubleValue)
-        let EnergyType:Int = Int(energyType.doubleValue)
+        var classArray = WLSSpinArray2D()
+        var classWLS = WLS()
+        
+        var J:Double = 1
+        
+        var Array = create2D(size: 64, type: "RANDOM")
+        
+        var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
+        var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
+        
+        var acceptState:Bool = false
+        
+        classArray.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
+        classWLS.initialize(possibleEnergies: possibleEnergies)
         
         
-        //var DOS:[Double] = generateWLSSystem(numberofSpins:NumberofSpins,maxIterations:MaxIterations, Dimentions:Dimentions, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Plot: displayView, Log:true)
+        while classWLS.multiplicitiveFactor > 1 + pow(10,-8){
+            //for g in 0...Dimentions{
+            while !(classWLS.isFlat){
+                
+                for i in 0...9999{
+                    
+                    classArray.calculateEnergyChange()
+                    
+                    classWLS.relativeProbability(oldEnergy: classArray.Energy, energyChange: classArray.energyChange)
+                    
+                    acceptState = classWLS.acceptState
+                    
+                    if acceptState{
+                        classArray.commitToSpinFlip()
+                    }
+                    //print(testclass.Energy)
+                    classWLS.updateWLS(newEnergy: classArray.Energy)
+                }
+                
+                classWLS.checkFlat()
+                //print(testWLS.isFlat)
+                //print(testWLS.multiplicitiveFactor)
+            }//end of flat check
+            // } //end of extra test
+            classWLS.isFlat = false
+        }//end of F updates
         
+        classWLS.removeDOSZeroes()
+        classWLS.normalize()
+        //classWLS.eulerDOS()
+        Plot2(Xaxis: classWLS.Energies, Yaxis: classWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
         
-        var DOS:[Double] = generate2DWLSSystem(numberofSpins:NumberofSpins, T:temperature,J:nearestNeighborCoupling, J2: nextNearestNeighborCoupling, Log:true)
-        
-        
-        
-        //var spins:[Int8] = create1D(size: NumberofSpins, type: "UP")
-        var spins:[[Int8]] = create2D(size: NumberofSpins, type: "UP")
-        
-        //var energies:[Double] = generatePossibleEnergies(Spins:spins,J:nearestNeighborCoupling)
-        
-        var energies:[Double] = generatePossible2DEnergies(Spins:spins,J:nearestNeighborCoupling)
-        
-        //print(DOS.count)
-        //print(energies.count)
-        //print(DOS)
-        Plot2(Xaxis:energies, Yaxis:DOS, Xlabel:"KbT", Ylabel:"U")
         
         
         
@@ -373,37 +396,48 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         var testclass = WLSSpinArray2D()
         var testWLS = WLS()
         
-        var J:Double = 1
         
         var Array = create2D(size: 4, type: "UP")
         
-        var energy = initalize2DNearestNeighborsEnergy(Spins:Array, J:J)
-        var possibleEnergies = generatePossible2DEnergies(Spins: Array, J: J)
+        var temperature:Double = 0.1
+        let temperatureChange:Double = 0.1
         
-        var acceptState:Bool = false
+        let nearestNeighborCoupling:Double = 1
+        let nextNearestNeighborCoupling:Double = 0.5
+        let StartType:Int = 0
         
-        testclass.initialize(newArray:Array,newEnergy:energy,newArraylength:Array.count)
-        testWLS.initialize(possibleEnergies: possibleEnergies)
+        let Dimentions:Int = Int(whatDimention.doubleValue)
+        let EnergyType:Int = 0
         
+        var spins1D:[Int8] = []
+        var spins2D:[[Int8]] = [[]]
         
-        while testWLS.multiplicitiveFactor > 1 + pow(10,-8){
-        //for g in 0...Dimentions{
-        while !(testWLS.isFlat){
-            
-        for i in 0...9999{
-            
-        testclass.calculateEnergyChange()
-            
-        testWLS.relativeProbability(oldEnergy: testclass.Energy, energyChange: testclass.energyChange)
+        var temperatureArray:[Double] = []
+        var energyArray:[Double] = []
+        var specificHeatArray:[Double] = []
         
-        acceptState = testWLS.acceptState
+        var count:Double = 0
         
-        if acceptState{
-            testclass.commitToSpinFlip()
+        if Dimentions == 2{
+            count = pow(Double(Numberof2DSpins),2)
         }
-        //print(testclass.Energy)
-        testWLS.updateWLS(newEnergy: testclass.Energy)
+        else{
+            count = Double(NumberofSpins)
         }
+        
+        
+        for j in 0...100{
+            for i in 0...10{
+                
+                var spinTuple = algorithmSwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, startType:StartType, maxiterations:MaxIterations, temperature:temperature, NumberofSpins:NumberofSpins, Numberof2DSpins:Numberof2DSpins)
+                
+                spins1D = spinTuple.spins1D
+                spins2D = spinTuple.spins2D
+                
+                
+                energyArray.append(energySwitch(Dimentions:Dimentions, energyType:EnergyType, nearestNeighborCoupling:nearestNeighborCoupling, nextNearestNeighborCoupling:nextNearestNeighborCoupling, array1D:spins1D, array2D:spins2D))
+                
+            }
             
         testWLS.checkFlat()
             //print(testWLS.isFlat)
@@ -415,7 +449,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
         
         testWLS.removeDOSZeroes()
         testWLS.normalize()
-        testWLS.eulerDOS()
+        //testWLS.eulerDOS()
         print(testWLS.DOS)
         Plot2(Xaxis: testWLS.Energies, Yaxis: testWLS.DOS, Xlabel: "Energy", Ylabel: "DOS")
  */
@@ -424,8 +458,7 @@ class ViewController: NSViewController, CPTScatterPlotDataSource, CPTAxisDelegat
     }
 
 
-
-
+    
 //generic plot function
 func Plot2(Xaxis:[Double], Yaxis:[Double], Xlabel:String, Ylabel:String) {
     for i in 0...(Xaxis.count-1) {
@@ -434,7 +467,7 @@ func Plot2(Xaxis:[Double], Yaxis:[Double], Xlabel:String, Ylabel:String) {
         contentArray.append(dataPoint)
     }
     
-    makePlot(xLabel: Xlabel, yLabel: Ylabel, xMin: Xaxis.min()! - 0.1, xMax: Xaxis.max()! * 1.1, yMin: -0.1, yMax: Yaxis.max()! * 1.1)
+    makePlot(xLabel: Xlabel, yLabel: Ylabel, xMin: Xaxis.min()! - 0.1, xMax: Xaxis.max()! * 1.1, yMin: Yaxis.min()!-0.1, yMax: Yaxis.max()! * 1.1)
     contentArray.removeAll()
 }
 
@@ -505,7 +538,7 @@ func makePlot(xLabel: String, yLabel: String, xMin: Double, xMax: Double, yMin: 
     let axisSet = newGraph.axisSet as! CPTXYAxisSet
     
     if let x = axisSet.xAxis {
-        x.majorIntervalLength   = 10.0
+        x.majorIntervalLength   = 100.0 //test
         x.orthogonalPosition    = 0.0
         x.minorTicksPerInterval = 3
     }
